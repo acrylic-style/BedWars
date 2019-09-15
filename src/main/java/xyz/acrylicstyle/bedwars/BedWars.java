@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
 
-public class BedWars extends JavaPlugin {
+public class BedWars extends JavaPlugin implements Listener {
     public static ConfigProvider config = null;
     public static String mapName = null;
     public static ConfigProvider map = null;
@@ -35,6 +36,7 @@ public class BedWars extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Bukkit.getPluginManager().registerEvents(this, this);
         new BukkitRunnable() {
             public void run() {
                 try {
