@@ -31,7 +31,7 @@ public class LobbyTask extends BukkitRunnable {
             Utils.setScoreReplace(" ", 2, objective);
             Utils.setScoreReplace("", 1, objective);
             Utils.setScoreReplace("", 0, objective);
-            player.setScoreboard(scoreboard);
+            player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
             if (countdown == 10) {
                 ActionBar.setActionBarWithoutException(player, ChatColor.YELLOW + "10");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
