@@ -52,6 +52,7 @@ public class BedWars extends JavaPlugin {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
+        e.getPlayer().setMaxHealth(20);
         scoreboards.put(e.getPlayer().getUniqueId(), manager.getNewScoreboard());
         LobbyTask lobbyTask = new LobbyTask();
         Utils.setLobbyTask(lobbyTask);
