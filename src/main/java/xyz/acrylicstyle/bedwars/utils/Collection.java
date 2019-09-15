@@ -27,8 +27,8 @@ public class Collection<K, V> extends HashMap<K, V> {
     public void foreach(BiConsumer<V, Integer> action) {
         final int[] index = {0};
         this.values().forEach(v -> {
-            index[0]++;
             action.accept(v, index[0]);
+            index[0]++;
         });
     }
 
@@ -38,8 +38,8 @@ public class Collection<K, V> extends HashMap<K, V> {
     public void foreachKeys(BiConsumer<K, Integer> action) {
         final int[] index = {0};
         this.keySet().forEach(k -> {
-            index[0]++;
             action.accept(k, index[0]);
+            index[0]++;
         });
     }
 
