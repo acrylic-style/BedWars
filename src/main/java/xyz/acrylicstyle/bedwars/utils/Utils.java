@@ -6,13 +6,14 @@ import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.function.Consumer;
 
 public final class Utils {
@@ -20,6 +21,9 @@ public final class Utils {
 
     private static GameTask _gameTask = null;
     private static LobbyTask _lobbyTask = null;
+
+    public final static int maximumPlayers = 16;
+    public static int minimumPlayers = 4;
 
     public static BedWars getInstance() {
         return BedWars.getPlugin(BedWars.class);
@@ -59,6 +63,7 @@ public final class Utils {
         BedWars.world.setGameRuleValue("keepInventory", "true");
         BedWars.world.setFullTime(6000);
         BedWars.manager = Bukkit.getScoreboardManager();
+        Utils.minimumPlayers = BedWars.config.getInt("minimumPlayers", 4);
         BedWars.scoreboards = new Collection<>();
         if (Bukkit.getOnlinePlayers().size() > 0) {
             for (Player player : Bukkit.getOnlinePlayers()) {
@@ -101,5 +106,57 @@ public final class Utils {
 
     private interface ThrowableRunnable {
         void run() throws Exception;
+    }
+
+    /**
+     * @param name A name to register / remove score.
+     * @param score Score for set score. null to remove the score.
+     * @param objective Objective for set score
+     */
+    public static void setScore(String name, Integer score, Objective objective) {
+        if (score == null) {
+            objective.getScoreboard().resetScores(name);
+            return;
+        }
+        Score scoreObj = objective.getScore(name);
+        scoreObj.setScore(score);
+    }
+
+    private static Collection<Integer, String> scores = new Collection<>();
+
+    /**
+     * @param name A name to register / remove score.
+     * @param score Score for set score. null to remove the score.
+     * @param objective Objective for set score
+     */
+    public static void setScoreReplace(String name, Integer score, Objective objective) {
+        final String name2 = "    " + name + "  ";
+        if (score == null) {
+            objective.getScoreboard().resetScores(name2);
+            return;
+        }
+        if (scores.get(score) != null) {
+            if (scores.get(score).equalsIgnoreCase(name)) return; // return if name is same as last score entry
+            objective.getScoreboard().resetScores(scores.get(score));
+        }
+        Score scoreObj = objective.getScore(name2);
+        scoreObj.setScore(score);
+        scores.put(score, name2);
+    }
+
+    /**
+     * @param scoreNameMap Integer: Score number for set score, null to remove the score. | String: A name to register / remove score.
+     * @param objective Objective for set score
+     */
+    public static void setScore(Collection<Integer, String> scoreNameMap, Objective objective) {
+        scoreNameMap.forEach((score, name) -> setScore(name, score, objective));
+    }
+
+    /**
+     * @param scoreNameMap Integer: Score number for set score, null to remove the score. | String: A name to register / remove score.
+     * @param objective Objective for set score
+     */
+    public static void setScoreReplace(Collection<Integer, String> scoreNameMap, Objective objective) {
+        scoreNameMap.forEach((score, name) -> setScoreReplace(name, score, objective));
     }
 }

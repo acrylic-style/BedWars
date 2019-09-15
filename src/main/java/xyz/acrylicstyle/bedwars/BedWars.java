@@ -1,10 +1,13 @@
 package xyz.acrylicstyle.bedwars;
 
+import com.comphenix.protocol.injector.PlayerLoggedOutException;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
@@ -53,5 +56,12 @@ public class BedWars extends JavaPlugin {
         LobbyTask lobbyTask = new LobbyTask();
         Utils.setLobbyTask(lobbyTask);
         lobbyTask.runTaskTimer(this, 0, 20);
+    }
+
+    @EventHandler
+    public void onPlayerLogin(PlayerLoginEvent e) {
+        if (Bukkit.getOnlinePlayers().size() >= Utils.maximumPlayers) {
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Current game is full. Please try again later!");
+        }
     }
 }
