@@ -16,6 +16,8 @@ import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+import static xyz.acrylicstyle.bedwars.utils.Team.YELLOW;
+
 public final class Utils {
     private Utils() {}
 
@@ -25,6 +27,9 @@ public final class Utils {
     public final static int maximumPlayers = 16;
     public static int minimumPlayers = 4;
     public static int teamSize = 2; // doubles
+
+    public final static char heavy_X = '\u2718';
+    public final static char heavy_check = '\u2714';
 
     public static BedWars getInstance() {
         return BedWars.getPlugin(BedWars.class);
@@ -160,5 +165,18 @@ public final class Utils {
      */
     public static void setScoreReplace(Collection<Integer, String> scoreNameMap, Objective objective) {
         scoreNameMap.forEach((score, name) -> setScoreReplace(name, score, objective));
+    }
+
+    public static void teamSB(Team team, int score, Objective objective) {
+        if (BedWars.aliveTeam.contains(team)) {
+            Utils.setScore(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective);
+        } else {
+            int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid -> BedWars.status.get(uuid) == PlayerStatus.ALIVE).size();
+            if (players <= 0) {
+                Utils.setScore(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective);
+            } else {
+                Utils.setScore(team + ": " + ChatColor.GREEN + players, score, objective);
+            }
+        }
     }
 }

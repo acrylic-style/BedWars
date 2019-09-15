@@ -1,11 +1,11 @@
 package xyz.acrylicstyle.bedwars;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,11 +17,12 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.bedwars.utils.Collection;
 import xyz.acrylicstyle.bedwars.utils.PlayerStatus;
+import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
-import java.util.UUID;
+import java.util.*;
 
 import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
 
@@ -34,7 +35,10 @@ public class BedWars extends JavaPlugin implements Listener {
     public static ScoreboardManager manager = null;
     public static Collection<UUID, Scoreboard> scoreboards = new Collection<>();
     public static Collection<UUID, PlayerStatus> status = new Collection<>();
+    public static Collection<UUID, Team> team = new Collection<>();
+    public static Set<Team> aliveTeam = new HashSet<>();
     public static boolean startedLobbyTask = false;
+    private static Set<Location> playerPlacedBlocks = new HashSet<>();
 
     @Override
     public void onEnable() {
@@ -73,5 +77,27 @@ public class BedWars extends JavaPlugin implements Listener {
         if (Bukkit.getOnlinePlayers().size() >= Utils.maximumPlayers) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Current game is full. Please try again later!");
         }
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e) {
+        playerPlacedBlocks.add(e.getBlockPlaced().getLocation());
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+        if (playerPlacedBlocks.contains(e.getBlock().getLocation())) {
+            e.setCancelled(true);
+            e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
+        }
+    }
+
+    @EventHandler
+    public void onBlockExplode(BlockExplodeEvent e) {
+        e.setCancelled(false);
+        e.blockList().forEach(block -> {
+            if (playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+        });
     }
 }
