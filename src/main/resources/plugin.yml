@@ -1,0 +1,16 @@
+name: BedWars
+main: xyz.acrylicstyle.bedwars.BedWars
+version: 0.0.1-SNAPSHOT
+api-version: 1.8.8
+author: acrylic-style
+commands:
+  start:
+    usage: /<command>
+    description: Start the game forcefully.
+    permission: bedwars.start
+    aliases: [startgame]
+  stop:
+    usage: /<command>
+    description: Stop the game forcefully and reset all constant settings to the default.
+    permission: bedwars.stop
+    aliases: [stopgame]
