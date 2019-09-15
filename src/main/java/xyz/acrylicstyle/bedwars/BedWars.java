@@ -16,6 +16,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.bedwars.utils.Collection;
+import xyz.acrylicstyle.bedwars.utils.PlayerStatus;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
@@ -32,6 +33,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public static World world = null;
     public static ScoreboardManager manager = null;
     public static Collection<UUID, Scoreboard> scoreboards = new Collection<>();
+    public static Collection<UUID, PlayerStatus> status = new Collection<>();
     public static boolean startedLobbyTask = false;
 
     @Override
@@ -52,6 +54,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+        status.put(e.getPlayer().getUniqueId(), PlayerStatus.BEFORE_GAME);
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setMaxHealth(20);
         Scoreboard board = manager.getNewScoreboard();

@@ -24,6 +24,7 @@ public final class Utils {
 
     public final static int maximumPlayers = 16;
     public static int minimumPlayers = 4;
+    public static int teamSize = 2; // doubles
 
     public static BedWars getInstance() {
         return BedWars.getPlugin(BedWars.class);
@@ -64,6 +65,7 @@ public final class Utils {
         BedWars.world.setFullTime(6000);
         BedWars.manager = Bukkit.getScoreboardManager();
         Utils.minimumPlayers = BedWars.config.getInt("minimumPlayers", 4);
+        Utils.teamSize = BedWars.map.getInt("teamSize", 2);
         BedWars.scoreboards = new Collection<>();
         if (Bukkit.getOnlinePlayers().size() > 0) {
             for (Player player : Bukkit.getOnlinePlayers()) {
