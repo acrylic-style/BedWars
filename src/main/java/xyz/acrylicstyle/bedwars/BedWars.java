@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
@@ -53,7 +55,11 @@ public class BedWars extends JavaPlugin {
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setMaxHealth(20);
-        scoreboards.put(e.getPlayer().getUniqueId(), manager.getNewScoreboard());
+        Scoreboard board = manager.getNewScoreboard();
+        final Objective objective = board.registerNewObjective("scoreboard", "dummy");
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        objective.setDisplayName(""+ChatColor.GREEN + ChatColor.BOLD + "BED WARS");
+        scoreboards.put(e.getPlayer().getUniqueId(), board);
         LobbyTask lobbyTask = new LobbyTask();
         Utils.setLobbyTask(lobbyTask);
         lobbyTask.runTaskTimer(this, 0, 20);
