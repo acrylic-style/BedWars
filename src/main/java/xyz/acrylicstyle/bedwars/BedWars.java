@@ -1,6 +1,5 @@
 package xyz.acrylicstyle.bedwars;
 
-import com.comphenix.protocol.injector.PlayerLoggedOutException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -20,8 +19,6 @@ import xyz.acrylicstyle.bedwars.utils.Utils;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
@@ -56,6 +53,7 @@ public class BedWars extends JavaPlugin {
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setMaxHealth(20);
         Scoreboard board = manager.getNewScoreboard();
+        e.getPlayer().setScoreboard(board);
         final Objective objective = board.registerNewObjective("scoreboard", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(""+ChatColor.GREEN + ChatColor.BOLD + "BED WARS");
