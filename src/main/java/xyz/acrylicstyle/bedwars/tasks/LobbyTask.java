@@ -9,7 +9,6 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import xyz.acrylicstyle.bedwars.BedWars;
-import xyz.acrylicstyle.bedwars.effects.ActionBar;
 import xyz.acrylicstyle.bedwars.utils.PlayerStatus;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
@@ -35,7 +34,7 @@ public class LobbyTask extends BukkitRunnable {
             int minutes = (int) Math.floor((float) countdown / 60F);
             String count = minutes + ":" + (countdown % 60);
             if (Bukkit.getOnlinePlayers().size() < Utils.minimumPlayers) {
-                Utils.setScoreReplace(ChatColor.WHITE + "Waiting..." + count, 1, objective);
+                Utils.setScoreReplace(ChatColor.WHITE + "Waiting...", 1, objective);
                 Utils.setScoreReplace("", 0, objective);
                 return;
             }

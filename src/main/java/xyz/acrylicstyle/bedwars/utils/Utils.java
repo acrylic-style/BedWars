@@ -132,7 +132,7 @@ public final class Utils {
      * @param objective Objective for set score
      */
     public static void setScoreReplace(String name, Integer score, Objective objective) {
-        final String name2 = "    " + name + "  ";
+        final String name2 = "    " + name + "        ";
         if (score == null) {
             objective.getScoreboard().resetScores(name2);
             return;
