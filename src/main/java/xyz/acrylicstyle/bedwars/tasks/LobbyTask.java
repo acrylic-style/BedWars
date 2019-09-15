@@ -103,7 +103,7 @@ public class LobbyTask extends BukkitRunnable {
                 if (BedWars.team.values(Team.AQUA).size() > 0) {
                     BedWars.aliveTeam.add(Team.AQUA);
                 }
-                player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "Go!", ChatColor.GREEN + "Your team is " + BedWars.team.get(player.getUniqueId()));
+                player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "Go!", "");
                 GameTask gameTask = new GameTask();
                 gameTask.runTaskTimer(Utils.getInstance(), 0, 20);
                 Utils.setGameTask(gameTask);

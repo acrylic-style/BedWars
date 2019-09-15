@@ -143,7 +143,7 @@ public final class Utils {
             return;
         }
         if (scores.get(score) != null) {
-            if (scores.get(score).equalsIgnoreCase(name)) return; // return if name is same as last score entry
+            if (scores.get(score).equalsIgnoreCase(name2)) return; // return if name is same as last score entry
             objective.getScoreboard().resetScores(scores.get(score));
         }
         Score scoreObj = objective.getScore(name2);
@@ -169,13 +169,13 @@ public final class Utils {
 
     public static void teamSB(Team team, int score, Objective objective) {
         if (BedWars.aliveTeam.contains(team)) {
-            Utils.setScore(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective);
+            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective);
         } else {
             int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid -> BedWars.status.get(uuid) == PlayerStatus.ALIVE).size();
             if (players <= 0) {
-                Utils.setScore(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective);
+                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective);
             } else {
-                Utils.setScore(team + ": " + ChatColor.GREEN + players, score, objective);
+                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players, score, objective);
             }
         }
     }

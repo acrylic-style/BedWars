@@ -1,7 +1,6 @@
 package xyz.acrylicstyle.bedwars.tasks;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -17,7 +16,6 @@ public class GameTask extends BukkitRunnable {
         for (Player player : Bukkit.getOnlinePlayers()) {
             Scoreboard scoreboard = BedWars.scoreboards.get(player.getUniqueId());
             Objective objective = scoreboard.getObjective(DisplaySlot.SIDEBAR);
-            Utils.setScoreReplace(ChatColor.GREEN + "Map: " + BedWars.map.getString("name", "???"), null, objective);
             Utils.teamSB(Team.RED, 8, objective);
             Utils.teamSB(Team.BLUE, 7, objective);
             Utils.teamSB(Team.YELLOW, 6, objective);
