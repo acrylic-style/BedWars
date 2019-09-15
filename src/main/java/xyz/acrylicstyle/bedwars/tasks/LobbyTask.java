@@ -15,6 +15,7 @@ import xyz.acrylicstyle.bedwars.utils.Utils;
 public class LobbyTask extends BukkitRunnable {
     private int countdown = 30;
 
+    @SuppressWarnings("deprecation")
     @Override
     public void run() {
         if (Bukkit.getOnlinePlayers().size() <= 0) {
@@ -33,25 +34,25 @@ public class LobbyTask extends BukkitRunnable {
             Utils.setScoreReplace("", 0, objective);
             player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
             if (countdown == 10) {
-                ActionBar.setActionBarWithoutException(player, ChatColor.YELLOW + "10");
+                player.sendTitle(ChatColor.YELLOW + "10", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
             } else if (countdown == 5) {
-                ActionBar.setActionBarWithoutException(player, ChatColor.YELLOW + "5");
+                player.sendTitle(ChatColor.YELLOW + "5", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
             } else if (countdown == 4) {
-                ActionBar.setActionBarWithoutException(player, ChatColor.YELLOW + "4");
+                player.sendTitle(ChatColor.YELLOW + "4", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
             } else if (countdown == 3) {
-                ActionBar.setActionBarWithoutException(player, ChatColor.RED + "3");
+                player.sendTitle(ChatColor.RED + "3", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
             } else if (countdown == 2) {
-                ActionBar.setActionBarWithoutException(player, ChatColor.RED + "2");
+                player.sendTitle(ChatColor.RED + "2", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
             } else if (countdown == 1) {
-                ActionBar.setActionBarWithoutException(player, ChatColor.RED + "1");
+                player.sendTitle(ChatColor.RED + "1", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
             } else if (countdown == 0) {
-                player.sendMessage("" + ChatColor.GREEN + ChatColor.BOLD + "Go!");
+                player.sendTitle(ChatColor.BOLD + "Go!", "");
                 GameTask gameTask = new GameTask();
                 gameTask.runTaskTimer(Utils.getInstance(), 0, 20);
                 Utils.setGameTask(gameTask);
