@@ -32,6 +32,7 @@ public class LobbyTask extends BukkitRunnable {
             Utils.setScoreReplace("  ", 4, objective);
             Utils.setScoreReplace(ChatColor.GREEN + "Players: " + Bukkit.getOnlinePlayers().size(), 3, objective);
             Utils.setScoreReplace(" ", 2, objective);
+            Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective);
             int minutes = (int) Math.floor((float) countdown / 60F);
             String count = minutes + ":" + (countdown % 60);
             if (Bukkit.getOnlinePlayers().size() < Utils.minimumPlayers) {

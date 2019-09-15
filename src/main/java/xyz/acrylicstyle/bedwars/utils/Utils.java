@@ -137,7 +137,16 @@ public final class Utils {
      * @param objective Objective for set score
      */
     public static void setScoreReplace(String name, Integer score, Objective objective) {
-        final String name2 = "    " + name + "        ";
+        Utils.setScoreReplace(name, score, objective, true);
+    }
+
+    /**
+     * @param name A name to register / remove score.
+     * @param score Score for set score. null to remove the score.
+     * @param objective Objective for set score
+     */
+    public static void setScoreReplace(String name, Integer score, Objective objective, boolean putWhitespace) {
+        final String name2 = putWhitespace ? "    " + name + "        " : name + "        ";
         if (score == null) {
             objective.getScoreboard().resetScores(name2);
             return;
@@ -169,13 +178,13 @@ public final class Utils {
 
     public static void teamSB(Team team, int score, Objective objective) {
         if (BedWars.aliveTeam.contains(team)) {
-            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective);
+            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective, false);
         } else {
             int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid -> BedWars.status.get(uuid) == PlayerStatus.ALIVE).size();
             if (players <= 0) {
-                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective);
+                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective, false);
             } else {
-                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players, score, objective);
+                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players, score, objective, false);
             }
         }
     }
