@@ -33,14 +33,12 @@ public class LobbyTask extends BukkitRunnable {
             Utils.setScoreReplace(ChatColor.GREEN + "Players: " + Bukkit.getOnlinePlayers().size(), 3, objective);
             Utils.setScoreReplace(" ", 2, objective);
             Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective);
-            int minutes = (int) Math.floor((float) countdown / 60F);
-            String count = minutes + ":" + (countdown % 60);
             if (Bukkit.getOnlinePlayers().size() < Utils.minimumPlayers) {
                 Utils.setScoreReplace(ChatColor.WHITE + "Waiting...", 1, objective);
                 Utils.setScoreReplace("", 0, objective);
                 return;
             }
-            Utils.setScoreReplace(ChatColor.GREEN + "Starting in " + count, 1, objective);
+            Utils.setScoreReplace(ChatColor.GREEN + "Starting in " + Utils.secondsToTime(countdown), 1, objective);
             Utils.setScoreReplace("", 0, objective);
             player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
             if (countdown == 10) {
@@ -108,6 +106,8 @@ public class LobbyTask extends BukkitRunnable {
                 GameTask gameTask = new GameTask();
                 gameTask.runTaskTimer(Utils.getInstance(), 0, 20);
                 Utils.setGameTask(gameTask);
+                GeneratorTask generatorTask = new GeneratorTask();
+                generatorTask.runTask(Utils.getInstance());
                 this.cancel();
                 return;
             }

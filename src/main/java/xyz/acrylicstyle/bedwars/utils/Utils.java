@@ -16,20 +16,19 @@ import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import static xyz.acrylicstyle.bedwars.utils.Team.YELLOW;
-
 public final class Utils {
     private Utils() {}
 
     private static GameTask _gameTask = null;
     private static LobbyTask _lobbyTask = null;
+    private static ConfigUtils configUtils = null;
 
-    public final static int maximumPlayers = 16;
+    public static int maximumPlayers = 16;
     public static int minimumPlayers = 4;
     public static int teamSize = 2; // doubles
 
-    public final static char heavy_X = '\u2718';
-    public final static char heavy_check = '\u2714';
+    private final static char heavy_X = '\u2718';
+    private final static char heavy_check = '\u2714';
 
     public static BedWars getInstance() {
         return BedWars.getPlugin(BedWars.class);
@@ -51,6 +50,21 @@ public final class Utils {
         return Utils._lobbyTask;
     }
 
+    private static void initConfigUtils() throws IOException, InvalidConfigurationException {
+        Utils.configUtils = new ConfigUtils("./plugins/BedWars/config.yml");
+    }
+
+    public static ConfigUtils getConfigUtils() {
+        if (Utils.configUtils == null) throw new NullPointerException("ConfigUtils isn't initialized yet!");
+        return Utils.configUtils;
+    }
+
+    public static String secondsToTime(int seconds) {
+        int minutes = (int) Math.floor((float) seconds / 60F);
+        String sec = Integer.toString(seconds % 60);
+        return minutes + ":" + (sec.length() == 1 ? "0" + sec : sec);
+    }
+
     public static void reset() throws IOException, InvalidConfigurationException {
         BedWars.config = new ConfigProvider("./plugins/BedWars/config.yml");
         BedWars.mapName = BedWars.config.getString("map");
@@ -69,8 +83,10 @@ public final class Utils {
         BedWars.world.setGameRuleValue("keepInventory", "true");
         BedWars.world.setFullTime(6000);
         BedWars.manager = Bukkit.getScoreboardManager();
+        Utils.maximumPlayers = BedWars.config.getInt("maximumPlayers", 16);
         Utils.minimumPlayers = BedWars.config.getInt("minimumPlayers", 4);
         Utils.teamSize = BedWars.map.getInt("teamSize", 2);
+        Utils.initConfigUtils();
         BedWars.scoreboards = new Collection<>();
         if (Bukkit.getOnlinePlayers().size() > 0) {
             for (Player player : Bukkit.getOnlinePlayers()) {
