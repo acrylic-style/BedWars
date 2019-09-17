@@ -73,6 +73,11 @@ public class Collection<K, V> extends HashMap<K, V> {
         return newList;
     }
 
+    public Collection<K, V> removeReturnCollection(K k) {
+        this.remove(k);
+        return this;
+    }
+
     public Collection<K, V> values(V v) {
         return this.filter(f -> f.equals(v));
     }

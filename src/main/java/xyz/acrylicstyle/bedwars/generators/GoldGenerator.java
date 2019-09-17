@@ -7,7 +7,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import xyz.acrylicstyle.bedwars.utils.Generator;
 import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
 
-public class IronGenerator implements Generator {
+public class GoldGenerator implements Generator {
     @Override
     public GeneratorPlaces getGeneratorPlace() {
         return GeneratorPlaces.TEAM_BASE;
@@ -15,11 +15,11 @@ public class IronGenerator implements Generator {
 
     @Override
     public ItemStack getResource() {
-        return new ItemStack(Material.IRON_INGOT);
+        return new ItemStack(Material.GOLD_INGOT);
     }
 
     @Override
     public int getGenerateTime() {
-        return 1;
+        return 5;
     }
 }

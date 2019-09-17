@@ -8,6 +8,8 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -15,10 +17,8 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
+import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.bedwars.utils.Collection;
-import xyz.acrylicstyle.bedwars.utils.PlayerStatus;
-import xyz.acrylicstyle.bedwars.utils.Team;
-import xyz.acrylicstyle.bedwars.utils.Utils;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
@@ -99,5 +99,19 @@ public class BedWars extends JavaPlugin implements Listener {
         e.blockList().forEach(block -> {
             if (playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
+    }
+
+    @EventHandler
+    public void onPlayerPickupItemEvent(PlayerPickupItemEvent e) {
+        Material type = e.getItem().getItemStack().getType();
+        if (type == Material.GOLD_INGOT || type == Material.IRON_INGOT || type == Material.BRICK) {
+            Team team = BedWars.team.get(e.getPlayer().getUniqueId());
+            Location resourceSpawn = Utils.getConfigUtils().getGeneratorLocation(team.name());
+            BedWars.team.values(team).removeReturnCollection(e.getPlayer().getUniqueId()).forEach((uuid, team1) -> {
+                if (Bukkit.getPlayer(uuid).getLocation().distance(resourceSpawn) <= 4) {
+                    Bukkit.getPlayer(uuid).getInventory().addItem(new ItemStack(type));
+                }
+            });
+        }
     }
 }
