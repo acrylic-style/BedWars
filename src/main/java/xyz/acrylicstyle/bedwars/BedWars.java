@@ -245,16 +245,8 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onDropItem(PlayerDropItemEvent event) {
-        if (event.getItemDrop().getItemStack().getType() == Material.LEATHER_BOOTS
-        || event.getItemDrop().getItemStack().getType() == Material.LEATHER_CHESTPLATE
+        if (event.getItemDrop().getItemStack().getType() == Material.LEATHER_CHESTPLATE
         || event.getItemDrop().getItemStack().getType() == Material.LEATHER_HELMET
-        || event.getItemDrop().getItemStack().getType() == Material.LEATHER_LEGGINGS
-        || event.getItemDrop().getItemStack().getType() == Material.IRON_LEGGINGS
-        || event.getItemDrop().getItemStack().getType() == Material.IRON_BOOTS
-        || event.getItemDrop().getItemStack().getType() == Material.CHAINMAIL_LEGGINGS
-        || event.getItemDrop().getItemStack().getType() == Material.CHAINMAIL_BOOTS
-        || event.getItemDrop().getItemStack().getType() == Material.DIAMOND_LEGGINGS
-        || event.getItemDrop().getItemStack().getType() == Material.DIAMOND_BOOTS
         || event.getItemDrop().getItemStack().getType() == Material.WOOD_SWORD) event.setCancelled(true);
     }
 }

@@ -52,6 +52,7 @@ public class LobbyTask extends BukkitRunnable {
                 player.getInventory().setLeggings(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())));
                 player.getInventory().setChestplate(Utils.getColoredLeatherArmor(Material.LEATHER_CHESTPLATE, BedWars.team.get(player.getUniqueId())));
                 player.getInventory().setHelmet(Utils.getColoredLeatherArmor(Material.LEATHER_HELMET, BedWars.team.get(player.getUniqueId())));
+                player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
             });
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
