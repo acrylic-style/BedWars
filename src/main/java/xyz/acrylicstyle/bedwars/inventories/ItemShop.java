@@ -218,7 +218,7 @@ public class ItemShop implements InventoryHolder, Listener {
         if (name.equalsIgnoreCase("AQUA")) name = "LIGHT_BLUE";
         if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
         p.getInventory().addItem(clickedItem);
-        //clickedItem.setDurability((byte) 0);
+        clickedItem.setDurability((byte) 0);
         //clickedItem = setLore(clickedItem);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
     }
