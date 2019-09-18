@@ -162,6 +162,7 @@ public final class Utils {
             objective.getScoreboard().resetScores(name2);
             return;
         }
+        if (scores.get(uuid) == null) scores.put(uuid, new Collection<>());
         if (scores.get(uuid).get(score) != null) {
             if (scores.get(uuid).get(score).equalsIgnoreCase(name2)) return; // return if name is same as last score entry
             objective.getScoreboard().resetScores(scores.get(uuid).get(score));
