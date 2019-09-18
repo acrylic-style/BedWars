@@ -47,7 +47,7 @@ public class ItemShop implements InventoryHolder, Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (inv.getHolder() != this) {
+        if (e.getClickedInventory().getHolder() != this) {
             return;
         }
         if (e.getClick().equals(ClickType.NUMBER_KEY)){
@@ -58,6 +58,5 @@ public class ItemShop implements InventoryHolder, Listener {
         Player p = (Player) e.getWhoClicked();
         ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
-        if (e.getRawSlot() == 10) p.sendMessage("You clicked at slot " + 10);
     }
 }
