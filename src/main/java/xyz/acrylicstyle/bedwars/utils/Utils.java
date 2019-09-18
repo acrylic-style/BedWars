@@ -170,14 +170,16 @@ public final class Utils {
     }
 
     public static void teamSB(Team team, int score, Objective objective, UUID uuid) {
+        String you = ChatColor.GRAY + " YOU";
+        boolean inTeam = BedWars.team.get(uuid) == team;
         if (BedWars.aliveTeam.contains(team)) {
-            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective, uuid);
+            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check + (inTeam ? you : ""), score, objective, uuid);
         } else {
             int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid2 -> BedWars.status.get(uuid2) == PlayerStatus.ALIVE).size();
             if (players <= 0) {
-                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective, uuid);
+                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X + (inTeam ? you : ""), score, objective, uuid);
             } else {
-                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players, score, objective, uuid);
+                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players + (inTeam ? you : ""), score, objective, uuid);
             }
         }
     }

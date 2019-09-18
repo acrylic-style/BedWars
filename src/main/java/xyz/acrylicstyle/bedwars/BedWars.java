@@ -76,7 +76,7 @@ public class BedWars extends JavaPlugin implements Listener {
         e.getPlayer().setScoreboard(board);
         final Objective objective = board.registerNewObjective("scoreboard", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(""+ChatColor.GREEN + ChatColor.BOLD + "BED WARS");
+        objective.setDisplayName(""+ChatColor.YELLOW + ChatColor.BOLD + "BED WARS");
         scoreboards.put(e.getPlayer().getUniqueId(), board);
         if (startedLobbyTask) return;
         LobbyTask lobbyTask = new LobbyTask();
@@ -100,6 +100,7 @@ public class BedWars extends JavaPlugin implements Listener {
         playerPlacedBlocks.add(e.getBlockPlaced().getLocation());
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
@@ -110,6 +111,7 @@ public class BedWars extends JavaPlugin implements Listener {
         if (e.getBlock().getType() == Material.BED) {
             Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
             if (team == null) throw new NullPointerException("Unknown bed location: " + e.getBlock().getLocation().toString());
+            BedWars.team.values(team).foreachKeys((uuid, i) -> Bukkit.getPlayer(uuid).sendTitle("" + ChatColor.RED + ChatColor.BLUE + "BED DESTROYED!", "You will no longer respawn!"));
             Team theirTeam = BedWars.team.get(e.getPlayer().getUniqueId());
             world.getPlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1));
             Bukkit.broadcastMessage("");

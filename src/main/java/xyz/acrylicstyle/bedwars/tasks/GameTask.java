@@ -23,12 +23,12 @@ public class GameTask extends BukkitRunnable {
             Utils.setScoreReplace("   ", 9, objective, uuid);
             Utils.teamSB(Team.RED, 8, objective, uuid);
             Utils.teamSB(Team.BLUE, 7, objective, uuid);
-            Utils.teamSB(Team.YELLOW, 6, objective, uuid);
-            Utils.teamSB(Team.GREEN, 5, objective, uuid);
-            Utils.teamSB(Team.WHITE, 4, objective, uuid);
-            Utils.teamSB(Team.BLACK, 3, objective, uuid);
+            Utils.teamSB(Team.GREEN, 6, objective, uuid);
+            Utils.teamSB(Team.YELLOW, 5, objective, uuid);
+            Utils.teamSB(Team.AQUA, 4, objective, uuid);
+            Utils.teamSB(Team.WHITE, 3, objective, uuid);
             Utils.teamSB(Team.PINK, 2, objective, uuid);
-            Utils.teamSB(Team.AQUA, 1, objective, uuid);
+            Utils.teamSB(Team.BLACK, 1, objective, uuid);
             player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
         }
         playedTime++;
