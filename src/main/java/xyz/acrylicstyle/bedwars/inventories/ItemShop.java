@@ -119,7 +119,7 @@ public class ItemShop implements InventoryHolder, Listener {
         if (name.equalsIgnoreCase("Gold")) color = ChatColor.GOLD;
         if (name.equalsIgnoreCase("Diamond")) color = ChatColor.AQUA;
         if (name.equalsIgnoreCase("Emerald")) color = ChatColor.GREEN;
-        if (color == null) throw new NullPointerException("color is null - probably missing resource color?");
+        if (color == null) color = ChatColor.GRAY;
         String[] a = { ChatColor.YELLOW + "Cost: " + color + cost.getAmount() + " " + name.replaceAll("ingot", "") };
         meta.setLore(Arrays.asList(a));
         item.setItemMeta(meta);
