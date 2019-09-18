@@ -97,7 +97,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         ItemMeta meta = clickedItem.getItemMeta();
-        meta.setLore(new ArrayList<>());
+        meta.setLore(null);
         clickedItem.setItemMeta(meta);
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
