@@ -17,14 +17,14 @@ public class ShopNPCTask extends BukkitRunnable {
             Villager itemShop = (Villager) BedWars.world.spawnEntity(Utils.getConfigUtils().getItemShopNPCLocation(team), EntityType.VILLAGER);
             itemShop.setCustomName("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP");
             itemShop.setProfession(Villager.Profession.BLACKSMITH);
-            itemShop.setMaxHealth(Integer.MAX_VALUE);
-            itemShop.setHealth(Integer.MAX_VALUE);
+            itemShop.setMaxHealth(2048);
+            itemShop.setHealth(2048);
             itemShop.setCanPickupItems(false);
             Villager upgrade = (Villager) BedWars.world.spawnEntity(Utils.getConfigUtils().getUpgradeNPCLocation(team), EntityType.VILLAGER);
             upgrade.setCustomName("" + ChatColor.YELLOW + ChatColor.BOLD + "TEAM UPGRADES");
             upgrade.setProfession(Villager.Profession.PRIEST);
-            upgrade.setMaxHealth(Integer.MAX_VALUE);
-            upgrade.setHealth(Integer.MAX_VALUE);
+            upgrade.setMaxHealth(2048);
+            upgrade.setHealth(2048);
             upgrade.setCanPickupItems(false);
         });
     }
