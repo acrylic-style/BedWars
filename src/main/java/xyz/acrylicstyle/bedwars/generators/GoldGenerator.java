@@ -26,6 +26,6 @@ public class GoldGenerator implements Generator {
 
     @Override
     public double getGenerateTime() {
-        return 5/(Utils.teamSize/4F);
+        return 3/(Utils.teamSize/4F);
     }
 }
