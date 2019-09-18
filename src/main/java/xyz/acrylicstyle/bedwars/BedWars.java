@@ -232,7 +232,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player)) return;
+        if (!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player)) e.setCancelled(true);
         Player damager = (Player) e.getDamager();
         Player player = (Player) e.getEntity();
         if (team.get(damager.getUniqueId()) == team.get(player.getUniqueId())) e.setCancelled(true);
