@@ -9,6 +9,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,13 +19,18 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
-import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.bedwars.utils.Collection;
+import xyz.acrylicstyle.bedwars.utils.PlayerStatus;
+import xyz.acrylicstyle.bedwars.utils.Team;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
 
@@ -63,6 +69,8 @@ public class BedWars extends JavaPlugin implements Listener {
         status.put(e.getPlayer().getUniqueId(), PlayerStatus.BEFORE_GAME);
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setMaxHealth(20);
+        e.getPlayer().getInventory().clear();
+        e.getPlayer().getInventory().setArmorContents(new ItemStack[]{new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR)});
         Scoreboard board = manager.getNewScoreboard();
         e.getPlayer().setScoreboard(board);
         final Objective objective = board.registerNewObjective("scoreboard", "dummy");
@@ -79,6 +87,10 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onPlayerLogin(PlayerLoginEvent e) {
         if (Bukkit.getOnlinePlayers().size() >= Utils.maximumPlayers) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Current game is full. Please try again later!");
+            return;
+        }
+        if (GameTask.playedTime > 0) {
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Game is already started. Please try again later!");
         }
     }
 
@@ -131,5 +143,10 @@ public class BedWars extends JavaPlugin implements Listener {
                 }
             });
         }
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent e) {
+        e.setRespawnLocation(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
     }
 }
