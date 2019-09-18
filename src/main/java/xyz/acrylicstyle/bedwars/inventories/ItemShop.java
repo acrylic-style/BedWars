@@ -181,6 +181,9 @@ public class ItemShop implements InventoryHolder, Listener {
             p.updateInventory();
         }
         if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;
+        ItemMeta meta = clickedItem.getItemMeta();
+        meta.setLore(new ArrayList<>());
+        clickedItem.setItemMeta(meta);
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
@@ -195,9 +198,6 @@ public class ItemShop implements InventoryHolder, Listener {
         String name = team.name().toUpperCase();
         if (name.equalsIgnoreCase("AQUA")) name = "LIGHT_BLUE";
         if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
-        ItemMeta meta = clickedItem.getItemMeta();
-        meta.setLore(new ArrayList<>());
-        clickedItem.setItemMeta(meta);
         p.getInventory().addItem(clickedItem);
         clickedItem.setDurability((byte) 0);
         clickedItem = setLore(clickedItem);
