@@ -110,7 +110,7 @@ public class ItemShop implements InventoryHolder, Listener {
         });
     }
 
-    private ItemStack setLore(ItemStack item) {
+    private ItemStack setLore(ItemStack item) {/*
         ItemStack cost = Constants.shopItems_everything.get(item);
         if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
         ItemMeta meta = item.getItemMeta();
@@ -124,7 +124,7 @@ public class ItemShop implements InventoryHolder, Listener {
         if (color == null) color = ChatColor.GRAY;
         String[] a = { ChatColor.YELLOW + "Cost: " + color + cost.getAmount() + " " + name.replaceAll("ingot", "") };
         meta.setLore(Arrays.asList(a));
-        item.setItemMeta(meta);
+        item.setItemMeta(meta);*/
         return item;
     }
 
@@ -190,14 +190,14 @@ public class ItemShop implements InventoryHolder, Listener {
             p.openInventory(inventories.get(ShopCategory.UTILITY));
             p.updateInventory();
         }
-        if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;
+        if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;/*
         ItemMeta meta = clickedItem.getItemMeta();
         meta.setLore(null);
         clickedItem.setItemMeta(meta);
         if (!meta.spigot().isUnbreakable()) {
             clickedItem.setItemMeta(null);
             clickedItem = new ItemStack(clickedItem.getType(), clickedItem.getAmount());
-        }
+        }*/
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
@@ -218,8 +218,8 @@ public class ItemShop implements InventoryHolder, Listener {
         if (name.equalsIgnoreCase("AQUA")) name = "LIGHT_BLUE";
         if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
         p.getInventory().addItem(clickedItem);
-        clickedItem.setDurability((byte) 0);
-        clickedItem = setLore(clickedItem);
+        //clickedItem.setDurability((byte) 0);
+        //clickedItem = setLore(clickedItem);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
     }
 }
