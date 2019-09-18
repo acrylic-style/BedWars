@@ -90,9 +90,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getClickedInventory().getHolder() != this) {
-            return;
-        }
+        if (e.getClickedInventory().getHolder() != this) return;
         e.setCancelled(true);
         Player p = (Player) e.getWhoClicked();
         ItemStack clickedItem = e.getCurrentItem();
