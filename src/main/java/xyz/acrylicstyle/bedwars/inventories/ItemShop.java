@@ -100,9 +100,9 @@ public class ItemShop implements InventoryHolder, Listener {
         Constants.shopItems_Ranged.foreachKeys((item, index) -> {
             inventories.get(ShopCategory.RANGED).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
         });
-        Constants.shopItems_Potions.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.POTIONS).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
-        });
+        //Constants.shopItems_Potions.foreachKeys((item, index) -> {
+        //    inventories.get(ShopCategory.POTIONS).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
+        //});
         Constants.shopItems_Utility.foreachKeys((item, index) -> {
             inventories.get(ShopCategory.UTILITY).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
         });
@@ -110,6 +110,7 @@ public class ItemShop implements InventoryHolder, Listener {
 
     private ItemStack setLore(ItemStack item) {
         ItemStack cost = Constants.shopItems_everything.get(item);
+        if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
         ItemMeta meta = item.getItemMeta();
         String[] a = { ChatColor.YELLOW + "Cost: " + ChatColor.GOLD + cost.getAmount() + " " + Utils.getFriendlyName(cost) };
         meta.setLore(Arrays.asList(a));
