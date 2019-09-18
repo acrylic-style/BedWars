@@ -90,9 +90,18 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
-        if (!playerPlacedBlocks.contains(e.getBlock().getLocation())) {
+        if (!playerPlacedBlocks.contains(e.getBlock().getLocation()) && e.getBlock().getType() != Material.BED) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
+        }
+        if (e.getBlock().getType() == Material.BED) {
+            Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
+            if (team == null) throw new NullPointerException("Unknown bed location: " + e.getBlock().getLocation().toString());
+            Team theirTeam = BedWars.team.get(e.getPlayer().getUniqueId());
+            world.getPlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1));
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "BED DESTRUCTION > " + team.color + Utils.capitalize(team.name()) + " Bed " + ChatColor.GRAY + "was traded with milk by " + theirTeam.color + e.getPlayer().getName() + ChatColor.GRAY + "!");
+            Bukkit.broadcastMessage("");
         }
     }
 

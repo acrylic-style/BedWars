@@ -212,4 +212,8 @@ public final class Utils {
         Scoreboard scoreboard = BedWars.scoreboards.get(uuid);
         return scoreboard.getObjective(DisplaySlot.SIDEBAR);
     }
+
+    public static String capitalize(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
 }

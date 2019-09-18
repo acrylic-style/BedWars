@@ -9,6 +9,7 @@ import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ConfigUtils extends ConfigProvider {
     ConfigUtils(String path) throws IOException, InvalidConfigurationException {
@@ -43,5 +44,13 @@ public class ConfigUtils extends ConfigProvider {
             locationList.add(new Location(BedWars.world, x, y, z));
         });
         return locationList;
+    }
+
+    public Team getTeamFromLocation(Location location) {
+        Map<String, Object> locations = ConfigProvider.getConfigSectionValue(this.get("beds.locationTeam"), true);
+        String locationStr = location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
+        Object obj = locations.get(locationStr);
+        if (obj == null) return null;
+        return Team.valueOf(obj.toString());
     }
 }
