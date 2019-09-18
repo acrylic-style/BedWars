@@ -11,7 +11,8 @@ import java.util.List;
 public final class Constants {
     public static final List<Generator> generators = new ArrayList<>();
     public static final List<GameEvent> events = new ArrayList<>();
-    public static final Collection<ItemStack, ItemStack> shopItems = new Collection<>();
+    public static final Collection<ItemStack, ItemStack> shopItems_everything = new Collection<>();
+    public static final Collection<ItemStack, ItemStack> shopItems_Blocks = new Collection<>();
 
     static {
         generators.add(new IronGenerator());
@@ -34,9 +35,11 @@ public final class Constants {
         events.add(new GameEnd()); // 60 minutes
         events.add(new KickAll()); // 61 minutes
 
-        shopItems.put(new ItemStack(Material.WOOL, 16), new ItemStack(Material.IRON_INGOT, 4));
-        shopItems.put(new ItemStack(Material.WOOD, 16), new ItemStack(Material.GOLD_INGOT, 4));
-        shopItems.put(new ItemStack(Material.GLASS, 4), new ItemStack(Material.IRON_INGOT, 12));
-        shopItems.put(new ItemStack(Material.ENDER_STONE, 16), new ItemStack(Material.IRON_INGOT, 24));
+        shopItems_Blocks.put(new ItemStack(Material.WOOL, 16), new ItemStack(Material.IRON_INGOT, 4));
+        shopItems_Blocks.put(new ItemStack(Material.WOOD, 16), new ItemStack(Material.GOLD_INGOT, 4));
+        shopItems_Blocks.put(new ItemStack(Material.GLASS, 4), new ItemStack(Material.IRON_INGOT, 12));
+        shopItems_Blocks.put(new ItemStack(Material.ENDER_STONE, 16), new ItemStack(Material.IRON_INGOT, 24));
+
+        shopItems_everything.addAll(shopItems_Blocks);
     }
 }

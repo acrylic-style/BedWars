@@ -6,6 +6,7 @@ import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -191,5 +192,11 @@ public final class Utils {
 
     public static String capitalize(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    public static String getFriendlyName(ItemStack itemStack) {
+        String name = itemStack.getType().toString().replaceAll("_", " ").toLowerCase();
+        name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+        return name;
     }
 }

@@ -44,7 +44,8 @@ public class LobbyTask extends BukkitRunnable {
                     BedWars.team.add(player.getUniqueId(), Team.PINK);
                 } else if (BedWars.team.values(Team.AQUA).size() < Utils.teamSize) {
                     BedWars.team.add(player.getUniqueId(), Team.AQUA);
-                }
+                } else throw new StackOverflowError("Players count has overflowed.");
+                player.setPlayerListName(BedWars.team.get(player.getUniqueId()).color + player.getName());
             });
         }
         for (Player player : Bukkit.getOnlinePlayers()) {

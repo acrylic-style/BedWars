@@ -1,12 +1,14 @@
 package xyz.acrylicstyle.bedwars;
 
 import org.bukkit.*;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -35,6 +37,7 @@ import xyz.acrylicstyle.tomeito_core.utils.Log;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
 
@@ -156,7 +159,36 @@ public class BedWars extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e) {
+        Team victimTeam = team.get(e.getEntity().getUniqueId());
+        Player killer = e.getEntity().getKiller();
+        if (killer == null) {
+            e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " died.");
+        } else {
+            Team killerTeam = team.get(killer.getUniqueId());
+            e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + ".");
+        }
+        Utils.run(l -> e.getEntity().spigot().respawn());
+    }
+
+    @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
+        e.getPlayer().setGameMode(GameMode.SPECTATOR);
+        AtomicInteger integer = new AtomicInteger(5);
+        new BukkitRunnable() {
+            @SuppressWarnings("deprecation")
+            public void run() {
+                if (integer.get() <= 0) {
+                    e.getPlayer().setGameMode(GameMode.SURVIVAL);
+                    this.cancel();
+                    return;
+                }
+                int number = integer.getAndDecrement();
+                String subtitle = ChatColor.YELLOW + "You will respawn in " + ChatColor.RED + number + ChatColor.YELLOW + " seconds!";
+                e.getPlayer().sendTitle(ChatColor.RED + "YOU DIED!", subtitle);
+                e.getPlayer().sendMessage(subtitle);
+            }
+        }.runTaskTimer(this, 0, 20);
         e.setRespawnLocation(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
     }
 
@@ -165,7 +197,7 @@ public class BedWars extends JavaPlugin implements Listener {
         if (e.getInventory().getType() == InventoryType.MERCHANT && e.getInventory().getHolder() instanceof Villager) {
             e.setCancelled(true);
             if (((Villager) e.getInventory().getHolder()).getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
-                itemShop.openInventory(Bukkit.getPlayer(e.getPlayer().getUniqueId()));
+                e.getPlayer().openInventory(itemShop.getInventory());
             }
         }
     }
