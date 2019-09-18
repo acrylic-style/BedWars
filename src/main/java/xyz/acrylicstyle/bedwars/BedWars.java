@@ -71,6 +71,7 @@ public class BedWars extends JavaPlugin implements Listener {
         e.getPlayer().setMaxHealth(20);
         e.getPlayer().getInventory().clear();
         e.getPlayer().getInventory().setArmorContents(new ItemStack[]{new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR)});
+        e.getPlayer().getActivePotionEffects().forEach(effect -> e.getPlayer().removePotionEffect(effect.getType()));
         Scoreboard board = manager.getNewScoreboard();
         e.getPlayer().setScoreboard(board);
         final Objective objective = board.registerNewObjective("scoreboard", "dummy");

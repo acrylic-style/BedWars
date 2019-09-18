@@ -97,7 +97,7 @@ public class LobbyTask extends BukkitRunnable {
                 generatorTask.runTask(Utils.getInstance());
                 EventTask eventTask = new EventTask();
                 eventTask.scheduleEvents();
-                eventTask.runTaskTimer(Utils.getInstance(), 20, 20);
+                eventTask.runTaskTimer(Utils.getInstance(), 0, 20);
                 this.cancel();
                 this.countdown = 30;
                 return;

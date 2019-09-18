@@ -55,9 +55,9 @@ public class ConfigUtils extends ConfigProvider {
     }
 
     public Location getTeamSpawnPoint(Team team) {
-        double x = this.getDouble("teams." + team.name() + ".spawn.x");
-        double y = this.getDouble("teams." + team.name() + ".spawn.y");
-        double z = this.getDouble("teams." + team.name() + ".spawn.z");
+        double x = this.getDouble("teams." + team.name().toLowerCase() + ".spawn.x");
+        double y = this.getDouble("teams." + team.name().toLowerCase() + ".spawn.y");
+        double z = this.getDouble("teams." + team.name().toLowerCase() + ".spawn.z");
         return new Location(BedWars.world, x, y, z);
     }
 
