@@ -18,5 +18,6 @@ public class KickAll implements GameEvent {
     @Override
     public void run() {
         Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(ChatColor.GREEN + "Game is over!"));
+        Bukkit.shutdown();
     }
 }

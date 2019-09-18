@@ -84,6 +84,7 @@ public final class Utils {
         BedWars.world.setMonsterSpawnLimit(0);
         BedWars.world.setGameRuleValue("doMobSpawning", "false");
         BedWars.world.setGameRuleValue("keepInventory", "true");
+        BedWars.world.setGameRuleValue("mobGriefing", "true");
         BedWars.world.setFullTime(6000);
         BedWars.manager = Bukkit.getScoreboardManager();
         Utils.maximumPlayers = BedWars.config.getInt("maximumPlayers", 16);
@@ -133,20 +134,6 @@ public final class Utils {
 
     private interface ThrowableRunnable {
         void run() throws Exception;
-    }
-
-    /**
-     * @param name A name to register / remove score.
-     * @param score Score for set score. null to remove the score.
-     * @param objective Objective for set score
-     */
-    public static void setScore(String name, Integer score, Objective objective) {
-        if (score == null) {
-            objective.getScoreboard().resetScores(name);
-            return;
-        }
-        Score scoreObj = objective.getScore(name);
-        scoreObj.setScore(score);
     }
 
     private static Collection<UUID, Collection<Integer, String>> scores = new Collection<>();
