@@ -141,6 +141,7 @@ public class ItemShop implements InventoryHolder, Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
+        if (e.getClickedInventory() == null) return;
         if (e.getClickedInventory().getHolder() != this) {
             return;
         }
