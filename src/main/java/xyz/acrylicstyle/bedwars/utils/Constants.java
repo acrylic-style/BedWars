@@ -61,6 +61,7 @@ public final class Constants {
         shopItems_Tools.put(Utils.enchantTool(Material.IRON_AXE), new ItemStack(Material.IRON_INGOT, 20));
         shopItems_Tools.put(Utils.enchantTool(Material.GOLD_AXE), new ItemStack(Material.GOLD_INGOT, 13));
         shopItems_Tools.put(Utils.enchantTool(Material.DIAMOND_AXE), new ItemStack(Material.GOLD_INGOT, 19));
+        shopItems_Tools.put(Utils.unbreakable(Material.SHEARS), new ItemStack(Material.IRON_INGOT, 20));
 
         shopItems_everything.addAll(shopItems_Blocks);
         shopItems_everything.addAll(shopItems_Melee);

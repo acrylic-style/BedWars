@@ -17,7 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ItemShop implements InventoryHolder, Listener {
@@ -62,33 +61,42 @@ public class ItemShop implements InventoryHolder, Listener {
 
     private void initializeQuickBuyItems() {
         Inventory quickBuy = inventories.get(ShopCategory.QUICK_BUY);
-        quickBuy.setItem(19, new ItemStack(Material.WOOL, 16));
-        quickBuy.setItem(28, new ItemStack(Material.WOOD, 16));
-        quickBuy.setItem(37, new ItemStack(Material.GLASS, 4));
-        quickBuy.setItem(46, new ItemStack(Material.ENDER_STONE, 16));
-        quickBuy.setItem(20, Utils.unbreakable(Material.STONE_SWORD));
-        quickBuy.setItem(29, Utils.unbreakable(Material.IRON_SWORD));
-        quickBuy.setItem(38, Utils.unbreakable(Material.DIAMOND_SWORD));
-        quickBuy.setItem(47, Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2));
-        quickBuy.setItem(21, Utils.unbreakable(Material.CHAINMAIL_BOOTS));
-        quickBuy.setItem(30, Utils.unbreakable(Material.IRON_BOOTS));
-        quickBuy.setItem(39, Utils.unbreakable(Material.DIAMOND_BOOTS));
-        quickBuy.setItem(22, Utils.enchantTool(Material.WOOD_PICKAXE));
-        quickBuy.setItem(31, Utils.enchantTool(Material.IRON_PICKAXE));
-        quickBuy.setItem(40, Utils.enchantTool(Material.WOOD_AXE));
-        quickBuy.setItem(49, Utils.enchantTool(Material.IRON_AXE));
+        quickBuy.setItem(19, setLore(new ItemStack(Material.WOOL, 16)));
+        quickBuy.setItem(28, setLore(new ItemStack(Material.WOOD, 16)));
+        quickBuy.setItem(37, setLore(new ItemStack(Material.GLASS, 4)));
+        quickBuy.setItem(46, setLore(new ItemStack(Material.ENDER_STONE, 16)));
+        quickBuy.setItem(20, setLore(Utils.unbreakable(Material.STONE_SWORD)));
+        quickBuy.setItem(29, setLore(Utils.unbreakable(Material.IRON_SWORD)));
+        quickBuy.setItem(38, setLore(Utils.unbreakable(Material.DIAMOND_SWORD)));
+        quickBuy.setItem(47, setLore(Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2)));
+        quickBuy.setItem(21, setLore(Utils.unbreakable(Material.CHAINMAIL_BOOTS)));
+        quickBuy.setItem(30, setLore(Utils.unbreakable(Material.IRON_BOOTS)));
+        quickBuy.setItem(39, setLore(Utils.unbreakable(Material.DIAMOND_BOOTS)));
+        quickBuy.setItem(22, setLore(Utils.enchantTool(Material.WOOD_PICKAXE)));
+        quickBuy.setItem(31, setLore(Utils.enchantTool(Material.IRON_PICKAXE)));
+        quickBuy.setItem(40, setLore(Utils.enchantTool(Material.WOOD_AXE)));
+        quickBuy.setItem(49, setLore(Utils.enchantTool(Material.IRON_AXE)));
         Constants.shopItems_Blocks.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.BLOCKS).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.BLOCKS).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
         });
         Constants.shopItems_Melee.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.MELEE).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.MELEE).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
         });
         Constants.shopItems_Armor.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.ARMOR).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.ARMOR).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
         });
         Constants.shopItems_Tools.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.TOOLS).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.TOOLS).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
         });
+    }
+
+    private ItemStack setLore(ItemStack item) {
+        ItemStack cost = Constants.shopItems_everything.get(item);
+        ItemMeta meta = item.getItemMeta();
+        String[] a = { ChatColor.YELLOW + "Cost: " + cost.getAmount() + " " + Utils.getFriendlyName(cost) };
+        meta.setLore(Arrays.asList(a));
+        item.setItemMeta(meta);
+        return item;
     }
 
     private void initializeItems() {
@@ -105,7 +113,7 @@ public class ItemShop implements InventoryHolder, Listener {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
         String[] a = { ChatColor.YELLOW + "Click to view!" };
-        meta.setLore(new ArrayList<>(Arrays.asList(a)));
+        meta.setLore(Arrays.asList(a));
         item.setItemMeta(meta);
         return item;
     }
@@ -153,7 +161,6 @@ public class ItemShop implements InventoryHolder, Listener {
             p.updateInventory();
         }
         if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;
-        clickedItem.setDurability((byte) 0);
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
@@ -169,6 +176,7 @@ public class ItemShop implements InventoryHolder, Listener {
         if (name.equalsIgnoreCase("AQUA")) name = "LIGHT_BLUE";
         if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
         p.getInventory().addItem(clickedItem);
+        clickedItem.setDurability((byte) 0);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
     }
 }
