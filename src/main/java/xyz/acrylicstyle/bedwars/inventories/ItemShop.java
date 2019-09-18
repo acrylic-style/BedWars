@@ -117,8 +117,8 @@ public class ItemShop implements InventoryHolder, Listener {
         String name = Utils.getFriendlyName(cost);
         ChatColor color = null;
         Log.debug(name);
-        if (name.equalsIgnoreCase("Iron")) color = ChatColor.WHITE;
-        if (name.equalsIgnoreCase("Gold")) color = ChatColor.GOLD;
+        if (name.equalsIgnoreCase("Iron ingot")) color = ChatColor.WHITE;
+        if (name.equalsIgnoreCase("Gold ingot")) color = ChatColor.GOLD;
         if (name.equalsIgnoreCase("Diamond")) color = ChatColor.AQUA;
         if (name.equalsIgnoreCase("Emerald")) color = ChatColor.GREEN;
         if (color == null) color = ChatColor.GRAY;
@@ -194,13 +194,17 @@ public class ItemShop implements InventoryHolder, Listener {
         ItemMeta meta = clickedItem.getItemMeta();
         meta.setLore(null);
         clickedItem.setItemMeta(meta);
-        if (!meta.spigot().isUnbreakable()) clickedItem.setItemMeta(null);
+        if (!meta.spigot().isUnbreakable()) {
+            clickedItem.setItemMeta(null);
+            clickedItem = new ItemStack(clickedItem.getType(), clickedItem.getAmount(), clickedItem.getData().getData());
+        }
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
             Log.debug("Data: " + clickedItem.getData());
             Log.debug("Lore: " + clickedItem.getItemMeta().getLore());
             Log.debug("Unbreakable: " + meta.spigot().isUnbreakable());
+            Log.debug("ItemMeta: " + clickedItem.getItemMeta());
             throw new NullPointerException("Undefined item data: " + clickedItem);
         }
         if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
