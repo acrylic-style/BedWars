@@ -5,6 +5,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import xyz.acrylicstyle.bedwars.gameevents.*;
 import xyz.acrylicstyle.bedwars.generators.*;
+import xyz.acrylicstyle.bedwars.upgrades.OneTimeUpgrade;
+import xyz.acrylicstyle.bedwars.upgrades.SharpenedSword;
+import xyz.acrylicstyle.bedwars.upgrades.TieredUpgrade;
+import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +16,7 @@ import java.util.List;
 public final class Constants {
     public static final List<Generator> generators = new ArrayList<>();
     public static final List<GameEvent> events = new ArrayList<>();
+    public static final List<Upgrade> upgrades = new ArrayList<>();
     public static final Collection<ItemStack, ItemStack> shopItems_everything = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Blocks = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Melee = new Collection<>();
@@ -89,5 +94,7 @@ public final class Constants {
         shopItems_everything.addAll(shopItems_Potions);
         shopItems_everything.addAll(shopItems_Ranged);
         shopItems_everything.addAll(shopItems_Utility);
+
+        upgrades.add(new SharpenedSword());
     }
 }

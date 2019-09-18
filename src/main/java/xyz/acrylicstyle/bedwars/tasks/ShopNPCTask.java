@@ -3,6 +3,8 @@ package xyz.acrylicstyle.bedwars.tasks;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Team;
@@ -23,6 +25,7 @@ public class ShopNPCTask extends BukkitRunnable {
             itemShop.setCustomNameVisible(true);
             Villager upgrade = (Villager) BedWars.world.spawnEntity(Utils.getConfigUtils().getUpgradeNPCLocation(team), EntityType.VILLAGER);
             upgrade.setCustomName("" + ChatColor.YELLOW + ChatColor.BOLD + "TEAM UPGRADES");
+            upgrade.setMetadata("team", new FixedMetadataValue(Utils.getInstance(), team.name().toUpperCase()));
             upgrade.setProfession(Villager.Profession.PRIEST);
             upgrade.setMaxHealth(2048);
             upgrade.setHealth(2048);

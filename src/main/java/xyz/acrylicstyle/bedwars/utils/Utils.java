@@ -19,7 +19,6 @@ import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -247,7 +246,7 @@ public final class Utils {
         return item;
     }
 
-    public static Color teamToColor(Team team) {
+    private static Color teamToColor(Team team) {
         switch (team) {
             case RED:
                 return Color.RED;
@@ -274,7 +273,7 @@ public final class Utils {
         return getColoredLeatherArmor(material, teamToColor(team));
     }
 
-    public static ItemStack getColoredLeatherArmor(Material material, Color color) {
+    private static ItemStack getColoredLeatherArmor(Material material, Color color) {
         ItemStack item = unbreakable(material);
         LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
         meta.setColor(color);

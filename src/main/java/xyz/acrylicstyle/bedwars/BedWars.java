@@ -27,6 +27,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import xyz.acrylicstyle.bedwars.inventories.ItemShop;
+import xyz.acrylicstyle.bedwars.inventories.TeamUpgrades;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.bedwars.utils.Collection;
@@ -57,10 +58,12 @@ public class BedWars extends JavaPlugin implements Listener {
     public static boolean startedLobbyTask = false;
     private static Set<Location> playerPlacedBlocks = new HashSet<>();
     private static ItemShop itemShop = null;
+    private static TeamUpgrades teamUpgrades = null;
 
     @Override
     public void onEnable() {
         itemShop = new ItemShop();
+        teamUpgrades = new TeamUpgrades();
         Bukkit.getPluginManager().registerEvents(this, this);
         Bukkit.getPluginManager().registerEvents(itemShop, this);
         new BukkitRunnable() {
@@ -228,6 +231,9 @@ public class BedWars extends JavaPlugin implements Listener {
             e.setCancelled(true);
             if (((Villager) e.getInventory().getHolder()).getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
                 e.getPlayer().openInventory(itemShop.getInventory());
+            } else if (((Villager) e.getInventory().getHolder()).getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "TEAM UPGRADES")) {
+                Team team = Team.valueOf(((Villager) e.getInventory().getHolder()).getMetadata("team").get(0).asString());
+                e.getPlayer().openInventory(teamUpgrades.prepare(team).getInventory());
             }
         }
     }
@@ -238,6 +244,9 @@ public class BedWars extends JavaPlugin implements Listener {
         e.setCancelled(true);
         if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
             e.getPlayer().openInventory(itemShop.getInventory());
+        } else if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "TEAM UPGRADES")) {
+            Team team = Team.valueOf(e.getRightClicked().getMetadata("team").get(0).asString());
+            e.getPlayer().openInventory(teamUpgrades.prepare(team).getInventory());
         }
     }
 
@@ -247,6 +256,9 @@ public class BedWars extends JavaPlugin implements Listener {
         e.setCancelled(true);
         if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
             e.getPlayer().openInventory(itemShop.getInventory());
+        } else if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "TEAM UPGRADES")) {
+            Team team = Team.valueOf(e.getRightClicked().getMetadata("team").get(0).asString());
+            e.getPlayer().openInventory(teamUpgrades.prepare(team).getInventory());
         }
     }
 

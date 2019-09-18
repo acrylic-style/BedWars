@@ -187,7 +187,8 @@ public class ItemShop implements InventoryHolder, Listener {
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
-            throw new NullPointerException("Undefined item: " + clickedItem.getType() + ", Data: " + clickedItem.getData() + ", Amount: " + clickedItem.getAmount() + ", " + clickedItem);
+            ItemStack required = Constants.shopItems_everything.get(new ItemStack(clickedItem.getType()));
+            throw new NullPointerException("Undefined item data: " + clickedItem.getData() + ", " + clickedItem + "\nExpected(probably): " + required + ", Data: " + (required != null ? required.getData() : null));
         }
         if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
             p.sendMessage(ChatColor.RED + "You don't have enough items!");
