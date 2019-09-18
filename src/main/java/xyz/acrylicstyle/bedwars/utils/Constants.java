@@ -17,6 +17,9 @@ public final class Constants {
     public static final Collection<ItemStack, ItemStack> shopItems_Melee = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Armor = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Tools = new Collection<>();
+    public static final Collection<ItemStack, ItemStack> shopItems_Ranged = new Collection<>();
+    public static final Collection<ItemStack, ItemStack> shopItems_Potions = new Collection<>();
+    public static final Collection<ItemStack, ItemStack> shopItems_Utility = new Collection<>();
 
     static {
         generators.add(new IronGenerator());
@@ -49,9 +52,12 @@ public final class Constants {
         shopItems_Melee.put(Utils.unbreakable(Material.DIAMOND_SWORD), new ItemStack(Material.EMERALD, 4));
         shopItems_Melee.put(Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2), new ItemStack(Material.GOLD_INGOT, 10));
 
-        shopItems_Armor.put(Utils.unbreakable(Material.CHAINMAIL_BOOTS), new ItemStack(Material.IRON_INGOT, 40));
-        shopItems_Armor.put(Utils.unbreakable(Material.IRON_BOOTS), new ItemStack(Material.GOLD_INGOT, 12));
-        shopItems_Armor.put(Utils.unbreakable(Material.DIAMOND_BOOTS), new ItemStack(Material.EMERALD, 6));
+        shopItems_Armor.put(Utils.unbreakable(Material.CHAINMAIL_LEGGINGS), new ItemStack(Material.IRON_INGOT, 20));
+        shopItems_Armor.put(Utils.unbreakable(Material.CHAINMAIL_BOOTS), new ItemStack(Material.IRON_INGOT, 20));
+        shopItems_Armor.put(Utils.unbreakable(Material.IRON_LEGGINGS), new ItemStack(Material.GOLD_INGOT, 6));
+        shopItems_Armor.put(Utils.unbreakable(Material.IRON_BOOTS), new ItemStack(Material.GOLD_INGOT, 6));
+        shopItems_Armor.put(Utils.unbreakable(Material.DIAMOND_LEGGINGS), new ItemStack(Material.EMERALD, 3));
+        shopItems_Armor.put(Utils.unbreakable(Material.DIAMOND_BOOTS), new ItemStack(Material.EMERALD, 3));
 
         shopItems_Tools.put(Utils.enchantTool(Material.WOOD_PICKAXE), new ItemStack(Material.IRON_INGOT, 10));
         shopItems_Tools.put(Utils.enchantTool(Material.IRON_PICKAXE), new ItemStack(Material.IRON_INGOT, 20));
@@ -62,6 +68,19 @@ public final class Constants {
         shopItems_Tools.put(Utils.enchantTool(Material.GOLD_AXE), new ItemStack(Material.GOLD_INGOT, 13));
         shopItems_Tools.put(Utils.enchantTool(Material.DIAMOND_AXE), new ItemStack(Material.GOLD_INGOT, 19));
         shopItems_Tools.put(Utils.unbreakable(Material.SHEARS), new ItemStack(Material.IRON_INGOT, 20));
+
+        shopItems_Ranged.put(new ItemStack(Material.ARROW, 8), new ItemStack(Material.GOLD_INGOT, 2));
+        shopItems_Ranged.put(Utils.unbreakable(Material.BOW), new ItemStack(Material.GOLD_INGOT, 12));
+        shopItems_Ranged.put(Utils.enchantTool(Material.BOW, Enchantment.ARROW_DAMAGE, 4), new ItemStack(Material.EMERALD, 4));
+        shopItems_Ranged.put(Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 2), new ItemStack(Material.EMERALD, 10));
+        shopItems_Ranged.put(Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 10), new ItemStack(Material.EMERALD, 64));
+
+        // shopItems_Potions.put(itemStack, itemStack); // ???
+
+        shopItems_Utility.put(new ItemStack(Material.TNT), new ItemStack(Material.GOLD_INGOT, 8));
+        shopItems_Utility.put(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.GOLD_INGOT, 4));
+        shopItems_Utility.put(new ItemStack(Material.MILK_BUCKET), new ItemStack(Material.GOLD_INGOT, 6));
+        shopItems_Utility.put(new ItemStack(Material.COOKED_BEEF), new ItemStack(Material.IRON_INGOT, 1));
 
         shopItems_everything.addAll(shopItems_Blocks);
         shopItems_everything.addAll(shopItems_Melee);

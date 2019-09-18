@@ -1,6 +1,7 @@
 package xyz.acrylicstyle.bedwars;
 
 import org.bukkit.*;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -119,7 +120,13 @@ public class BedWars extends JavaPlugin implements Listener {
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
         }
         if (e.getBlock().getType() == Material.BED_BLOCK) {
-            e.getBlock().getDrops().clear();
+            e.getBlock().breakNaturally();
+            Utils.run(a -> {
+                java.util.Collection<Item> items = e.getBlock().getWorld().getEntitiesByClass(Item.class);
+                items.forEach(item -> {
+                    if (item.getItemStack().getType() == Material.BED) item.remove();
+                });
+            });
             Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
             if (team == null) throw new NullPointerException("Unknown bed location: " + e.getBlock().getLocation().toString());
             BedWars.team.values(team).foreachKeys((uuid, i) -> Bukkit.getPlayer(uuid).sendTitle("" + ChatColor.RED + ChatColor.BOLD + "BED DESTROYED!", "You will no longer respawn!"));
@@ -232,7 +239,11 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player)) e.setCancelled(true);
+        if (!(e.getEntity() instanceof Player)) {
+            e.setCancelled(true);
+            return;
+        }
+        if (!(e.getDamager() instanceof Player)) return;
         Player damager = (Player) e.getDamager();
         Player player = (Player) e.getEntity();
         if (team.get(damager.getUniqueId()) == team.get(player.getUniqueId())) e.setCancelled(true);
