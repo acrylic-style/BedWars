@@ -85,29 +85,29 @@ public class LobbyTask extends BukkitRunnable {
                 player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "Go!", "");
                 player.teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(player.getUniqueId())));
             }
-            if (countdown == 0) {
-                if (BedWars.team.values(Team.RED).size() > 0) BedWars.aliveTeam.add(Team.RED);
-                if (BedWars.team.values(Team.BLUE).size() > 0) BedWars.aliveTeam.add(Team.BLUE);
-                if (BedWars.team.values(Team.YELLOW).size() > 0) BedWars.aliveTeam.add(Team.YELLOW);
-                if (BedWars.team.values(Team.GREEN).size() > 0) BedWars.aliveTeam.add(Team.GREEN);
-                if (BedWars.team.values(Team.WHITE).size() > 0) BedWars.aliveTeam.add(Team.WHITE);
-                if (BedWars.team.values(Team.BLACK).size() > 0) BedWars.aliveTeam.add(Team.BLACK);
-                if (BedWars.team.values(Team.PINK).size() > 0) BedWars.aliveTeam.add(Team.PINK);
-                if (BedWars.team.values(Team.AQUA).size() > 0) BedWars.aliveTeam.add(Team.AQUA);
-                GameTask gameTask = new GameTask();
-                gameTask.runTaskTimer(Utils.getInstance(), 0, 20);
-                Utils.setGameTask(gameTask);
-                GeneratorTask generatorTask = new GeneratorTask();
-                generatorTask.runTask(Utils.getInstance());
-                EventTask eventTask = new EventTask();
-                eventTask.scheduleEvents();
-                eventTask.runTaskTimer(Utils.getInstance(), 0, 20);
-                ShopNPCTask npcTask = new ShopNPCTask();
-                npcTask.runTask(Utils.getInstance());
-                this.cancel();
-                this.countdown = 30;
-                return;
-            }
+        }
+        if (countdown == 0) {
+            if (BedWars.team.values(Team.RED).size() > 0) BedWars.aliveTeam.add(Team.RED);
+            if (BedWars.team.values(Team.BLUE).size() > 0) BedWars.aliveTeam.add(Team.BLUE);
+            if (BedWars.team.values(Team.YELLOW).size() > 0) BedWars.aliveTeam.add(Team.YELLOW);
+            if (BedWars.team.values(Team.GREEN).size() > 0) BedWars.aliveTeam.add(Team.GREEN);
+            if (BedWars.team.values(Team.WHITE).size() > 0) BedWars.aliveTeam.add(Team.WHITE);
+            if (BedWars.team.values(Team.BLACK).size() > 0) BedWars.aliveTeam.add(Team.BLACK);
+            if (BedWars.team.values(Team.PINK).size() > 0) BedWars.aliveTeam.add(Team.PINK);
+            if (BedWars.team.values(Team.AQUA).size() > 0) BedWars.aliveTeam.add(Team.AQUA);
+            GameTask gameTask = new GameTask();
+            gameTask.runTaskTimer(Utils.getInstance(), 0, 20);
+            Utils.setGameTask(gameTask);
+            GeneratorTask generatorTask = new GeneratorTask();
+            generatorTask.runTask(Utils.getInstance());
+            EventTask eventTask = new EventTask();
+            eventTask.scheduleEvents();
+            eventTask.runTaskTimer(Utils.getInstance(), 0, 20);
+            ShopNPCTask npcTask = new ShopNPCTask();
+            npcTask.runTask(Utils.getInstance());
+            this.cancel();
+            this.countdown = 30;
+            return;
         }
         countdown--;
     }
