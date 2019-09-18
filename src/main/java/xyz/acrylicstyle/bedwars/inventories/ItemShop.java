@@ -194,11 +194,13 @@ public class ItemShop implements InventoryHolder, Listener {
         ItemMeta meta = clickedItem.getItemMeta();
         meta.setLore(null);
         clickedItem.setItemMeta(meta);
+        if (!meta.spigot().isUnbreakable()) clickedItem.setItemMeta(null);
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
-            ItemStack required = Constants.shopItems_everything.get(new ItemStack(clickedItem.getType(), clickedItem.getAmount()));
-            throw new NullPointerException("Undefined item data: " + clickedItem.getData() + ", " + clickedItem + ", Lore: " + clickedItem.getItemMeta().getLore());
+            Log.debug("Data: " + clickedItem.getData());
+            Log.debug("Lore: " + clickedItem.getItemMeta().getLore());
+            throw new NullPointerException("Undefined item data: " + clickedItem);
         }
         if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
             p.sendMessage(ChatColor.RED + "You don't have enough items!");
