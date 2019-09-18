@@ -110,12 +110,19 @@ public class ItemShop implements InventoryHolder, Listener {
     }
 
     private ItemStack setLore(ItemStack item) {
-        //ItemStack cost = Constants.shopItems_everything.get(item);
-        //if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
-        //ItemMeta meta = item.getItemMeta();
-        //String[] a = { ChatColor.YELLOW + "Cost: " + ChatColor.GOLD + cost.getAmount() + " " + Utils.getFriendlyName(cost) };
-        //meta.setLore(Arrays.asList(a));
-        //item.setItemMeta(meta);
+        ItemStack cost = Constants.shopItems_everything.get(item);
+        if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
+        ItemMeta meta = item.getItemMeta();
+        String name = Utils.getFriendlyName(cost);
+        ChatColor color = null;
+        if (name.equalsIgnoreCase("Iron")) color = ChatColor.WHITE;
+        if (name.equalsIgnoreCase("Gold")) color = ChatColor.GOLD;
+        if (name.equalsIgnoreCase("Diamond")) color = ChatColor.AQUA;
+        if (name.equalsIgnoreCase("Emerald")) color = ChatColor.GREEN;
+        if (color == null) throw new NullPointerException("color is null - probably missing resource color?");
+        String[] a = { ChatColor.YELLOW + "Cost: " + color + cost.getAmount() + " " + name.replaceAll("ingot", "") };
+        meta.setLore(Arrays.asList(a));
+        item.setItemMeta(meta);
         return item;
     }
 
@@ -182,9 +189,9 @@ public class ItemShop implements InventoryHolder, Listener {
             p.updateInventory();
         }
         if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;
-        //ItemMeta meta = clickedItem.getItemMeta();
-        //meta.setLore(null);
-        //clickedItem.setItemMeta(meta);
+        ItemMeta meta = clickedItem.getItemMeta();
+        meta.setLore(null);
+        clickedItem.setItemMeta(meta);
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
@@ -202,7 +209,7 @@ public class ItemShop implements InventoryHolder, Listener {
         if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
         p.getInventory().addItem(clickedItem);
         clickedItem.setDurability((byte) 0);
-        //clickedItem = setLore(clickedItem);
+        clickedItem = setLore(clickedItem);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
     }
 }

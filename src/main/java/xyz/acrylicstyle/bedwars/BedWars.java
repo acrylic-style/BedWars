@@ -125,6 +125,20 @@ public class BedWars extends JavaPlugin implements Listener {
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
         }
         if (e.getBlock().getType() == Material.BED_BLOCK) {
+            Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
+            Team theirTeam = BedWars.team.get(e.getPlayer().getUniqueId());
+            if (team == theirTeam) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(ChatColor.RED + "You can't destroy your own bed!");
+                return;
+            }
+            if (team == null) throw new NullPointerException("Unknown bed location: " + e.getBlock().getLocation().toString());
+            BedWars.team.values(team).foreachKeys((uuid, i) -> Bukkit.getPlayer(uuid).sendTitle("" + ChatColor.RED + ChatColor.BOLD + "BED DESTROYED!", "You will no longer respawn!"));
+            world.getPlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1));
+            aliveTeam.remove(team);
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "BED DESTRUCTION > " + team.color + Utils.capitalize(team.name()) + " Bed " + ChatColor.GRAY + "was traded with milk by " + theirTeam.color + e.getPlayer().getName() + ChatColor.GRAY + "!");
+            Bukkit.broadcastMessage("");
             e.getBlock().breakNaturally();
             Utils.run(a -> {
                 java.util.Collection<Item> items = e.getBlock().getWorld().getEntitiesByClass(Item.class);
@@ -132,15 +146,6 @@ public class BedWars extends JavaPlugin implements Listener {
                     if (item.getItemStack().getType() == Material.BED) item.remove();
                 });
             });
-            Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
-            if (team == null) throw new NullPointerException("Unknown bed location: " + e.getBlock().getLocation().toString());
-            BedWars.team.values(team).foreachKeys((uuid, i) -> Bukkit.getPlayer(uuid).sendTitle("" + ChatColor.RED + ChatColor.BOLD + "BED DESTROYED!", "You will no longer respawn!"));
-            Team theirTeam = BedWars.team.get(e.getPlayer().getUniqueId());
-            world.getPlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1));
-            aliveTeam.remove(team);
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "BED DESTRUCTION > " + team.color + Utils.capitalize(team.name()) + " Bed " + ChatColor.GRAY + "was traded with milk by " + theirTeam.color + e.getPlayer().getName() + ChatColor.GRAY + "!");
-            Bukkit.broadcastMessage("");
         }
     }
 

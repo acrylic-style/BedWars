@@ -1,9 +1,9 @@
 package xyz.acrylicstyle.bedwars.upgrades;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Team;
@@ -22,7 +22,11 @@ public class SharpenedSword implements OneTimeUpgrade {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStack(Material.IRON_SWORD);
+        ItemStack item = new ItemStack(Material.IRON_SWORD);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + "Sharpened Sword");
+        item.setItemMeta(meta);
+        return item;
     }
 
     @Override
