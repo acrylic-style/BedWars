@@ -1,11 +1,16 @@
 package xyz.acrylicstyle.bedwars;
 
 import org.bukkit.*;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -19,6 +24,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import xyz.acrylicstyle.bedwars.inventories.ItemShop;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.bedwars.utils.Collection;
@@ -47,10 +53,13 @@ public class BedWars extends JavaPlugin implements Listener {
     public static Set<Team> aliveTeam = new HashSet<>();
     public static boolean startedLobbyTask = false;
     private static Set<Location> playerPlacedBlocks = new HashSet<>();
+    private static ItemShop itemShop = null;
 
     @Override
     public void onEnable() {
+        itemShop = new ItemShop();
         Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getPluginManager().registerEvents(itemShop, this);
         new BukkitRunnable() {
             public void run() {
                 try {
@@ -151,5 +160,15 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
         e.setRespawnLocation(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
+    }
+
+    @EventHandler
+    public void onInventoryOpen(InventoryOpenEvent e) {
+        if (e.getInventory().getType() == InventoryType.MERCHANT && e.getInventory().getHolder() instanceof Villager) {
+            e.setCancelled(true);
+            if (((Villager) e.getInventory().getHolder()).getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
+                itemShop.openInventory(Bukkit.getPlayer(e.getPlayer().getUniqueId()));
+            }
+        }
     }
 }
