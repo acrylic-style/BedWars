@@ -6,6 +6,7 @@ import org.bukkit.Sound;
 import xyz.acrylicstyle.bedwars.utils.GameEvent;
 
 public class BedDestruction implements GameEvent {
+    @SuppressWarnings("deprecation")
     public void run() {
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);

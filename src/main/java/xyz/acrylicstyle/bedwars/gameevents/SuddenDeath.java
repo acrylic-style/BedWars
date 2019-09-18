@@ -12,6 +12,7 @@ import xyz.acrylicstyle.bedwars.utils.Utils;
 import java.util.Arrays;
 
 public class SuddenDeath implements GameEvent {
+    @SuppressWarnings("deprecation")
     public void run() {
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);

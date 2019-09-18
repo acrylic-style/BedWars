@@ -61,6 +61,20 @@ public class ConfigUtils extends ConfigProvider {
         return new Location(BedWars.world, x, y, z);
     }
 
+    public Location getItemShopNPCLocation(Team team) {
+        double x = this.getDouble("teams." + team.name().toLowerCase() + ".itemShop.x");
+        double y = this.getDouble("teams." + team.name().toLowerCase() + ".itemShop.y");
+        double z = this.getDouble("teams." + team.name().toLowerCase() + ".itemShop.z");
+        return new Location(BedWars.world, x, y, z);
+    }
+
+    public Location getUpgradeNPCLocation(Team team) {
+        double x = this.getDouble("teams." + team.name().toLowerCase() + ".upgrade.x");
+        double y = this.getDouble("teams." + team.name().toLowerCase() + ".upgrade.y");
+        double z = this.getDouble("teams." + team.name().toLowerCase() + ".upgrade.z");
+        return new Location(BedWars.world, x, y, z);
+    }
+
     public Location getTeamEnderDragonSpawnPoint(Team team) {
         Location location = this.getTeamSpawnPoint(team);
         location.setY(location.getY()+15);
