@@ -139,7 +139,7 @@ public class BedWars extends JavaPlugin implements Listener {
             Team team = BedWars.team.get(e.getPlayer().getUniqueId());
             Location resourceSpawn = Utils.getConfigUtils().getGeneratorLocation(team.name());
             BedWars.team.values(team).removeReturnCollection(e.getPlayer().getUniqueId()).forEach((uuid, team1) -> {
-                if (Bukkit.getPlayer(uuid).getLocation().distance(resourceSpawn) <= 4) {
+                if (Bukkit.getPlayer(uuid).getLocation().distanceSquared(resourceSpawn) <= 4) {
                     Bukkit.getPlayer(uuid).getInventory().addItem(new ItemStack(type));
                 }
             });
