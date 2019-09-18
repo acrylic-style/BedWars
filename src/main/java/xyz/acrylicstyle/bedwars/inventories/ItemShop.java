@@ -150,6 +150,7 @@ public class ItemShop implements InventoryHolder, Listener {
             p.updateInventory();
         }
         if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;
+        clickedItem.setDurability((byte) 0);
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
