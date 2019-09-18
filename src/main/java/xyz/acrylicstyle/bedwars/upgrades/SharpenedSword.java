@@ -30,7 +30,7 @@ public class SharpenedSword implements OneTimeUpgrade {
         new BukkitRunnable() {
             public void run() {
                 BedWars.team.values(team).foreachKeys((uuid, i) -> {
-                    Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "Someone has bought a upgrade(and triggered event), " + SharpenedSword.this.getName());
+                    // Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "Someone has bought a upgrade(and triggered event), " + SharpenedSword.this.getName());
                 });
             }
         }.runTaskTimer(Utils.getInstance(), 0, 40);

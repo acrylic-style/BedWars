@@ -23,9 +23,11 @@ import xyz.acrylicstyle.bedwars.utils.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class TeamUpgrades implements InventoryHolder, Listener {
     private Collection<Material, Upgrade> upgrades = new Collection<>();
+    private List<Upgrade> unlockedUpgrades = new ArrayList<>();
     private final Collection<Team, Inventory> inventories = new Collection<>();
     private Team team = null;
 
@@ -96,6 +98,10 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         Player p = (Player) e.getWhoClicked();
         ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
+        if (unlockedUpgrades.contains(upgrades.get(clickedItem.getType()))) {
+            p.sendMessage(ChatColor.RED + "You've already unlocked this upgrade!");
+            return;
+        }
         ItemMeta meta = clickedItem.getItemMeta();
         meta.setLore(null);
         clickedItem.setItemMeta(meta);
@@ -112,6 +118,8 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         p.getInventory().removeItem(cost);
         Team team = BedWars.team.get(p.getUniqueId());
         upgrades.get(clickedItem.getType()).run(team);
+        if (upgrades.get(clickedItem.getType()) instanceof OneTimeUpgrade) unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
+        if (upgrades.get(clickedItem.getType()) instanceof TieredUpgrade) if (((TieredUpgrade) upgrades.get(clickedItem.getType())).getTier() == ((TieredUpgrade)upgrades.get(clickedItem.getType())).maxTier()) unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
         clickedItem = setLore(upgrades.get(clickedItem.getType()));
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(clickedItem.getType()).getName());
     }

@@ -182,9 +182,9 @@ public class ItemShop implements InventoryHolder, Listener {
             p.updateInventory();
         }
         if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;
-        ItemMeta meta = clickedItem.getItemMeta();
-        meta.setLore(null);
-        clickedItem.setItemMeta(meta);
+        //ItemMeta meta = clickedItem.getItemMeta();
+        //meta.setLore(null);
+        //clickedItem.setItemMeta(meta);
         ItemStack cost = Constants.shopItems_everything.get(clickedItem);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
@@ -202,7 +202,7 @@ public class ItemShop implements InventoryHolder, Listener {
         if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
         p.getInventory().addItem(clickedItem);
         clickedItem.setDurability((byte) 0);
-        clickedItem = setLore(clickedItem);
+        //clickedItem = setLore(clickedItem);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
     }
 }
