@@ -1,8 +1,6 @@
 package xyz.acrylicstyle.bedwars;
 
 import org.bukkit.*;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -113,11 +111,11 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
-        if (!playerPlacedBlocks.contains(e.getBlock().getLocation()) && e.getBlock().getType() != Material.BED) {
+        if (!playerPlacedBlocks.contains(e.getBlock().getLocation()) && e.getBlock().getType() != Material.BED_BLOCK) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
         }
-        if (e.getBlock().getType() == Material.BED) {
+        if (e.getBlock().getType() == Material.BED_BLOCK) {
             Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
             if (team == null) throw new NullPointerException("Unknown bed location: " + e.getBlock().getLocation().toString());
             BedWars.team.values(team).foreachKeys((uuid, i) -> Bukkit.getPlayer(uuid).sendTitle("" + ChatColor.RED + ChatColor.BLUE + "BED DESTROYED!", "You will no longer respawn!"));
