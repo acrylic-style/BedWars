@@ -83,6 +83,9 @@ public class ItemShop implements InventoryHolder, Listener {
         Constants.shopItems_Melee.foreachKeys((item, index) -> {
             inventories.get(ShopCategory.MELEE).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
         });
+        Constants.shopItems_Armor.foreachKeys((item, index) -> {
+            inventories.get(ShopCategory.ARMOR).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
+        });
         Constants.shopItems_Tools.foreachKeys((item, index) -> {
             inventories.get(ShopCategory.TOOLS).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
         });
