@@ -1,6 +1,7 @@
 package xyz.acrylicstyle.bedwars.inventories;
 
 import com.avaje.ebean.validation.NotNull;
+import jdk.internal.jline.internal.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -115,6 +116,7 @@ public class ItemShop implements InventoryHolder, Listener {
         ItemMeta meta = item.getItemMeta();
         String name = Utils.getFriendlyName(cost);
         ChatColor color = null;
+        Log.debug(name);
         if (name.equalsIgnoreCase("Iron")) color = ChatColor.WHITE;
         if (name.equalsIgnoreCase("Gold")) color = ChatColor.GOLD;
         if (name.equalsIgnoreCase("Diamond")) color = ChatColor.AQUA;
