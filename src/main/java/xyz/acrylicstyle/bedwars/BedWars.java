@@ -211,8 +211,14 @@ public class BedWars extends JavaPlugin implements Listener {
                 }
             }.runTaskTimer(this, 0, 20);
         } else {
+            Team team = BedWars.team.remove(e.getPlayer().getUniqueId());
             e.getPlayer().sendTitle(ChatColor.RED + "YOU DIED!", "");
             e.getPlayer().sendMessage(ChatColor.RED + "You've been eliminated!");
+            if (BedWars.team.values(Team.AQUA).size() <= 0) {
+                Bukkit.broadcastMessage("");
+                Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "TEAM ELIMINATED > " + team.color + Utils.capitalize(team.name()) + "Team " + ChatColor.RED + "has been eliminated!");
+                Bukkit.broadcastMessage("");
+            }
         }
     }
 
