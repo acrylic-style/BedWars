@@ -37,7 +37,7 @@ public class LobbyTask extends BukkitRunnable {
                 Utils.setScoreReplace("", 0, objective);
                 return;
             }
-            Utils.setScoreReplace(ChatColor.GREEN + "Starting in " + Utils.secondsToTime(countdown), 1, objective);
+            Utils.setScoreReplace("Starting in " + ChatColor.GREEN + Utils.secondsToTime(countdown), 1, objective);
             Utils.setScoreReplace("", 0, objective);
             player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
             if (countdown == 10) {
