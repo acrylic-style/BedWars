@@ -149,26 +149,28 @@ public final class Utils {
         scoreObj.setScore(score);
     }
 
-    private static Collection<Integer, String> scores = new Collection<>();
+    private static Collection<UUID, Collection<Integer, String>> scores = new Collection<>();
 
     /**
      * @param name A name to register / remove score.
      * @param score Score for set score. null to remove the score.
      * @param objective Objective for set score
      */
-    public static void setScoreReplace(String name, Integer score, Objective objective) {
+    public static void setScoreReplace(String name, Integer score, Objective objective, UUID uuid) {
         final String name2 = name + "        ";
         if (score == null) {
             objective.getScoreboard().resetScores(name2);
             return;
         }
-        if (scores.get(score) != null) {
-            if (scores.get(score).equalsIgnoreCase(name2)) return; // return if name is same as last score entry
-            objective.getScoreboard().resetScores(scores.get(score));
+        if (scores.get(uuid).get(score) != null) {
+            if (scores.get(uuid).get(score).equalsIgnoreCase(name2)) return; // return if name is same as last score entry
+            objective.getScoreboard().resetScores(scores.get(uuid).get(score));
         }
         Score scoreObj = objective.getScore(name2);
         scoreObj.setScore(score);
-        scores.put(score, name2);
+        Collection<Integer, String> collection = scores.get(uuid);
+        collection.put(score, name2);
+        scores.put(uuid, collection);
     }
 
     /**
@@ -176,34 +178,18 @@ public final class Utils {
      * @param score Score for set score. null to remove the score.
      */
     public static void setScoreReplace(String name, Integer score) {
-        Bukkit.getOnlinePlayers().forEach(player -> Utils.setScoreReplace(name, score, Utils.getObjective(player.getUniqueId())));
+        Bukkit.getOnlinePlayers().forEach(player -> Utils.setScoreReplace(name, score, Utils.getObjective(player.getUniqueId()), player.getUniqueId()));
     }
 
-    /**
-     * @param scoreNameMap Integer: Score number for set score, null to remove the score. | String: A name to register / remove score.
-     * @param objective Objective for set score
-     */
-    public static void setScore(Collection<Integer, String> scoreNameMap, Objective objective) {
-        scoreNameMap.forEach((score, name) -> setScore(name, score, objective));
-    }
-
-    /**
-     * @param scoreNameMap Integer: Score number for set score, null to remove the score. | String: A name to register / remove score.
-     * @param objective Objective for set score
-     */
-    public static void setScoreReplace(Collection<Integer, String> scoreNameMap, Objective objective) {
-        scoreNameMap.forEach((score, name) -> setScoreReplace(name, score, objective));
-    }
-
-    public static void teamSB(Team team, int score, Objective objective) {
+    public static void teamSB(Team team, int score, Objective objective, UUID uuid) {
         if (BedWars.aliveTeam.contains(team)) {
-            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective);
+            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective, uuid);
         } else {
-            int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid -> BedWars.status.get(uuid) == PlayerStatus.ALIVE).size();
+            int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid2 -> BedWars.status.get(uuid2) == PlayerStatus.ALIVE).size();
             if (players <= 0) {
-                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective);
+                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective, uuid);
             } else {
-                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players, score, objective);
+                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players, score, objective, uuid);
             }
         }
     }

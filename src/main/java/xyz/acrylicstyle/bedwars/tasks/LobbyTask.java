@@ -11,6 +11,8 @@ import xyz.acrylicstyle.bedwars.utils.PlayerStatus;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
+import java.util.UUID;
+
 public class LobbyTask extends BukkitRunnable {
     private int countdown = 30;
 
@@ -25,18 +27,19 @@ public class LobbyTask extends BukkitRunnable {
         BedWars.startedLobbyTask = true;
         for (Player player : Bukkit.getOnlinePlayers()) {
             Objective objective = Utils.getObjective(player.getUniqueId());
-            Utils.setScoreReplace(ChatColor.GREEN + "Map: " + BedWars.map.getString("name", "???"), 5, objective);
-            Utils.setScoreReplace("  ", 4, objective);
-            Utils.setScoreReplace(ChatColor.GREEN + "Players: " + Bukkit.getOnlinePlayers().size(), 3, objective);
-            Utils.setScoreReplace(" ", 2, objective);
-            Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective);
+            UUID uuid = player.getUniqueId();
+            Utils.setScoreReplace(ChatColor.GREEN + "Map: " + BedWars.map.getString("name", "???"), 5, objective, uuid);
+            Utils.setScoreReplace("  ", 4, objective, uuid);
+            Utils.setScoreReplace(ChatColor.GREEN + "Players: " + Bukkit.getOnlinePlayers().size(), 3, objective, uuid);
+            Utils.setScoreReplace(" ", 2, objective, uuid);
+            Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective, uuid);
             if (Bukkit.getOnlinePlayers().size() < Utils.minimumPlayers) {
-                Utils.setScoreReplace(ChatColor.WHITE + "Waiting...", 1, objective);
-                Utils.setScoreReplace("", 0, objective);
+                Utils.setScoreReplace(ChatColor.WHITE + "Waiting...", 1, objective, uuid);
+                Utils.setScoreReplace("", 0, objective, uuid);
                 return;
             }
-            Utils.setScoreReplace("Starting in " + ChatColor.GREEN + Utils.secondsToTime(countdown), 1, objective);
-            Utils.setScoreReplace("", 0, objective);
+            Utils.setScoreReplace("Starting in " + ChatColor.GREEN + Utils.secondsToTime(countdown), 1, objective, uuid);
+            Utils.setScoreReplace("", 0, objective, uuid);
             player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
             if (countdown == 10) {
                 player.sendTitle(ChatColor.YELLOW + "10", "");
