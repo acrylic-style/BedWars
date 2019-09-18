@@ -50,6 +50,7 @@ public class ItemShop implements InventoryHolder, Listener {
         inventories.foreach((inv,i) -> inv.setItem(5, categoryItem(Material.BOW, ChatColor.GREEN + "Ranged")));
         inventories.foreach((inv,i) -> inv.setItem(6, categoryItem(Material.BREWING_STAND_ITEM, ChatColor.GREEN + "Potions")));
         inventories.foreach((inv,i) -> inv.setItem(7, categoryItem(Material.TNT, ChatColor.GREEN + "Utility")));
+        inventories.forEach((c,inv) -> inv.setItem(9, categoryItem(Material.STAINED_GLASS_PANE, "", "Quick Buy".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
         inventories.forEach((c,inv) -> inv.setItem(10, categoryItem(Material.STAINED_GLASS_PANE, "", "Blocks".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
         inventories.forEach((c,inv) -> inv.setItem(11, categoryItem(Material.STAINED_GLASS_PANE, "", "Melee".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
         inventories.forEach((c,inv) -> inv.setItem(12, categoryItem(Material.STAINED_GLASS_PANE, "", "Armor".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
@@ -133,11 +134,11 @@ public class ItemShop implements InventoryHolder, Listener {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
             throw new NullPointerException("Undefined item: " + clickedItem.getType() + ", Data: " + clickedItem.getData() + ", Amount: " + clickedItem.getAmount() + ", " + clickedItem);
         }
-        if (p.getInventory().contains(cost)) {
+        if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
             p.sendMessage(ChatColor.RED + "You don't have enough items!");
             return;
         }
-        p.getInventory().remove(cost);
+        p.getInventory().removeItem(cost);
         p.getInventory().addItem(clickedItem);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
     }

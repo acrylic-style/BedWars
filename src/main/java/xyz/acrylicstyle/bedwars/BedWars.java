@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -119,11 +120,13 @@ public class BedWars extends JavaPlugin implements Listener {
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
         }
         if (e.getBlock().getType() == Material.BED_BLOCK) {
+            e.getBlock().getDrops().clear();
             Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
             if (team == null) throw new NullPointerException("Unknown bed location: " + e.getBlock().getLocation().toString());
-            BedWars.team.values(team).foreachKeys((uuid, i) -> Bukkit.getPlayer(uuid).sendTitle("" + ChatColor.RED + ChatColor.BLUE + "BED DESTROYED!", "You will no longer respawn!"));
+            BedWars.team.values(team).foreachKeys((uuid, i) -> Bukkit.getPlayer(uuid).sendTitle("" + ChatColor.RED + ChatColor.BOLD + "BED DESTROYED!", "You will no longer respawn!"));
             Team theirTeam = BedWars.team.get(e.getPlayer().getUniqueId());
             world.getPlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1));
+            aliveTeam.remove(team);
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "BED DESTRUCTION > " + team.color + Utils.capitalize(team.name()) + " Bed " + ChatColor.GRAY + "was traded with milk by " + theirTeam.color + e.getPlayer().getName() + ChatColor.GRAY + "!");
             Bukkit.broadcastMessage("");
@@ -134,7 +137,15 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onBlockExplode(BlockExplodeEvent e) {
         e.setCancelled(false);
         e.blockList().forEach(block -> {
-            if (playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            if (block.getType() != Material.GLASS && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+        });
+    }
+
+    @EventHandler
+    public void onEntityExplode(EntityExplodeEvent e) {
+        e.setCancelled(false);
+        e.blockList().forEach(block -> {
+            if (block.getType() != Material.GLASS && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
     }
 
