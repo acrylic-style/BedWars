@@ -25,6 +25,28 @@ public class LobbyTask extends BukkitRunnable {
             return;
         }
         BedWars.startedLobbyTask = true;
+        if (countdown == 0) {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                BedWars.status.put(player.getUniqueId(), PlayerStatus.ALIVE);
+                if (BedWars.team.values(Team.RED).size() < Utils.teamSize) {
+                    BedWars.team.add(player.getUniqueId(), Team.RED);
+                } else if (BedWars.team.values(Team.BLUE).size() < Utils.teamSize) {
+                    BedWars.team.add(player.getUniqueId(), Team.BLUE);
+                } else if (BedWars.team.values(Team.YELLOW).size() < Utils.teamSize) {
+                    BedWars.team.add(player.getUniqueId(), Team.YELLOW);
+                } else if (BedWars.team.values(Team.GREEN).size() < Utils.teamSize) {
+                    BedWars.team.add(player.getUniqueId(), Team.GREEN);
+                } else if (BedWars.team.values(Team.WHITE).size() < Utils.teamSize) {
+                    BedWars.team.add(player.getUniqueId(), Team.WHITE);
+                } else if (BedWars.team.values(Team.BLACK).size() < Utils.teamSize) {
+                    BedWars.team.add(player.getUniqueId(), Team.BLACK);
+                } else if (BedWars.team.values(Team.PINK).size() < Utils.teamSize) {
+                    BedWars.team.add(player.getUniqueId(), Team.PINK);
+                } else if (BedWars.team.values(Team.AQUA).size() < Utils.teamSize) {
+                    BedWars.team.add(player.getUniqueId(), Team.AQUA);
+                }
+            });
+        }
         for (Player player : Bukkit.getOnlinePlayers()) {
             Objective objective = Utils.getObjective(player.getUniqueId());
             UUID uuid = player.getUniqueId();
@@ -60,24 +82,6 @@ public class LobbyTask extends BukkitRunnable {
                 player.sendTitle(ChatColor.RED + "1", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
             } else if (countdown == 0) {
-                BedWars.status.put(player.getUniqueId(), PlayerStatus.ALIVE);
-                if (BedWars.team.values(Team.RED).size() < Utils.teamSize) {
-                    BedWars.team.add(player.getUniqueId(), Team.RED);
-                } else if (BedWars.team.values(Team.BLUE).size() < Utils.teamSize) {
-                    BedWars.team.add(player.getUniqueId(), Team.BLUE);
-                } else if (BedWars.team.values(Team.YELLOW).size() < Utils.teamSize) {
-                    BedWars.team.add(player.getUniqueId(), Team.YELLOW);
-                } else if (BedWars.team.values(Team.GREEN).size() < Utils.teamSize) {
-                    BedWars.team.add(player.getUniqueId(), Team.GREEN);
-                } else if (BedWars.team.values(Team.WHITE).size() < Utils.teamSize) {
-                    BedWars.team.add(player.getUniqueId(), Team.WHITE);
-                } else if (BedWars.team.values(Team.BLACK).size() < Utils.teamSize) {
-                    BedWars.team.add(player.getUniqueId(), Team.BLACK);
-                } else if (BedWars.team.values(Team.PINK).size() < Utils.teamSize) {
-                    BedWars.team.add(player.getUniqueId(), Team.PINK);
-                } else if (BedWars.team.values(Team.AQUA).size() < Utils.teamSize) {
-                    BedWars.team.add(player.getUniqueId(), Team.AQUA);
-                }
                 player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "Go!", "");
                 player.teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(player.getUniqueId())));
             }
