@@ -200,6 +200,7 @@ public class ItemShop implements InventoryHolder, Listener {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
             Log.debug("Data: " + clickedItem.getData());
             Log.debug("Lore: " + clickedItem.getItemMeta().getLore());
+            Log.debug("Unbreakable: " + meta.spigot().isUnbreakable());
             throw new NullPointerException("Undefined item data: " + clickedItem);
         }
         if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
