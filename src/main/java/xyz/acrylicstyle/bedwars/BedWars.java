@@ -9,7 +9,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -67,6 +69,7 @@ public class BedWars extends JavaPlugin implements Listener {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(""+ChatColor.GREEN + ChatColor.BOLD + "BED WARS");
         scoreboards.put(e.getPlayer().getUniqueId(), board);
+        if (startedLobbyTask) return;
         LobbyTask lobbyTask = new LobbyTask();
         Utils.setLobbyTask(lobbyTask);
         lobbyTask.runTaskTimer(this, 0, 20);
@@ -87,7 +90,7 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
-        if (playerPlacedBlocks.contains(e.getBlock().getLocation())) {
+        if (!playerPlacedBlocks.contains(e.getBlock().getLocation())) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
         }
@@ -104,6 +107,12 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerPickupItemEvent(PlayerPickupItemEvent e) {
         Material type = e.getItem().getItemStack().getType();
+        ItemStack item = e.getItem().getItemStack();
+        ItemMeta meta = item.getItemMeta();
+        meta.spigot().setUnbreakable(false);
+        meta.removeItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(meta);
+        e.getItem().setItemStack(item);
         if (type == Material.GOLD_INGOT || type == Material.IRON_INGOT || type == Material.BRICK) {
             Team team = BedWars.team.get(e.getPlayer().getUniqueId());
             Location resourceSpawn = Utils.getConfigUtils().getGeneratorLocation(team.name());

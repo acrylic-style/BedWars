@@ -15,7 +15,12 @@ public class IronGenerator implements Generator {
 
     @Override
     public ItemStack getResource() {
-        return new ItemStack(Material.IRON_INGOT);
+        ItemStack item = new ItemStack(Material.IRON_INGOT);
+        ItemMeta meta = item.getItemMeta();
+        meta.spigot().setUnbreakable(true);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(meta);
+        return item;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package xyz.acrylicstyle.bedwars.utils;
 
-import xyz.acrylicstyle.bedwars.generators.IronGenerator;
+import xyz.acrylicstyle.bedwars.generators.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,5 +10,8 @@ public final class Constants {
 
     static {
         generators.add(new IronGenerator());
+        generators.add(new GoldGenerator());
+        generators.add(new DiamondGenerator());
+        generators.add(new EmeraldGenerator());
     }
 }

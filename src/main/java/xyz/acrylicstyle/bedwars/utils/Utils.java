@@ -51,7 +51,7 @@ public final class Utils {
     }
 
     private static void initConfigUtils() throws IOException, InvalidConfigurationException {
-        Utils.configUtils = new ConfigUtils("./plugins/BedWars/config.yml");
+        Utils.configUtils = new ConfigUtils("./plugins/BedWars/maps/" + BedWars.mapName + ".yml");
     }
 
     public static ConfigUtils getConfigUtils() {
