@@ -1,7 +1,6 @@
 package xyz.acrylicstyle.bedwars.inventories;
 
 import com.avaje.ebean.validation.NotNull;
-import jdk.internal.jline.internal.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -17,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.*;
+import xyz.acrylicstyle.tomeito_core.utils.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
