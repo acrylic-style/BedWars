@@ -6,14 +6,17 @@ import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 
 import java.io.IOException;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public final class Utils {
@@ -86,6 +89,7 @@ public final class Utils {
         Utils.maximumPlayers = BedWars.config.getInt("maximumPlayers", 16);
         Utils.minimumPlayers = BedWars.config.getInt("minimumPlayers", 4);
         Utils.teamSize = BedWars.map.getInt("teamSize", 2);
+        GameTask.playedTime = 0;
         Utils.initConfigUtils();
         BedWars.scoreboards = new Collection<>();
         if (Bukkit.getOnlinePlayers().size() > 0) {
@@ -153,16 +157,7 @@ public final class Utils {
      * @param objective Objective for set score
      */
     public static void setScoreReplace(String name, Integer score, Objective objective) {
-        Utils.setScoreReplace(name, score, objective, true);
-    }
-
-    /**
-     * @param name A name to register / remove score.
-     * @param score Score for set score. null to remove the score.
-     * @param objective Objective for set score
-     */
-    public static void setScoreReplace(String name, Integer score, Objective objective, boolean putWhitespace) {
-        final String name2 = putWhitespace ? "    " + name + "        " : name + "        ";
+        final String name2 = name + "        ";
         if (score == null) {
             objective.getScoreboard().resetScores(name2);
             return;
@@ -174,6 +169,14 @@ public final class Utils {
         Score scoreObj = objective.getScore(name2);
         scoreObj.setScore(score);
         scores.put(score, name2);
+    }
+
+    /**
+     * @param name A name to register / remove score.
+     * @param score Score for set score. null to remove the score.
+     */
+    public static void setScoreReplace(String name, Integer score) {
+        Bukkit.getOnlinePlayers().forEach(player -> Utils.setScoreReplace(name, score, Utils.getObjective(player.getUniqueId())));
     }
 
     /**
@@ -194,14 +197,19 @@ public final class Utils {
 
     public static void teamSB(Team team, int score, Objective objective) {
         if (BedWars.aliveTeam.contains(team)) {
-            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective, false);
+            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check, score, objective);
         } else {
             int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid -> BedWars.status.get(uuid) == PlayerStatus.ALIVE).size();
             if (players <= 0) {
-                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective, false);
+                Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X, score, objective);
             } else {
-                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players, score, objective, false);
+                Utils.setScoreReplace(team + ": " + ChatColor.GREEN + players, score, objective);
             }
         }
+    }
+
+    public static Objective getObjective(UUID uuid) {
+        Scoreboard scoreboard = BedWars.scoreboards.get(uuid);
+        return scoreboard.getObjective(DisplaySlot.SIDEBAR);
     }
 }

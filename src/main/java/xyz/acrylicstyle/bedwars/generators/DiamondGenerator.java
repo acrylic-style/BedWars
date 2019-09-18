@@ -8,6 +8,8 @@ import xyz.acrylicstyle.bedwars.utils.Generator;
 import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
 
 public class DiamondGenerator implements Generator {
+    private static int time = 30;
+
     @Override
     public GeneratorPlaces getGeneratorPlace() {
         return GeneratorPlaces.SEMI_MIDDLE;
@@ -25,6 +27,10 @@ public class DiamondGenerator implements Generator {
 
     @Override
     public int getGenerateTime() {
-        return 30;
+        return time;
+    }
+
+    public static void setTime(int time) {
+        DiamondGenerator.time = time;
     }
 }

@@ -8,6 +8,8 @@ import xyz.acrylicstyle.bedwars.utils.Generator;
 import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
 
 public class EmeraldGenerator implements Generator {
+    private static int time = 70;
+
     @Override
     public GeneratorPlaces getGeneratorPlace() {
         return GeneratorPlaces.MIDDLE;
@@ -25,6 +27,10 @@ public class EmeraldGenerator implements Generator {
 
     @Override
     public int getGenerateTime() {
-        return 60;
+        return time;
+    }
+
+    public static void setTime(int time) {
+        EmeraldGenerator.time = time;
     }
 }

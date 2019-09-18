@@ -26,8 +26,7 @@ public class LobbyTask extends BukkitRunnable {
         }
         BedWars.startedLobbyTask = true;
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Scoreboard scoreboard = BedWars.scoreboards.get(player.getUniqueId());
-            Objective objective = scoreboard.getObjective(DisplaySlot.SIDEBAR);
+            Objective objective = Utils.getObjective(player.getUniqueId());
             Utils.setScoreReplace(ChatColor.GREEN + "Map: " + BedWars.map.getString("name", "???"), 5, objective);
             Utils.setScoreReplace("  ", 4, objective);
             Utils.setScoreReplace(ChatColor.GREEN + "Players: " + Bukkit.getOnlinePlayers().size(), 3, objective);
@@ -108,7 +107,11 @@ public class LobbyTask extends BukkitRunnable {
                 Utils.setGameTask(gameTask);
                 GeneratorTask generatorTask = new GeneratorTask();
                 generatorTask.runTask(Utils.getInstance());
+                EventTask eventTask = new EventTask();
+                eventTask.scheduleEvents();
+                eventTask.runTaskTimer(Utils.getInstance(), 20, 20);
                 this.cancel();
+                this.countdown = 30;
                 return;
             }
         }

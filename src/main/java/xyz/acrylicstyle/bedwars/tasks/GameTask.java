@@ -12,12 +12,14 @@ import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
 public class GameTask extends BukkitRunnable {
+    public static int playedTime = 0;
+
     @Override
     public void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Scoreboard scoreboard = BedWars.scoreboards.get(player.getUniqueId());
-            Objective objective = scoreboard.getObjective(DisplaySlot.SIDEBAR);
-            Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective, false);
+            Objective objective = Utils.getObjective(player.getUniqueId());
+            Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective);
+            Utils.setScoreReplace("   ", 9, objective);
             Utils.teamSB(Team.RED, 8, objective);
             Utils.teamSB(Team.BLUE, 7, objective);
             Utils.teamSB(Team.YELLOW, 6, objective);
@@ -28,5 +30,6 @@ public class GameTask extends BukkitRunnable {
             Utils.teamSB(Team.AQUA, 1, objective);
             player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
         }
+        playedTime++;
     }
 }
