@@ -110,12 +110,12 @@ public class ItemShop implements InventoryHolder, Listener {
     }
 
     private ItemStack setLore(ItemStack item) {
-        ItemStack cost = Constants.shopItems_everything.get(item);
-        if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
-        ItemMeta meta = item.getItemMeta();
-        String[] a = { ChatColor.YELLOW + "Cost: " + ChatColor.GOLD + cost.getAmount() + " " + Utils.getFriendlyName(cost) };
-        meta.setLore(Arrays.asList(a));
-        item.setItemMeta(meta);
+        //ItemStack cost = Constants.shopItems_everything.get(item);
+        //if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
+        //ItemMeta meta = item.getItemMeta();
+        //String[] a = { ChatColor.YELLOW + "Cost: " + ChatColor.GOLD + cost.getAmount() + " " + Utils.getFriendlyName(cost) };
+        //meta.setLore(Arrays.asList(a));
+        //item.setItemMeta(meta);
         return item;
     }
 
