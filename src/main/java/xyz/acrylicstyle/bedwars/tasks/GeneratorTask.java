@@ -9,7 +9,7 @@ public class GeneratorTask extends BukkitRunnable {
     public void run() {
         Constants.generators.forEach(generator -> {
             ResourceGeneratorTask task = new ResourceGeneratorTask(generator);
-            task.runTaskTimer(Utils.getInstance(), 0, generator.getGenerateTime()*20);
+            task.runTaskTimer(Utils.getInstance(), 0, (long) (generator.getGenerateTime()*20));
         });
     }
 }

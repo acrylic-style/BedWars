@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.acrylicstyle.bedwars.utils.Generator;
 import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 
 public class IronGenerator implements Generator {
     @Override
@@ -24,7 +25,7 @@ public class IronGenerator implements Generator {
     }
 
     @Override
-    public int getGenerateTime() {
-        return 1;
+    public double getGenerateTime() {
+        return 0.5/(Utils.teamSize/4F);
     }
 }

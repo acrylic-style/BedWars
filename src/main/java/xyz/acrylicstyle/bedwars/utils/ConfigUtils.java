@@ -53,4 +53,17 @@ public class ConfigUtils extends ConfigProvider {
         if (obj == null) return null;
         return Team.valueOf(obj.toString());
     }
+
+    public Location getTeamSpawnPoint(Team team) {
+        double x = this.getDouble("teams." + team.name() + ".spawn.x");
+        double y = this.getDouble("teams." + team.name() + ".spawn.y");
+        double z = this.getDouble("teams." + team.name() + ".spawn.z");
+        return new Location(BedWars.world, x, y, z);
+    }
+
+    public Location getTeamEnderDragonSpawnPoint(Team team) {
+        Location location = this.getTeamSpawnPoint(team);
+        location.setY(location.getY()+15);
+        return location;
+    }
 }

@@ -5,5 +5,5 @@ import org.bukkit.inventory.ItemStack;
 public interface Generator {
     GeneratorPlaces getGeneratorPlace();
     ItemStack getResource();
-    int getGenerateTime();
+    double getGenerateTime();
 }

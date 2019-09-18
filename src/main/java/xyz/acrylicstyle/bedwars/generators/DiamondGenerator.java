@@ -26,7 +26,7 @@ public class DiamondGenerator implements Generator {
     }
 
     @Override
-    public int getGenerateTime() {
+    public double getGenerateTime() {
         return time;
     }
 
