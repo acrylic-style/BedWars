@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ItemShop implements InventoryHolder, Listener {
@@ -194,8 +195,12 @@ public class ItemShop implements InventoryHolder, Listener {
         String name = team.name().toUpperCase();
         if (name.equalsIgnoreCase("AQUA")) name = "LIGHT_BLUE";
         if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
+        ItemMeta meta = clickedItem.getItemMeta();
+        meta.setLore(new ArrayList<>());
+        clickedItem.setItemMeta(meta);
         p.getInventory().addItem(clickedItem);
         clickedItem.setDurability((byte) 0);
+        clickedItem = setLore(clickedItem);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
     }
 }
