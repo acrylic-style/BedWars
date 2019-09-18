@@ -79,7 +79,7 @@ public final class Utils {
             throw new NullPointerException("World is null. (Probably invalid world name were provided)");
         BedWars.world.setPVP(true);
         BedWars.world.setMonsterSpawnLimit(0);
-        BedWars.world.setGameRuleValue("doMobSpawning", "true");
+        BedWars.world.setGameRuleValue("doMobSpawning", "false");
         BedWars.world.setGameRuleValue("keepInventory", "true");
         BedWars.world.setFullTime(6000);
         BedWars.manager = Bukkit.getScoreboardManager();
