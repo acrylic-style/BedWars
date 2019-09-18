@@ -3,7 +3,9 @@ package xyz.acrylicstyle.bedwars.inventories;
 import com.avaje.ebean.validation.NotNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,10 +14,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import xyz.acrylicstyle.bedwars.utils.Collection;
-import xyz.acrylicstyle.bedwars.utils.Constants;
-import xyz.acrylicstyle.bedwars.utils.ShopCategory;
-import xyz.acrylicstyle.bedwars.utils.Utils;
+import xyz.acrylicstyle.bedwars.BedWars;
+import xyz.acrylicstyle.bedwars.utils.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,14 +50,14 @@ public class ItemShop implements InventoryHolder, Listener {
         inventories.foreach((inv,i) -> inv.setItem(5, categoryItem(Material.BOW, ChatColor.GREEN + "Ranged")));
         inventories.foreach((inv,i) -> inv.setItem(6, categoryItem(Material.BREWING_STAND_ITEM, ChatColor.GREEN + "Potions")));
         inventories.foreach((inv,i) -> inv.setItem(7, categoryItem(Material.TNT, ChatColor.GREEN + "Utility")));
-        inventories.forEach((c,inv) -> inv.setItem(9, categoryItem(Material.STAINED_GLASS_PANE, "", "Quick Buy".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
-        inventories.forEach((c,inv) -> inv.setItem(10, categoryItem(Material.STAINED_GLASS_PANE, "", "Blocks".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
-        inventories.forEach((c,inv) -> inv.setItem(11, categoryItem(Material.STAINED_GLASS_PANE, "", "Melee".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
-        inventories.forEach((c,inv) -> inv.setItem(12, categoryItem(Material.STAINED_GLASS_PANE, "", "Armor".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
-        inventories.forEach((c,inv) -> inv.setItem(13, categoryItem(Material.STAINED_GLASS_PANE, "", "Tools".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
-        inventories.forEach((c,inv) -> inv.setItem(14, categoryItem(Material.STAINED_GLASS_PANE, "", "Ranged".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
-        inventories.forEach((c,inv) -> inv.setItem(15, categoryItem(Material.STAINED_GLASS_PANE, "", "Potions".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
-        inventories.forEach((c,inv) -> inv.setItem(16, categoryItem(Material.STAINED_GLASS_PANE, "", "Utility".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
+        inventories.forEach((c,inv) -> inv.setItem(9, categoryItem(Material.STAINED_GLASS_PANE, " ", "Quick Buy".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
+        inventories.forEach((c,inv) -> inv.setItem(10, categoryItem(Material.STAINED_GLASS_PANE, " ", "Blocks".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
+        inventories.forEach((c,inv) -> inv.setItem(11, categoryItem(Material.STAINED_GLASS_PANE, " ", "Melee".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
+        inventories.forEach((c,inv) -> inv.setItem(12, categoryItem(Material.STAINED_GLASS_PANE, " ", "Armor".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
+        inventories.forEach((c,inv) -> inv.setItem(13, categoryItem(Material.STAINED_GLASS_PANE, " ", "Tools".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
+        inventories.forEach((c,inv) -> inv.setItem(14, categoryItem(Material.STAINED_GLASS_PANE, " ", "Ranged".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
+        inventories.forEach((c,inv) -> inv.setItem(15, categoryItem(Material.STAINED_GLASS_PANE, " ", "Potions".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
+        inventories.forEach((c,inv) -> inv.setItem(16, categoryItem(Material.STAINED_GLASS_PANE, " ", "Utility".equalsIgnoreCase(c.name) ? (byte) 5 : (byte) 0)));
     }
 
     private void initializeQuickBuyItems() {
@@ -66,6 +66,26 @@ public class ItemShop implements InventoryHolder, Listener {
         quickBuy.setItem(28, new ItemStack(Material.WOOD, 16));
         quickBuy.setItem(37, new ItemStack(Material.GLASS, 4));
         quickBuy.setItem(46, new ItemStack(Material.ENDER_STONE, 16));
+        quickBuy.setItem(20, Utils.unbreakable(Material.STONE_SWORD));
+        quickBuy.setItem(29, Utils.unbreakable(Material.IRON_SWORD));
+        quickBuy.setItem(38, Utils.unbreakable(Material.DIAMOND_SWORD));
+        quickBuy.setItem(47, Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2));
+        quickBuy.setItem(21, Utils.unbreakable(Material.CHAINMAIL_BOOTS));
+        quickBuy.setItem(30, Utils.unbreakable(Material.IRON_BOOTS));
+        quickBuy.setItem(39, Utils.unbreakable(Material.DIAMOND_BOOTS));
+        quickBuy.setItem(22, Utils.enchantTool(Material.WOOD_PICKAXE));
+        quickBuy.setItem(31, Utils.enchantTool(Material.IRON_PICKAXE));
+        quickBuy.setItem(40, Utils.enchantTool(Material.WOOD_AXE));
+        quickBuy.setItem(49, Utils.enchantTool(Material.IRON_AXE));
+        Constants.shopItems_Blocks.foreachKeys((item, index) -> {
+            inventories.get(ShopCategory.BLOCKS).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
+        });
+        Constants.shopItems_Melee.foreachKeys((item, index) -> {
+            inventories.get(ShopCategory.MELEE).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
+        });
+        Constants.shopItems_Tools.foreachKeys((item, index) -> {
+            inventories.get(ShopCategory.TOOLS).setItem(index+18, item); // 18 is the offset, because <= 17 is category zone
+        });
     }
 
     private void initializeItems() {
@@ -87,6 +107,7 @@ public class ItemShop implements InventoryHolder, Listener {
         return item;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getClickedInventory().getHolder() != this) {
@@ -123,7 +144,7 @@ public class ItemShop implements InventoryHolder, Listener {
             p.closeInventory();
             p.openInventory(inventories.get(ShopCategory.POTIONS));
             p.updateInventory();
-        } else if (e.getSlot() == 77) {
+        } else if (e.getSlot() == 7) {
             p.closeInventory();
             p.openInventory(inventories.get(ShopCategory.UTILITY));
             p.updateInventory();
@@ -139,6 +160,10 @@ public class ItemShop implements InventoryHolder, Listener {
             return;
         }
         p.getInventory().removeItem(cost);
+        Team team = BedWars.team.get(p.getUniqueId());
+        String name = team.name().toUpperCase();
+        if (name.equalsIgnoreCase("AQUA")) name = "LIGHT_BLUE";
+        if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
         p.getInventory().addItem(clickedItem);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
     }

@@ -1,12 +1,14 @@
 package xyz.acrylicstyle.bedwars.utils;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -17,6 +19,7 @@ import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -198,5 +201,84 @@ public final class Utils {
         String name = itemStack.getType().toString().replaceAll("_", " ").toLowerCase();
         name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
         return name;
+    }
+
+    /**
+     * Grants unbreakable tag and add efficiency enchant to the specified material and return ItemStack.
+     */
+    public static ItemStack enchantTool(Material material) {
+        return getItemStack(material, Enchantment.DIG_SPEED, 1, false);
+    }
+
+    /**
+     * Grants unbreakable tag and add specified enchant to the specified material and return ItemStack.
+     */
+    static ItemStack enchantTool(Material material, Collection<Enchantment, Integer> enchantments) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        enchantments.forEach((enchant, level) -> meta.addEnchant(enchant, level, true));
+        meta.spigot().setUnbreakable(true);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
+     * Grants unbreakable tag and add specified enchant to the specified material and return ItemStack.
+     */
+    public static ItemStack enchantTool(Material material, Enchantment enchant, Integer level) {
+        return getItemStack(material, enchant, level, true);
+    }
+
+    private static ItemStack getItemStack(Material material, Enchantment enchant, Integer level, boolean ignoreLevelRestriction) {
+        ItemStack item = unbreakable(material);
+        ItemMeta meta = item.getItemMeta();
+        meta.addEnchant(enchant, level, ignoreLevelRestriction);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static ItemStack unbreakable(Material material) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        meta.spigot().setUnbreakable(true);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static Color teamToColor(Team team) {
+        switch (team) {
+            case RED:
+                return Color.RED;
+            case BLUE:
+                return Color.BLUE;
+            case YELLOW:
+                return Color.YELLOW;
+            case GREEN:
+                return Color.GREEN;
+            case PINK:
+                return Color.fromRGB(255,0,255);
+            case AQUA:
+                return Color.AQUA;
+            case BLACK:
+                return Color.BLACK;
+            case WHITE:
+                return Color.WHITE;
+            default:
+                return Color.PURPLE;
+        }
+    }
+
+    public static ItemStack getColoredLeatherArmor(Material material, Team team) {
+        return getColoredLeatherArmor(material, teamToColor(team));
+    }
+
+    public static ItemStack getColoredLeatherArmor(Material material, Color color) {
+        ItemStack item = unbreakable(material);
+        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+        meta.setColor(color);
+        item.setItemMeta(meta);
+        return item;
     }
 }

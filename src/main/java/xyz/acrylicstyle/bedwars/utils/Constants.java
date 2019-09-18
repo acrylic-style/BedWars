@@ -1,6 +1,7 @@
 package xyz.acrylicstyle.bedwars.utils;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import xyz.acrylicstyle.bedwars.gameevents.*;
 import xyz.acrylicstyle.bedwars.generators.*;
@@ -13,6 +14,9 @@ public final class Constants {
     public static final List<GameEvent> events = new ArrayList<>();
     public static final Collection<ItemStack, ItemStack> shopItems_everything = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Blocks = new Collection<>();
+    public static final Collection<ItemStack, ItemStack> shopItems_Melee = new Collection<>();
+    public static final Collection<ItemStack, ItemStack> shopItems_Armor = new Collection<>();
+    public static final Collection<ItemStack, ItemStack> shopItems_Tools = new Collection<>();
 
     static {
         generators.add(new IronGenerator());
@@ -40,6 +44,27 @@ public final class Constants {
         shopItems_Blocks.put(new ItemStack(Material.GLASS, 4), new ItemStack(Material.IRON_INGOT, 12));
         shopItems_Blocks.put(new ItemStack(Material.ENDER_STONE, 16), new ItemStack(Material.IRON_INGOT, 24));
 
+        shopItems_Melee.put(Utils.unbreakable(Material.STONE_SWORD), new ItemStack(Material.IRON_INGOT, 10));
+        shopItems_Melee.put(Utils.unbreakable(Material.IRON_SWORD), new ItemStack(Material.GOLD_INGOT, 7));
+        shopItems_Melee.put(Utils.unbreakable(Material.DIAMOND_SWORD), new ItemStack(Material.EMERALD, 4));
+        shopItems_Melee.put(Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2), new ItemStack(Material.GOLD_INGOT, 10));
+
+        shopItems_Armor.put(Utils.unbreakable(Material.CHAINMAIL_BOOTS), new ItemStack(Material.IRON_INGOT, 40));
+        shopItems_Armor.put(Utils.unbreakable(Material.IRON_BOOTS), new ItemStack(Material.GOLD_INGOT, 12));
+        shopItems_Armor.put(Utils.unbreakable(Material.DIAMOND_BOOTS), new ItemStack(Material.EMERALD, 6));
+
+        shopItems_Tools.put(Utils.enchantTool(Material.WOOD_PICKAXE), new ItemStack(Material.IRON_INGOT, 10));
+        shopItems_Tools.put(Utils.enchantTool(Material.IRON_PICKAXE), new ItemStack(Material.IRON_INGOT, 20));
+        shopItems_Tools.put(Utils.enchantTool(Material.GOLD_PICKAXE), new ItemStack(Material.GOLD_INGOT, 13));
+        shopItems_Tools.put(Utils.enchantTool(Material.DIAMOND_PICKAXE), new ItemStack(Material.GOLD_INGOT, 19));
+        shopItems_Tools.put(Utils.enchantTool(Material.WOOD_AXE), new ItemStack(Material.IRON_INGOT, 10));
+        shopItems_Tools.put(Utils.enchantTool(Material.IRON_AXE), new ItemStack(Material.IRON_INGOT, 20));
+        shopItems_Tools.put(Utils.enchantTool(Material.GOLD_AXE), new ItemStack(Material.GOLD_INGOT, 13));
+        shopItems_Tools.put(Utils.enchantTool(Material.DIAMOND_AXE), new ItemStack(Material.GOLD_INGOT, 19));
+
         shopItems_everything.addAll(shopItems_Blocks);
+        shopItems_everything.addAll(shopItems_Melee);
+        shopItems_everything.addAll(shopItems_Armor);
+        shopItems_everything.addAll(shopItems_Tools);
     }
 }

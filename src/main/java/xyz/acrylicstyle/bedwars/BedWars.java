@@ -8,14 +8,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -191,6 +190,7 @@ public class BedWars extends JavaPlugin implements Listener {
             public void run() {
                 if (integer.get() <= 0) {
                     e.getPlayer().setGameMode(GameMode.SURVIVAL);
+                    e.getPlayer().teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
                     this.cancel();
                     return;
                 }
@@ -200,7 +200,6 @@ public class BedWars extends JavaPlugin implements Listener {
                 e.getPlayer().sendMessage(subtitle);
             }
         }.runTaskTimer(this, 0, 20);
-        e.setRespawnLocation(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
     }
 
     @EventHandler
@@ -211,5 +210,51 @@ public class BedWars extends JavaPlugin implements Listener {
                 e.getPlayer().openInventory(itemShop.getInventory());
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
+        if (!(e.getRightClicked() instanceof Villager)) return;
+        e.setCancelled(true);
+        if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
+            e.getPlayer().openInventory(itemShop.getInventory());
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent e) {
+        if (!(e.getRightClicked() instanceof Villager)) return;
+        e.setCancelled(true);
+        if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
+            e.getPlayer().openInventory(itemShop.getInventory());
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player)) return;
+        Player damager = (Player) e.getDamager();
+        Player player = (Player) e.getEntity();
+        if (team.get(damager.getUniqueId()) == team.get(player.getUniqueId())) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        if (e.getSlotType() == InventoryType.SlotType.ARMOR && e.getWhoClicked().getGameMode() != GameMode.CREATIVE) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDropItem(PlayerDropItemEvent event) {
+        if (event.getItemDrop().getItemStack().getType() == Material.LEATHER_BOOTS
+        || event.getItemDrop().getItemStack().getType() == Material.LEATHER_CHESTPLATE
+        || event.getItemDrop().getItemStack().getType() == Material.LEATHER_HELMET
+        || event.getItemDrop().getItemStack().getType() == Material.LEATHER_LEGGINGS
+        || event.getItemDrop().getItemStack().getType() == Material.IRON_LEGGINGS
+        || event.getItemDrop().getItemStack().getType() == Material.IRON_BOOTS
+        || event.getItemDrop().getItemStack().getType() == Material.CHAINMAIL_LEGGINGS
+        || event.getItemDrop().getItemStack().getType() == Material.CHAINMAIL_BOOTS
+        || event.getItemDrop().getItemStack().getType() == Material.DIAMOND_LEGGINGS
+        || event.getItemDrop().getItemStack().getType() == Material.DIAMOND_BOOTS
+        || event.getItemDrop().getItemStack().getType() == Material.WOOD_SWORD) event.setCancelled(true);
     }
 }
