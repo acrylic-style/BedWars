@@ -99,7 +99,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         ItemMeta meta = clickedItem.getItemMeta();
         meta.setLore(null);
         clickedItem.setItemMeta(meta);
-        ItemStack cost = Constants.shopItems_everything.get(clickedItem);
+        ItemStack cost = getCost(upgrades.get(clickedItem.getType()));
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
             ItemStack required = Constants.shopItems_everything.get(new ItemStack(clickedItem.getType()));
@@ -111,8 +111,14 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         }
         p.getInventory().removeItem(cost);
         Team team = BedWars.team.get(p.getUniqueId());
-        String name = team.name().toUpperCase();
+        upgrades.get(clickedItem.getType()).run(team);
         clickedItem = setLore(upgrades.get(clickedItem.getType()));
-        p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
+        p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(clickedItem.getType()).getName());
+    }
+
+    private ItemStack getCost(Upgrade upgrade) {
+        if (upgrade instanceof OneTimeUpgrade) return ((OneTimeUpgrade)upgrade).getCost();
+        if (upgrade instanceof TieredUpgrade) return ((TieredUpgrade)upgrade).getCost(((TieredUpgrade)upgrade).getTier()+1);
+        return null;
     }
 }
