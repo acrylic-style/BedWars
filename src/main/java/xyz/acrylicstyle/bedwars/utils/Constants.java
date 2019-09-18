@@ -86,5 +86,8 @@ public final class Constants {
         shopItems_everything.addAll(shopItems_Melee);
         shopItems_everything.addAll(shopItems_Armor);
         shopItems_everything.addAll(shopItems_Tools);
+        shopItems_everything.addAll(shopItems_Potions);
+        shopItems_everything.addAll(shopItems_Ranged);
+        shopItems_everything.addAll(shopItems_Utility);
     }
 }
