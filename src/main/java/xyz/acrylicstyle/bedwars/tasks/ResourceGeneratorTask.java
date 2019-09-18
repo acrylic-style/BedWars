@@ -2,10 +2,12 @@ package xyz.acrylicstyle.bedwars.tasks;
 
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
-import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Generator;
 import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
+import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
+
+import java.util.Arrays;
 
 public class ResourceGeneratorTask extends BukkitRunnable {
     private Generator generator;
@@ -17,7 +19,7 @@ public class ResourceGeneratorTask extends BukkitRunnable {
     @Override
     public void run() {
         if (this.generator.getGeneratorPlace() == GeneratorPlaces.TEAM_BASE) {
-            BedWars.aliveTeam.forEach(team -> {
+            Arrays.asList(Team.values()).forEach(team -> {
                 Location location = Utils.getConfigUtils().getGeneratorLocation(team.name().toLowerCase());
                 location.getWorld().dropItem(location, this.generator.getResource());
             });
