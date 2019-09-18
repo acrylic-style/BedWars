@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -188,25 +189,31 @@ public class BedWars extends JavaPlugin implements Listener {
         Utils.run(l -> e.getEntity().spigot().respawn());
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
-        e.getPlayer().setGameMode(GameMode.SPECTATOR);
-        AtomicInteger integer = new AtomicInteger(5);
-        new BukkitRunnable() {
-            @SuppressWarnings("deprecation")
-            public void run() {
-                if (integer.get() <= 0) {
-                    e.getPlayer().setGameMode(GameMode.SURVIVAL);
-                    e.getPlayer().teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
-                    this.cancel();
-                    return;
+        Utils.run(a -> e.getPlayer().setGameMode(GameMode.SPECTATOR));
+        if (aliveTeam.contains(team.get(e.getPlayer().getUniqueId()))) {
+            AtomicInteger integer = new AtomicInteger(5);
+            new BukkitRunnable() {
+                @SuppressWarnings("deprecation")
+                public void run() {
+                    if (integer.get() <= 0) {
+                        e.getPlayer().setGameMode(GameMode.SURVIVAL);
+                        e.getPlayer().teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
+                        this.cancel();
+                        return;
+                    }
+                    int number = integer.getAndDecrement();
+                    String subtitle = ChatColor.YELLOW + "You will respawn in " + ChatColor.RED + number + ChatColor.YELLOW + " seconds!";
+                    e.getPlayer().sendTitle(ChatColor.RED + "YOU DIED!", subtitle);
+                    e.getPlayer().sendMessage(subtitle);
                 }
-                int number = integer.getAndDecrement();
-                String subtitle = ChatColor.YELLOW + "You will respawn in " + ChatColor.RED + number + ChatColor.YELLOW + " seconds!";
-                e.getPlayer().sendTitle(ChatColor.RED + "YOU DIED!", subtitle);
-                e.getPlayer().sendMessage(subtitle);
-            }
-        }.runTaskTimer(this, 0, 20);
+            }.runTaskTimer(this, 0, 20);
+        } else {
+            e.getPlayer().sendTitle(ChatColor.RED + "YOU DIED!", "");
+            e.getPlayer().sendMessage(ChatColor.RED + "You've been eliminated!");
+        }
     }
 
     @EventHandler
@@ -259,5 +266,12 @@ public class BedWars extends JavaPlugin implements Listener {
         if (event.getItemDrop().getItemStack().getType() == Material.LEATHER_CHESTPLATE
         || event.getItemDrop().getItemStack().getType() == Material.LEATHER_HELMET
         || event.getItemDrop().getItemStack().getType() == Material.WOOD_SWORD) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onServerListPing(ServerListPingEvent e) {
+        if (GameTask.playedTime > 0) {
+            e.setMaxPlayers(0);
+        }
     }
 }
