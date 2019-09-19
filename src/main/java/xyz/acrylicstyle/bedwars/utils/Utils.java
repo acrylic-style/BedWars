@@ -227,6 +227,16 @@ public final class Utils {
         return getItemStack(material, enchant, level, true);
     }
 
+    /**
+     * Grants unbreakable tag and add specified enchant to the specified material and return ItemStack.
+     */
+    public static ItemStack enchantTool(ItemStack item, Enchantment enchant, Integer level) {
+        ItemMeta meta = item.getItemMeta();
+        meta.addEnchant(enchant, level, true);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     private static ItemStack getItemStack(Material material, Enchantment enchant, Integer level, boolean ignoreLevelRestriction) {
         ItemStack item = unbreakable(material);
         ItemMeta meta = item.getItemMeta();

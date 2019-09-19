@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Objective;
@@ -48,7 +49,7 @@ public class LobbyTask extends BukkitRunnable {
                 } else throw new StackOverflowError("Players count has overflowed.");
                 player.setPlayerListName(BedWars.team.get(player.getUniqueId()).color + player.getName());
                 player.setDisplayName(BedWars.team.get(player.getUniqueId()).color + "[" + BedWars.team.get(player.getUniqueId()).name().toUpperCase() + "] " + ChatColor.GRAY + player.getName());
-                player.getInventory().setBoots(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())));
+                player.getInventory().setBoots(Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1));
                 player.getInventory().setLeggings(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())));
                 player.getInventory().setChestplate(Utils.getColoredLeatherArmor(Material.LEATHER_CHESTPLATE, BedWars.team.get(player.getUniqueId())));
                 player.getInventory().setHelmet(Utils.getColoredLeatherArmor(Material.LEATHER_HELMET, BedWars.team.get(player.getUniqueId())));
