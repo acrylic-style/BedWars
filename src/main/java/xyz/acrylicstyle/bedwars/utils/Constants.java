@@ -4,10 +4,11 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import xyz.acrylicstyle.bedwars.gameevents.*;
-import xyz.acrylicstyle.bedwars.generators.*;
-import xyz.acrylicstyle.bedwars.upgrades.OneTimeUpgrade;
+import xyz.acrylicstyle.bedwars.generators.DiamondGenerator;
+import xyz.acrylicstyle.bedwars.generators.EmeraldGenerator;
+import xyz.acrylicstyle.bedwars.generators.GoldGenerator;
+import xyz.acrylicstyle.bedwars.generators.IronGenerator;
 import xyz.acrylicstyle.bedwars.upgrades.SharpenedSword;
-import xyz.acrylicstyle.bedwars.upgrades.TieredUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
 
 import java.util.ArrayList;
@@ -57,9 +58,9 @@ public final class Constants {
         shopItems_Melee.put(Utils.unbreakable(Material.DIAMOND_SWORD), new ItemStack(Material.EMERALD, 4));
         shopItems_Melee.put(Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2), new ItemStack(Material.GOLD_INGOT, 10));
 
-        shopItems_Armor.put(Utils.unbreakable(Material.CHAINMAIL_BOOTS), new ItemStack(Material.IRON_INGOT, 20));
-        shopItems_Armor.put(Utils.unbreakable(Material.IRON_BOOTS), new ItemStack(Material.GOLD_INGOT, 6));
-        shopItems_Armor.put(Utils.unbreakable(Material.DIAMOND_BOOTS), new ItemStack(Material.EMERALD, 3));
+        shopItems_Armor.put(Utils.unbreakable(Material.CHAINMAIL_BOOTS), new ItemStack(Material.IRON_INGOT, 40));
+        shopItems_Armor.put(Utils.unbreakable(Material.IRON_BOOTS), new ItemStack(Material.GOLD_INGOT, 12));
+        shopItems_Armor.put(Utils.unbreakable(Material.DIAMOND_BOOTS), new ItemStack(Material.EMERALD, 6));
 
         shopItems_Tools.put(Utils.enchantTool(Material.WOOD_PICKAXE), new ItemStack(Material.IRON_INGOT, 10));
         shopItems_Tools.put(Utils.enchantTool(Material.IRON_PICKAXE), new ItemStack(Material.IRON_INGOT, 20));
