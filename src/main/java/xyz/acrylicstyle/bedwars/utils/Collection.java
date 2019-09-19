@@ -84,6 +84,12 @@ public class Collection<K, V> extends HashMap<K, V> {
         return this;
     }
 
+    public Collection<K, V> clone() {
+        Collection<K, V> newList = new Collection<>();
+        newList.addAll(this);
+        return newList;
+    }
+
     public Collection<K, V> values(V v) {
         return this.filter(f -> f.equals(v));
     }

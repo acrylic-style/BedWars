@@ -48,6 +48,12 @@ public class CollectionList<V> extends ArrayList<V> {
         return newList;
     }
 
+    public CollectionList<V> clone() {
+        CollectionList<V> newList = new CollectionList<>();
+        newList.addAll(this);
+        return newList;
+    }
+
     public CollectionList<V> removeReturnCollection(V v) {
         this.remove(v);
         return this;
