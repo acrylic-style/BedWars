@@ -14,10 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import xyz.acrylicstyle.bedwars.utils.Collection;
-import xyz.acrylicstyle.bedwars.utils.Constants;
-import xyz.acrylicstyle.bedwars.utils.ShopCategory;
-import xyz.acrylicstyle.bedwars.utils.Utils;
+import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
 import java.util.Arrays;
@@ -211,12 +208,28 @@ public class ItemShop implements InventoryHolder, Listener {
         }
         p.getInventory().removeItem(cost);
         if (item.getType() == Material.DIAMOND_BOOTS) {
+            if (Constants.wearingArmor.get(e.getWhoClicked().getUniqueId()).ordinal() <= PlayerArmor.DIAMOND.ordinal()) {
+                // never happens
+                p.sendMessage("You already have greater armor!");
+                return;
+            }
+            Constants.wearingArmor.add(e.getWhoClicked().getUniqueId(), PlayerArmor.DIAMOND);
             e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.DIAMOND_BOOTS));
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.DIAMOND_LEGGINGS));
         } else if (item.getType() == Material.IRON_BOOTS) {
+            if (Constants.wearingArmor.get(e.getWhoClicked().getUniqueId()).ordinal() <= PlayerArmor.IRON.ordinal()) {
+                p.sendMessage("You already have greater armor!");
+                return;
+            }
+            Constants.wearingArmor.add(e.getWhoClicked().getUniqueId(), PlayerArmor.IRON);
             e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.IRON_BOOTS));
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.IRON_LEGGINGS));
         } else if (item.getType() == Material.CHAINMAIL_BOOTS) {
+            if (Constants.wearingArmor.get(e.getWhoClicked().getUniqueId()).ordinal() <= PlayerArmor.CHAIN.ordinal()) {
+                p.sendMessage("You already have greater armor!");
+                return;
+            }
+            Constants.wearingArmor.add(e.getWhoClicked().getUniqueId(), PlayerArmor.CHAIN);
             e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.CHAINMAIL_BOOTS));
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.CHAINMAIL_LEGGINGS));
         } else p.getInventory().addItem(item);

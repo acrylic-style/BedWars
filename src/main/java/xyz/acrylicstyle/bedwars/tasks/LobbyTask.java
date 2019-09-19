@@ -9,9 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Objective;
 import xyz.acrylicstyle.bedwars.BedWars;
-import xyz.acrylicstyle.bedwars.utils.PlayerStatus;
-import xyz.acrylicstyle.bedwars.utils.Team;
-import xyz.acrylicstyle.bedwars.utils.Utils;
+import xyz.acrylicstyle.bedwars.utils.*;
 
 import java.util.UUID;
 
@@ -54,6 +52,7 @@ public class LobbyTask extends BukkitRunnable {
                 player.getInventory().setChestplate(Utils.getColoredLeatherArmor(Material.LEATHER_CHESTPLATE, BedWars.team.get(player.getUniqueId())));
                 player.getInventory().setHelmet(Utils.getColoredLeatherArmor(Material.LEATHER_HELMET, BedWars.team.get(player.getUniqueId())));
                 player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
+                Constants.wearingArmor.add(player.getUniqueId(), PlayerArmor.LEATHER);
             });
         }
         for (Player player : Bukkit.getOnlinePlayers()) {

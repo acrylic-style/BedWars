@@ -1,8 +1,10 @@
 package xyz.acrylicstyle.bedwars.inventories;
 
 import com.avaje.ebean.validation.NotNull;
-import org.bukkit.*;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,12 +13,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.Potion;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.upgrades.OneTimeUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.TieredUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
-import xyz.acrylicstyle.bedwars.utils.*;
+import xyz.acrylicstyle.bedwars.utils.Collection;
+import xyz.acrylicstyle.bedwars.utils.Constants;
+import xyz.acrylicstyle.bedwars.utils.Team;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,12 +30,11 @@ public class TeamUpgrades implements InventoryHolder, Listener {
     private Collection<Material, Upgrade> upgrades = new Collection<>();
     private List<Upgrade> unlockedUpgrades = new ArrayList<>();
     private final Collection<Team, Inventory> inventories = new Collection<>();
+    private final Collection<Integer, ItemStack> noLoreItems = new Collection<>();
     private Team team = null;
 
     public TeamUpgrades() {
-        Arrays.asList(Team.values()).forEach(team -> {
-            inventories.add(team, Bukkit.createInventory(this, 9*6, "Team Upgrades"));
-        });
+        Arrays.asList(Team.values()).forEach(team -> inventories.add(team, Bukkit.createInventory(this, 9*6, "Team Upgrades")));
         initializeItems();
     }
 
@@ -49,25 +52,29 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         return inv;
     }
 
-    private ItemStack setLore(Upgrade upgrade) {
-        if (upgrade instanceof TieredUpgrade) return setLore((TieredUpgrade) upgrade);
-        else if (upgrade instanceof OneTimeUpgrade) return setLore((OneTimeUpgrade) upgrade);
+    private ItemStack setLore(Upgrade upgrade, int slot) {
+        if (upgrade instanceof TieredUpgrade) return setLore((TieredUpgrade) upgrade, slot);
+        else if (upgrade instanceof OneTimeUpgrade) return setLore((OneTimeUpgrade) upgrade, slot);
         else return null;
     }
 
-    private ItemStack setLore(OneTimeUpgrade upgrade) {
+    private ItemStack setLore(OneTimeUpgrade upgrade, int slot) {
         ItemStack item = upgrade.getItem();
-        ItemStack cost = upgrade.getCost();
-        ItemMeta meta = cost.getItemMeta();
+        noLoreItems.put(slot, item.clone());
+        item = item.clone();
+        ItemStack cost = Constants.shopItems_everything.get(item);
+        ItemMeta meta = item.getItemMeta();
         String[] a = { ChatColor.YELLOW + "Cost: " + ChatColor.AQUA + cost.getAmount() + " " + Utils.getFriendlyName(cost) };
         meta.setLore(Arrays.asList(a));
         item.setItemMeta(meta);
         return item;
     }
 
-    private ItemStack setLore(TieredUpgrade upgrade) {
+    private ItemStack setLore(TieredUpgrade upgrade, int slot) {
         ItemStack item = upgrade.getItem();
-        ItemStack cost = upgrade.getCost(upgrade.getTier()+1);
+        noLoreItems.put(slot, item.clone());
+        item = item.clone();
+        ItemStack cost = Constants.shopItems_everything.get(item);
         ItemMeta meta = item.getItemMeta();
         final String[] a;
         if (cost == null) {
@@ -81,9 +88,9 @@ public class TeamUpgrades implements InventoryHolder, Listener {
     }
 
     private void initializeItems() {
-        Constants.upgrades.forEach(upgrade -> {
+        Constants.upgrades.foreach((upgrade, i) -> {
             upgrades.add(upgrade.getItem().getType(), upgrade);
-            inventories.foreach((inv,i) -> inv.setItem(i, setLore(upgrade)));
+            inventories.foreach((inv,i2) -> inv.setItem(i, setLore(upgrade, i)));
         });
     }
 
@@ -99,14 +106,11 @@ public class TeamUpgrades implements InventoryHolder, Listener {
             p.sendMessage(ChatColor.RED + "You've already unlocked this upgrade!");
             return;
         }
-        ItemMeta meta = clickedItem.getItemMeta();
-        meta.setLore(null);
-        clickedItem.setItemMeta(meta);
-        ItemStack cost = getCost(upgrades.get(clickedItem.getType()));
+        ItemStack item = noLoreItems.get(e.getSlot());
+        ItemStack cost = getCost(upgrades.get(item.getType()));
         if (cost == null) {
-            p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
-            ItemStack required = Constants.shopItems_everything.get(new ItemStack(clickedItem.getType()));
-            throw new NullPointerException("Undefined item data: " + clickedItem.getData() + ", " + clickedItem + "\nExpected(probably): " + required + ", Data: " + (required != null ? required.getData() : null));
+            p.sendMessage(ChatColor.RED + "This upgrade is already unlocked!");
+            return;
         }
         if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
             p.sendMessage(ChatColor.RED + "You don't have enough items!");
@@ -114,17 +118,17 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         }
         p.getInventory().removeItem(cost);
         Team team = BedWars.team.get(p.getUniqueId());
-        upgrades.get(clickedItem.getType()).run(team);
+        if (upgrades.get(item.getType()) instanceof OneTimeUpgrade) {
+            upgrades.get(item.getType()).run(team);
+            unlockedUpgrades.add(upgrades.get(item.getType()));
+        } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) if (((TieredUpgrade) upgrades.get(item.getType())).getTier() == ((TieredUpgrade)upgrades.get(item.getType())).maxTier()) {
+            ((TieredUpgrade) upgrades.get(item.getType())).upgrade();
+            upgrades.get(item.getType()).run(team);
+            unlockedUpgrades.add(upgrades.get(item.getType()));
+        }
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
-        p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(clickedItem.getType()).getName());
-        if (upgrades.get(clickedItem.getType()) instanceof OneTimeUpgrade) {
-            unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
-            clickedItem = new ItemStack(Material.AIR);
-        }
-        if (upgrades.get(clickedItem.getType()) instanceof TieredUpgrade) if (((TieredUpgrade) upgrades.get(clickedItem.getType())).getTier() == ((TieredUpgrade)upgrades.get(clickedItem.getType())).maxTier()) {
-            unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
-            clickedItem = new ItemStack(Material.AIR);
-        }
+        p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(item.getType()).getName());
+        initializeItems(); // re-add lore for items
     }
 
     private ItemStack getCost(Upgrade upgrade) {

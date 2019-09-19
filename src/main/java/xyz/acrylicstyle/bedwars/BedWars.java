@@ -30,10 +30,7 @@ import xyz.acrylicstyle.bedwars.inventories.ItemShop;
 import xyz.acrylicstyle.bedwars.inventories.TeamUpgrades;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
-import xyz.acrylicstyle.bedwars.utils.Collection;
-import xyz.acrylicstyle.bedwars.utils.PlayerStatus;
-import xyz.acrylicstyle.bedwars.utils.Team;
-import xyz.acrylicstyle.bedwars.utils.Utils;
+import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
@@ -212,6 +209,9 @@ public class BedWars extends JavaPlugin implements Listener {
                     if (integer.get() <= 0) {
                         e.getPlayer().setGameMode(GameMode.SURVIVAL);
                         e.getPlayer().teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
+                        if (!Constants.keepInventory) {
+
+                        }
                         this.cancel();
                         return;
                     }

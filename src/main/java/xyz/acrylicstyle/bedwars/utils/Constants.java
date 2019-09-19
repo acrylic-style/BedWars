@@ -8,16 +8,18 @@ import xyz.acrylicstyle.bedwars.generators.DiamondGenerator;
 import xyz.acrylicstyle.bedwars.generators.EmeraldGenerator;
 import xyz.acrylicstyle.bedwars.generators.GoldGenerator;
 import xyz.acrylicstyle.bedwars.generators.IronGenerator;
+import xyz.acrylicstyle.bedwars.upgrades.ReinforcedArmor;
 import xyz.acrylicstyle.bedwars.upgrades.SharpenedSword;
 import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public final class Constants {
     public static final List<Generator> generators = new ArrayList<>();
     public static final List<GameEvent> events = new ArrayList<>();
-    public static final List<Upgrade> upgrades = new ArrayList<>();
+    public static final CollectionList<Upgrade> upgrades = new CollectionList<>();
     public static final Collection<ItemStack, ItemStack> shopItems_everything = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Blocks = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Melee = new Collection<>();
@@ -26,6 +28,8 @@ public final class Constants {
     public static final Collection<ItemStack, ItemStack> shopItems_Ranged = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Potions = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Utility = new Collection<>();
+    public static final Collection<UUID, PlayerArmor> wearingArmor = new Collection<>();
+    public static final boolean keepInventory = false;
 
     static {
         generators.add(new IronGenerator());
@@ -94,5 +98,6 @@ public final class Constants {
         shopItems_everything.addAll(shopItems_Utility);
 
         upgrades.add(new SharpenedSword());
+        upgrades.add(new ReinforcedArmor());
     }
 }
