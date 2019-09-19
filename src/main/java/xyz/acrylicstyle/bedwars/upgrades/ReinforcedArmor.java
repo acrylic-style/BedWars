@@ -14,15 +14,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ReinforcedArmor implements TieredUpgrade {
-    private int tier = 0;
+    public static int tier = 0;
 
     public void upgrade() {
-        this.tier++;
+        ReinforcedArmor.tier++;
     }
 
     @Override
     public int getTier() {
-        return this.tier;
+        return ReinforcedArmor.tier;
     }
 
     @Override
