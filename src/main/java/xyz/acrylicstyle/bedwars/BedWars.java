@@ -62,12 +62,8 @@ public class BedWars extends JavaPlugin implements Listener {
     private static TeamUpgrades teamUpgrades = null;
 
     @Override
-    public void onLoad() {
-        Bukkit.getPluginManager().registerEvents(this, this);
-    }
-
-    @Override
     public void onEnable() {
+        Bukkit.getPluginManager().registerEvents(this, this);
         itemShop = new ItemShop();
         teamUpgrades = new TeamUpgrades();
         Bukkit.getPluginManager().registerEvents(itemShop, this);
