@@ -39,14 +39,13 @@ public class SharpenedSword implements OneTimeUpgrade {
         new BukkitRunnable() {
             public void run() {
                 BedWars.team.values(team).foreachKeys((uuid, i) -> {
-                    List<ItemStack> items = Arrays.asList(Bukkit.getPlayer(uuid).getInventory().getContents());
-                    items.forEach(item -> {
+                    Bukkit.getPlayer(uuid).getInventory().forEach(item -> {
                         if (item != null)
                             if (item.getType() == Material.IRON_SWORD
                                 || item.getType() == Material.GOLD_SWORD
                                 || item.getType() == Material.WOOD_SWORD
                                 || item.getType() == Material.DIAMOND_SWORD
-                                || item.getType() == Material.STONE_SWORD) Bukkit.getPlayer(uuid).getInventory().setItem(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1));
+                                || item.getType() == Material.STONE_SWORD) item = Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1);
                     });
                 });
             }

@@ -53,7 +53,7 @@ public class ReinforcedArmor implements TieredUpgrade {
 
     @Override
     public ItemStack getItem() {
-        ItemStack item = new ItemStack(Material.IRON_SWORD);
+        ItemStack item = new ItemStack(Material.IRON_CHESTPLATE);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + getName());
         item.setItemMeta(meta);
