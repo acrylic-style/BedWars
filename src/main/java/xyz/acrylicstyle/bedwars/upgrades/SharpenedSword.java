@@ -41,7 +41,8 @@ public class SharpenedSword implements OneTimeUpgrade {
                 BedWars.team.values(team).foreachKeys((uuid, i) -> {
                     List<ItemStack> items = Arrays.asList(Bukkit.getPlayer(uuid).getInventory().getContents());
                     items.forEach(item -> {
-                        if (item.isSimilar(new ItemStack(Material.IRON_SWORD))
+                        if (item != null)
+                            if (item.isSimilar(new ItemStack(Material.IRON_SWORD))
                                 || item.isSimilar(new ItemStack(Material.GOLD_SWORD))
                                 || item.isSimilar(new ItemStack(Material.WOOD_SWORD))
                                 || item.isSimilar(new ItemStack(Material.DIAMOND_SWORD))
