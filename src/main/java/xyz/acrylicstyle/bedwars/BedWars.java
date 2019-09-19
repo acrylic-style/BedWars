@@ -215,7 +215,7 @@ public class BedWars extends JavaPlugin implements Listener {
                             Player player = e.getPlayer();
                             ItemStack boots;
                             ItemStack leggings;
-                            PlayerArmor armor = Constants.wearingArmor.getOrDefault(player, PlayerArmor.LEATHER);
+                            PlayerArmor armor = Constants.wearingArmor.getOrDefault(player.getUniqueId(), PlayerArmor.LEATHER);
                             if (armor == PlayerArmor.LEATHER) {
                                 boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
                                 leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
