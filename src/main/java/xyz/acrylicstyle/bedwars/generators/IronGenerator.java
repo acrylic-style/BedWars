@@ -26,6 +26,6 @@ public class IronGenerator implements Generator {
 
     @Override
     public double getGenerateTime() {
-        return 0.5/(Utils.teamSize/4F);
+        return 1/(Utils.teamSize/4F);
     }
 }
