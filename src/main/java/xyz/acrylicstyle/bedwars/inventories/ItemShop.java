@@ -64,29 +64,29 @@ public class ItemShop implements InventoryHolder, Listener {
 
     private void initializeQuickBuyItems() {
         Inventory quickBuy = inventories.get(ShopCategory.QUICK_BUY);
-        quickBuy.setItem(19, setLore(19, new ItemStack(Material.WOOL, 16), ShopCategory.BLOCKS));
-        quickBuy.setItem(28, setLore(28, new ItemStack(Material.WOOD, 16), ShopCategory.BLOCKS));
-        quickBuy.setItem(37, setLore(37, new ItemStack(Material.GLASS, 4), ShopCategory.BLOCKS));
-        quickBuy.setItem(46, setLore(46, new ItemStack(Material.ENDER_STONE, 16), ShopCategory.BLOCKS));
-        quickBuy.setItem(20, setLore(20,Utils.unbreakable(Material.STONE_SWORD), ShopCategory.MELEE));
-        quickBuy.setItem(29, setLore(29, Utils.unbreakable(Material.IRON_SWORD), ShopCategory.MELEE));
-        quickBuy.setItem(38, setLore(38, Utils.unbreakable(Material.DIAMOND_SWORD), ShopCategory.MELEE));
-        quickBuy.setItem(47, setLore(47, Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2), ShopCategory.MELEE));
-        quickBuy.setItem(21, setLore(21, Utils.unbreakable(Material.CHAINMAIL_BOOTS), ShopCategory.ARMOR));
-        quickBuy.setItem(30, setLore(30, Utils.unbreakable(Material.IRON_BOOTS), ShopCategory.ARMOR));
-        quickBuy.setItem(39, setLore(39, Utils.unbreakable(Material.DIAMOND_BOOTS), ShopCategory.ARMOR));
-        quickBuy.setItem(22, setLore(22, Utils.enchantTool(Material.WOOD_PICKAXE), ShopCategory.TOOLS));
-        quickBuy.setItem(31, setLore(31, Utils.enchantTool(Material.IRON_PICKAXE), ShopCategory.TOOLS));
-        quickBuy.setItem(40, setLore(40, Utils.enchantTool(Material.WOOD_AXE), ShopCategory.TOOLS));
-        quickBuy.setItem(49, setLore(49, Utils.enchantTool(Material.IRON_AXE), ShopCategory.TOOLS));
-        quickBuy.setItem(23, setLore(23, new ItemStack(Material.ARROW, 8), ShopCategory.RANGED));
-        quickBuy.setItem(32, setLore(32, Utils.unbreakable(Material.BOW), ShopCategory.RANGED));
-        quickBuy.setItem(41, setLore(41, Utils.enchantTool(Material.BOW, Enchantment.ARROW_DAMAGE, 4), ShopCategory.RANGED));
-        quickBuy.setItem(50, setLore(50, Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 2), ShopCategory.RANGED));
-        quickBuy.setItem(25, setLore(25, new ItemStack(Material.TNT), ShopCategory.UTILITY));
-        quickBuy.setItem(34, setLore(34, new ItemStack(Material.WATER_BUCKET), ShopCategory.UTILITY));
-        quickBuy.setItem(43, setLore(43, new ItemStack(Material.MILK_BUCKET), ShopCategory.UTILITY));
-        quickBuy.setItem(52, setLore(52, new ItemStack(Material.COOKED_BEEF), ShopCategory.UTILITY));
+        quickBuy.setItem(19, setLore(19, new ItemStack(Material.WOOL, 16), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(28, setLore(28, new ItemStack(Material.WOOD, 16), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(37, setLore(37, new ItemStack(Material.GLASS, 4), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(46, setLore(46, new ItemStack(Material.ENDER_STONE, 16), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(20, setLore(20,Utils.unbreakable(Material.STONE_SWORD), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(29, setLore(29, Utils.unbreakable(Material.IRON_SWORD), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(38, setLore(38, Utils.unbreakable(Material.DIAMOND_SWORD), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(47, setLore(47, Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(21, setLore(21, Utils.unbreakable(Material.CHAINMAIL_BOOTS), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(30, setLore(30, Utils.unbreakable(Material.IRON_BOOTS), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(39, setLore(39, Utils.unbreakable(Material.DIAMOND_BOOTS), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(22, setLore(22, Utils.enchantTool(Material.WOOD_PICKAXE), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(31, setLore(31, Utils.enchantTool(Material.IRON_PICKAXE), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(40, setLore(40, Utils.enchantTool(Material.WOOD_AXE), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(49, setLore(49, Utils.enchantTool(Material.IRON_AXE), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(23, setLore(23, new ItemStack(Material.ARROW, 8), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(32, setLore(32, Utils.unbreakable(Material.BOW), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(41, setLore(41, Utils.enchantTool(Material.BOW, Enchantment.ARROW_DAMAGE, 4), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(50, setLore(50, Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 2), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(25, setLore(25, new ItemStack(Material.TNT), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(34, setLore(34, new ItemStack(Material.WATER_BUCKET), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(43, setLore(43, new ItemStack(Material.MILK_BUCKET), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(52, setLore(52, new ItemStack(Material.COOKED_BEEF), ShopCategory.QUICK_BUY));
 
         Constants.shopItems_Blocks.foreachKeys((item, index) -> {
             inventories.get(ShopCategory.BLOCKS).setItem(index+18, setLore(index+18, item, ShopCategory.BLOCKS)); // 18 is the offset, because <= 17 is category zone
@@ -114,7 +114,7 @@ public class ItemShop implements InventoryHolder, Listener {
     private ItemStack setLore(int slot, ItemStack item, ShopCategory shopCategory) {
         if (noLoreItems.get(shopCategory) == null) noLoreItems.put(shopCategory, new Collection<>());
         Collection<Integer, ItemStack> collection = noLoreItems.get(shopCategory);
-        collection.put(slot, item);
+        collection.put(slot, item.clone());
         noLoreItems.put(shopCategory, collection);
         ItemStack cost = Constants.shopItems_everything.get(item);
         if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
