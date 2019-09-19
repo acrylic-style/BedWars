@@ -194,6 +194,7 @@ public class ItemShop implements InventoryHolder, Listener {
         ItemStack item = noLoreItems.get(inventories.values(e.getClickedInventory()).keysCollection().first()).get(e.getSlot()).clone(); // clone for avoid bug
         ItemStack cost = Constants.shopItems_everything.get(item);
         if (cost == null) {
+            p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 0.5F);
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
             Log.debug("Amount: " + item.getAmount());
             Log.debug("Data: " + item.getData());
@@ -203,6 +204,7 @@ public class ItemShop implements InventoryHolder, Listener {
             throw new NullPointerException("Undefined item data: " + item);
         }
         if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
+            p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
             p.sendMessage(ChatColor.RED + "You don't have enough items!");
             return;
         }
