@@ -206,33 +206,41 @@ public class ItemShop implements InventoryHolder, Listener {
             p.sendMessage(ChatColor.RED + "You don't have enough items!");
             return;
         }
-        p.getInventory().removeItem(cost);
         if (item.getType() == Material.DIAMOND_BOOTS) {
             if (Constants.wearingArmor.get(e.getWhoClicked().getUniqueId()).ordinal() <= PlayerArmor.DIAMOND.ordinal()) {
                 // never happens
-                p.sendMessage("You already have greater armor!");
+                p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
+                p.sendMessage(ChatColor.RED + "You already have greater armor!");
                 return;
             }
+            p.getInventory().removeItem(cost);
             Constants.wearingArmor.add(e.getWhoClicked().getUniqueId(), PlayerArmor.DIAMOND);
             e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.DIAMOND_BOOTS));
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.DIAMOND_LEGGINGS));
         } else if (item.getType() == Material.IRON_BOOTS) {
             if (Constants.wearingArmor.get(e.getWhoClicked().getUniqueId()).ordinal() <= PlayerArmor.IRON.ordinal()) {
-                p.sendMessage("You already have greater armor!");
+                p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
+                p.sendMessage(ChatColor.RED + "You already have greater armor!");
                 return;
             }
+            p.getInventory().removeItem(cost);
             Constants.wearingArmor.add(e.getWhoClicked().getUniqueId(), PlayerArmor.IRON);
             e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.IRON_BOOTS));
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.IRON_LEGGINGS));
         } else if (item.getType() == Material.CHAINMAIL_BOOTS) {
             if (Constants.wearingArmor.get(e.getWhoClicked().getUniqueId()).ordinal() <= PlayerArmor.CHAIN.ordinal()) {
-                p.sendMessage("You already have greater armor!");
+                p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
+                p.sendMessage(ChatColor.RED + "You already have greater armor!");
                 return;
             }
+            p.getInventory().removeItem(cost);
             Constants.wearingArmor.add(e.getWhoClicked().getUniqueId(), PlayerArmor.CHAIN);
             e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.CHAINMAIL_BOOTS));
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.CHAINMAIL_LEGGINGS));
-        } else p.getInventory().addItem(item);
+        } else {
+            p.getInventory().removeItem(cost);
+            p.getInventory().addItem(item);
+        }
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(item));
     }
