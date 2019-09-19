@@ -115,7 +115,7 @@ public class ItemShop implements InventoryHolder, Listener {
         if (noLoreItems.get(shopCategory) == null) noLoreItems.put(shopCategory, new Collection<>());
         Collection<Integer, ItemStack> collection = noLoreItems.get(shopCategory);
         collection.put(slot, item.clone());
-        noLoreItems.put(shopCategory, collection);
+        noLoreItems.put(shopCategory, collection);/*
         ItemStack cost = Constants.shopItems_everything.get(item);
         if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
         ItemMeta meta = item.getItemMeta();
@@ -129,7 +129,7 @@ public class ItemShop implements InventoryHolder, Listener {
         if (color == null) color = ChatColor.GRAY;
         String[] a = { ChatColor.YELLOW + "Cost: " + color + cost.getAmount() + " " + name.replaceAll("ingot", "") };
         meta.setLore(Arrays.asList(a));
-        item.setItemMeta(meta);
+        item.setItemMeta(meta);*/
         return item;
     }
 
