@@ -46,9 +46,8 @@ public class SharpenedSword implements OneTimeUpgrade {
                                 || item.getType() == Material.GOLD_SWORD
                                 || item.getType() == Material.WOOD_SWORD
                                 || item.getType() == Material.DIAMOND_SWORD
-                                || item.getType() == Material.STONE_SWORD) items.add(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1));
+                                || item.getType() == Material.STONE_SWORD) Bukkit.getPlayer(uuid).getInventory().setItem(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1));
                     });
-                    Bukkit.getPlayer(uuid).getInventory().setContents(items.toArray(new ItemStack[0]));
                 });
             }
         }.runTaskTimer(Utils.getInstance(), 0, 40);
