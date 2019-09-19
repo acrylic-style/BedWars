@@ -1,9 +1,11 @@
 package xyz.acrylicstyle.bedwars.upgrades;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
@@ -46,12 +48,16 @@ public class ReinforcedArmor implements TieredUpgrade {
 
     @Override
     public String getName() {
-        return null;
+        return "Reinforced Armor";
     }
 
     @Override
     public ItemStack getItem() {
-        return null;
+        ItemStack item = new ItemStack(Material.IRON_SWORD);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + getName());
+        item.setItemMeta(meta);
+        return item;
     }
 
     @Override
