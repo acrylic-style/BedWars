@@ -45,6 +45,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
 
 public class BedWars extends JavaPlugin implements Listener {
+    private boolean enabled = false;
     public static ConfigProvider config = null;
     public static String mapName = null;
     public static ConfigProvider map = null;
@@ -71,6 +72,7 @@ public class BedWars extends JavaPlugin implements Listener {
             public void run() {
                 try {
                     Utils.reset();
+                    enabled = true;
                 } catch (Exception e) {
                     Log.error("An error occurred while loading config!");
                     e.printStackTrace();
@@ -294,7 +296,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onServerListPing(ServerListPingEvent e) {
-        if (GameTask.playedTime > 0) {
+        if (GameTask.playedTime > 0 || !enabled) {
             e.setMaxPlayers(0);
         }
     }
