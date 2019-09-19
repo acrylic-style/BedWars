@@ -4,6 +4,7 @@ import com.avaje.ebean.validation.NotNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -219,6 +220,7 @@ public class ItemShop implements InventoryHolder, Listener {
             e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.CHAINMAIL_BOOTS));
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.CHAINMAIL_LEGGINGS));
         } else p.getInventory().addItem(item);
+        p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(item));
     }
 }

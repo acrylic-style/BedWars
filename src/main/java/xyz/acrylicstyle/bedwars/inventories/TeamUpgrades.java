@@ -1,10 +1,7 @@
 package xyz.acrylicstyle.bedwars.inventories;
 
 import com.avaje.ebean.validation.NotNull;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -118,6 +115,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         p.getInventory().removeItem(cost);
         Team team = BedWars.team.get(p.getUniqueId());
         upgrades.get(clickedItem.getType()).run(team);
+        p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(clickedItem.getType()).getName());
         if (upgrades.get(clickedItem.getType()) instanceof OneTimeUpgrade) {
             unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
