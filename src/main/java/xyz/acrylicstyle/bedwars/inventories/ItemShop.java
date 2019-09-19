@@ -233,7 +233,7 @@ public class ItemShop implements InventoryHolder, Listener {
             e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.CHAINMAIL_BOOTS));
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.CHAINMAIL_LEGGINGS));
         } else p.getInventory().addItem(item);
-        p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
+        p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(item));
     }
 }

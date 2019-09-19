@@ -126,7 +126,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
             upgrades.get(item.getType()).run(team);
             unlockedUpgrades.add(upgrades.get(item.getType()));
         }
-        p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
+        p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(item.getType()).getName());
         initializeItems(); // re-add lore for items
     }
