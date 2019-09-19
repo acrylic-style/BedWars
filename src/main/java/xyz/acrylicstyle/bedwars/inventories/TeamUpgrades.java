@@ -62,7 +62,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         ItemStack item = upgrade.getItem();
         noLoreItems.put(slot, item.clone());
         item = item.clone();
-        ItemStack cost = Constants.shopItems_everything.get(item);
+        ItemStack cost = upgrade.getCost();
         ItemMeta meta = item.getItemMeta();
         String[] a = { ChatColor.YELLOW + "Cost: " + ChatColor.AQUA + cost.getAmount() + " " + Utils.getFriendlyName(cost) };
         meta.setLore(Arrays.asList(a));
@@ -74,7 +74,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         ItemStack item = upgrade.getItem();
         noLoreItems.put(slot, item.clone());
         item = item.clone();
-        ItemStack cost = Constants.shopItems_everything.get(item);
+        ItemStack cost = upgrade.getCost(upgrade.getTier()+1);
         ItemMeta meta = item.getItemMeta();
         final String[] a;
         if (cost == null) {
