@@ -16,6 +16,12 @@ public class Collection<K, V> extends HashMap<K, V> {
         return (K[]) this.keySet().toArray();
     }
 
+    public CollectionList<K> keysCollection() {
+        CollectionList<K> collection = new CollectionList<K>();
+        collection.addAll(this.keySet());
+        return collection;
+    }
+
     @SuppressWarnings("unchecked")
     public V[] valuesArray() {
         return (V[]) this.values().toArray();

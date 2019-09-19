@@ -3,7 +3,6 @@ package xyz.acrylicstyle.bedwars.inventories;
 import com.avaje.ebean.validation.NotNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -14,15 +13,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import xyz.acrylicstyle.bedwars.BedWars;
-import xyz.acrylicstyle.bedwars.utils.*;
+import xyz.acrylicstyle.bedwars.utils.Collection;
+import xyz.acrylicstyle.bedwars.utils.Constants;
+import xyz.acrylicstyle.bedwars.utils.ShopCategory;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ItemShop implements InventoryHolder, Listener {
     private final Collection<ShopCategory, Inventory> inventories = new Collection<>();
+    private final Collection<ShopCategory, Collection<Integer, ItemStack>> noLoreItems = new Collection<>();
 
     public ItemShop() {
         inventories.add(ShopCategory.QUICK_BUY, Bukkit.createInventory(this, 9*6, "Item Shop"));
@@ -63,54 +64,58 @@ public class ItemShop implements InventoryHolder, Listener {
 
     private void initializeQuickBuyItems() {
         Inventory quickBuy = inventories.get(ShopCategory.QUICK_BUY);
-        quickBuy.setItem(19, setLore(new ItemStack(Material.WOOL, 16)));
-        quickBuy.setItem(28, setLore(new ItemStack(Material.WOOD, 16)));
-        quickBuy.setItem(37, setLore(new ItemStack(Material.GLASS, 4)));
-        quickBuy.setItem(46, setLore(new ItemStack(Material.ENDER_STONE, 16)));
-        quickBuy.setItem(20, setLore(Utils.unbreakable(Material.STONE_SWORD)));
-        quickBuy.setItem(29, setLore(Utils.unbreakable(Material.IRON_SWORD)));
-        quickBuy.setItem(38, setLore(Utils.unbreakable(Material.DIAMOND_SWORD)));
-        quickBuy.setItem(47, setLore(Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2)));
-        quickBuy.setItem(21, setLore(Utils.unbreakable(Material.CHAINMAIL_BOOTS)));
-        quickBuy.setItem(30, setLore(Utils.unbreakable(Material.IRON_BOOTS)));
-        quickBuy.setItem(39, setLore(Utils.unbreakable(Material.DIAMOND_BOOTS)));
-        quickBuy.setItem(22, setLore(Utils.enchantTool(Material.WOOD_PICKAXE)));
-        quickBuy.setItem(31, setLore(Utils.enchantTool(Material.IRON_PICKAXE)));
-        quickBuy.setItem(40, setLore(Utils.enchantTool(Material.WOOD_AXE)));
-        quickBuy.setItem(49, setLore(Utils.enchantTool(Material.IRON_AXE)));
-        quickBuy.setItem(23, setLore(new ItemStack(Material.ARROW, 8)));
-        quickBuy.setItem(32, setLore(Utils.unbreakable(Material.BOW)));
-        quickBuy.setItem(41, setLore(Utils.enchantTool(Material.BOW, Enchantment.ARROW_DAMAGE, 4)));
-        quickBuy.setItem(50, setLore(Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 2)));
-        quickBuy.setItem(25, setLore(new ItemStack(Material.TNT)));
-        quickBuy.setItem(34, setLore(new ItemStack(Material.WATER_BUCKET)));
-        quickBuy.setItem(43, setLore(new ItemStack(Material.MILK_BUCKET)));
-        quickBuy.setItem(52, setLore(new ItemStack(Material.COOKED_BEEF)));
+        quickBuy.setItem(19, setLore(19, new ItemStack(Material.WOOL, 16), ShopCategory.BLOCKS));
+        quickBuy.setItem(28, setLore(28, new ItemStack(Material.WOOD, 16), ShopCategory.BLOCKS));
+        quickBuy.setItem(37, setLore(37, new ItemStack(Material.GLASS, 4), ShopCategory.BLOCKS));
+        quickBuy.setItem(46, setLore(46, new ItemStack(Material.ENDER_STONE, 16), ShopCategory.BLOCKS));
+        quickBuy.setItem(20, setLore(20,Utils.unbreakable(Material.STONE_SWORD), ShopCategory.MELEE));
+        quickBuy.setItem(29, setLore(29, Utils.unbreakable(Material.IRON_SWORD), ShopCategory.MELEE));
+        quickBuy.setItem(38, setLore(38, Utils.unbreakable(Material.DIAMOND_SWORD), ShopCategory.MELEE));
+        quickBuy.setItem(47, setLore(47, Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2), ShopCategory.MELEE));
+        quickBuy.setItem(21, setLore(21, Utils.unbreakable(Material.CHAINMAIL_BOOTS), ShopCategory.ARMOR));
+        quickBuy.setItem(30, setLore(30, Utils.unbreakable(Material.IRON_BOOTS), ShopCategory.ARMOR));
+        quickBuy.setItem(39, setLore(39, Utils.unbreakable(Material.DIAMOND_BOOTS), ShopCategory.ARMOR));
+        quickBuy.setItem(22, setLore(22, Utils.enchantTool(Material.WOOD_PICKAXE), ShopCategory.TOOLS));
+        quickBuy.setItem(31, setLore(31, Utils.enchantTool(Material.IRON_PICKAXE), ShopCategory.TOOLS));
+        quickBuy.setItem(40, setLore(40, Utils.enchantTool(Material.WOOD_AXE), ShopCategory.TOOLS));
+        quickBuy.setItem(49, setLore(49, Utils.enchantTool(Material.IRON_AXE), ShopCategory.TOOLS));
+        quickBuy.setItem(23, setLore(23, new ItemStack(Material.ARROW, 8), ShopCategory.RANGED));
+        quickBuy.setItem(32, setLore(32, Utils.unbreakable(Material.BOW), ShopCategory.RANGED));
+        quickBuy.setItem(41, setLore(41, Utils.enchantTool(Material.BOW, Enchantment.ARROW_DAMAGE, 4), ShopCategory.RANGED));
+        quickBuy.setItem(50, setLore(50, Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 2), ShopCategory.RANGED));
+        quickBuy.setItem(25, setLore(25, new ItemStack(Material.TNT), ShopCategory.UTILITY));
+        quickBuy.setItem(34, setLore(34, new ItemStack(Material.WATER_BUCKET), ShopCategory.UTILITY));
+        quickBuy.setItem(43, setLore(43, new ItemStack(Material.MILK_BUCKET), ShopCategory.UTILITY));
+        quickBuy.setItem(52, setLore(52, new ItemStack(Material.COOKED_BEEF), ShopCategory.UTILITY));
 
         Constants.shopItems_Blocks.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.BLOCKS).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.BLOCKS).setItem(index+18, setLore(index+18, item, ShopCategory.BLOCKS)); // 18 is the offset, because <= 17 is category zone
         });
         Constants.shopItems_Melee.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.MELEE).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.MELEE).setItem(index+18, setLore(index+18, item, ShopCategory.MELEE)); // 18 is the offset, because <= 17 is category zone
         });
         Constants.shopItems_Armor.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.ARMOR).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.ARMOR).setItem(index+18, setLore(index+18, item, ShopCategory.ARMOR)); // 18 is the offset, because <= 17 is category zone
         });
         Constants.shopItems_Tools.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.TOOLS).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.TOOLS).setItem(index+18, setLore(index+18, item, ShopCategory.TOOLS)); // 18 is the offset, because <= 17 is category zone
         });
         Constants.shopItems_Ranged.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.RANGED).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.RANGED).setItem(index+18, setLore(index+18, item, ShopCategory.RANGED)); // 18 is the offset, because <= 17 is category zone
         });
-        //Constants.shopItems_Potions.foreachKeys((item, index) -> {
-        //    inventories.get(ShopCategory.POTIONS).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
-        //});
+        Constants.shopItems_Potions.foreachKeys((item, index) -> {
+            inventories.get(ShopCategory.POTIONS).setItem(index+18, setLore(index+18, item, ShopCategory.POTIONS)); // 18 is the offset, because <= 17 is category zone
+        });
         Constants.shopItems_Utility.foreachKeys((item, index) -> {
-            inventories.get(ShopCategory.UTILITY).setItem(index+18, setLore(item)); // 18 is the offset, because <= 17 is category zone
+            inventories.get(ShopCategory.UTILITY).setItem(index+18, setLore(index+18, item, ShopCategory.UTILITY)); // 18 is the offset, because <= 17 is category zone
         });
     }
 
-    private ItemStack setLore(ItemStack item) {
+    private ItemStack setLore(int slot, ItemStack item, ShopCategory shopCategory) {
+        if (noLoreItems.get(shopCategory) == null) noLoreItems.put(shopCategory, new Collection<>());
+        Collection<Integer, ItemStack> collection = noLoreItems.get(shopCategory);
+        collection.put(slot, item);
+        noLoreItems.put(shopCategory, collection);
         ItemStack cost = Constants.shopItems_everything.get(item);
         if (cost == null) throw new NullPointerException("Couldn't find cost data for item: " + item);
         ItemMeta meta = item.getItemMeta();
@@ -147,13 +152,10 @@ public class ItemShop implements InventoryHolder, Listener {
         return item;
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getClickedInventory() == null) return;
-        if (e.getClickedInventory().getHolder() != this) {
-            return;
-        }
+        if (e.getClickedInventory().getHolder() != this) return;
         e.setCancelled(true);
         Player p = (Player) e.getWhoClicked();
         ItemStack clickedItem = e.getCurrentItem().clone();
@@ -191,35 +193,23 @@ public class ItemShop implements InventoryHolder, Listener {
             p.updateInventory();
         }
         if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;
-        ItemMeta meta = clickedItem.getItemMeta();
-        meta.setLore(null);
-        clickedItem.setItemMeta(meta);
-        if (!meta.spigot().isUnbreakable()) {
-            clickedItem.setItemMeta(null);
-            clickedItem = new ItemStack(clickedItem.getType(), clickedItem.getAmount());
-        }
-        ItemStack cost = Constants.shopItems_everything.get(clickedItem);
+        ItemStack item = noLoreItems.get(inventories.values(e.getClickedInventory()).keysCollection().first()).get(e.getSlot()).clone(); // clone for avoid bug
+        ItemStack cost = Constants.shopItems_everything.get(item);
         if (cost == null) {
             p.sendMessage(ChatColor.RED + "You've tried to purchase undefined item, it'll be reported to our developers.");
-            Log.debug("Amount: " + clickedItem.getAmount());
-            Log.debug("Data: " + clickedItem.getData());
-            Log.debug("Lore: " + clickedItem.getItemMeta().getLore());
-            Log.debug("Unbreakable: " + clickedItem.getItemMeta().spigot().isUnbreakable());
-            Log.debug("ItemMeta: " + clickedItem.getItemMeta());
-            throw new NullPointerException("Undefined item data: " + clickedItem);
+            Log.debug("Amount: " + item.getAmount());
+            Log.debug("Data: " + item.getData());
+            Log.debug("Lore: " + item.getItemMeta().getLore());
+            Log.debug("Unbreakable: " + item.getItemMeta().spigot().isUnbreakable());
+            Log.debug("ItemMeta: " + item.getItemMeta());
+            throw new NullPointerException("Undefined item data: " + item);
         }
         if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
             p.sendMessage(ChatColor.RED + "You don't have enough items!");
             return;
         }
         p.getInventory().removeItem(cost);
-        Team team = BedWars.team.get(p.getUniqueId());
-        String name = team.name().toUpperCase();
-        if (name.equalsIgnoreCase("AQUA")) name = "LIGHT_BLUE";
-        if (clickedItem.getType() == Material.WOOL) clickedItem.setDurability(DyeColor.valueOf(name).getWoolData());
-        p.getInventory().addItem(clickedItem);
-        clickedItem.setDurability((byte) 0);
-        clickedItem = setLore(clickedItem);
-        p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(clickedItem));
+        p.getInventory().addItem(item);
+        p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(item));
     }
 }
