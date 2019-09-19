@@ -151,7 +151,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onBlockExplode(BlockExplodeEvent e) {
-        e.setCancelled(false);
+        e.setCancelled(true);
         e.blockList().forEach(block -> {
             if (block.getType() != Material.GLASS && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
@@ -159,7 +159,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent e) {
-        e.setCancelled(false);
+        e.setCancelled(true);
         e.blockList().forEach(block -> {
             if (block.getType() != Material.GLASS && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
