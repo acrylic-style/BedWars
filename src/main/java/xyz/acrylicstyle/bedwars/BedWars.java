@@ -1,6 +1,7 @@
 package xyz.acrylicstyle.bedwars;
 
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -210,7 +211,31 @@ public class BedWars extends JavaPlugin implements Listener {
                         e.getPlayer().setGameMode(GameMode.SURVIVAL);
                         e.getPlayer().teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
                         if (!Constants.keepInventory) {
-
+                            Player player = e.getPlayer();
+                            ItemStack boots;
+                            ItemStack leggings;
+                            PlayerArmor armor = Constants.wearingArmor.getOrDefault(player, PlayerArmor.LEATHER);
+                            if (armor == PlayerArmor.LEATHER) {
+                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            } else if (armor == PlayerArmor.CHAIN) {
+                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.CHAINMAIL_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.CHAINMAIL_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            } else if (armor == PlayerArmor.IRON) {
+                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.IRON_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.IRON_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            } else if (armor == PlayerArmor.DIAMOND) {
+                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.DIAMOND_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.DIAMOND_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            } else { // impossible
+                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            }
+                            player.getInventory().setBoots(boots);
+                            player.getInventory().setLeggings(leggings);
+                            player.getInventory().setChestplate(Utils.getColoredLeatherArmor(Material.LEATHER_CHESTPLATE, BedWars.team.get(player.getUniqueId())));
+                            player.getInventory().setHelmet(Utils.getColoredLeatherArmor(Material.LEATHER_HELMET, BedWars.team.get(player.getUniqueId())));
+                            player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
                         }
                         this.cancel();
                         return;
