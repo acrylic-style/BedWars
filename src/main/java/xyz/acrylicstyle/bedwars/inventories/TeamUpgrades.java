@@ -103,16 +103,19 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         if (unlockedUpgrades.contains(upgrades.get(clickedItem.getType()))) {
+            p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
             p.sendMessage(ChatColor.RED + "You've already unlocked this upgrade!");
             return;
         }
         ItemStack item = noLoreItems.get(e.getSlot());
         ItemStack cost = getCost(upgrades.get(item.getType()));
         if (cost == null) {
+            p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
             p.sendMessage(ChatColor.RED + "This upgrade is already unlocked!");
             return;
         }
         if (!p.getInventory().containsAtLeast(cost, cost.getAmount())) {
+            p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
             p.sendMessage(ChatColor.RED + "You don't have enough items!");
             return;
         }
