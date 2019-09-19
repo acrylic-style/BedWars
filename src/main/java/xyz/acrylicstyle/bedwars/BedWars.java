@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -244,20 +243,6 @@ public class BedWars extends JavaPlugin implements Listener {
                 Team team = Team.valueOf(((Villager) e.getInventory().getHolder()).getMetadata("team").get(0).asString());
                 e.getPlayer().openInventory(teamUpgrades.prepare(team).getInventory());
             }
-        }
-    }
-
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem() != null) {
-            Material type = e.getItem().getType();
-            if (type == Material.IRON_LEGGINGS
-                    || type == Material.CHAINMAIL_LEGGINGS
-                    || type == Material.DIAMOND_LEGGINGS) e.getPlayer().getInventory().setLeggings(e.getItem());
-            if (type == Material.IRON_LEGGINGS
-                    || type == Material.DIAMOND_BOOTS
-                    || type == Material.CHAINMAIL_BOOTS
-                    || type == Material.IRON_BOOTS) e.getPlayer().getInventory().setBoots(e.getItem());
         }
     }
 

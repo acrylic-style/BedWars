@@ -57,11 +57,8 @@ public final class Constants {
         shopItems_Melee.put(Utils.unbreakable(Material.DIAMOND_SWORD), new ItemStack(Material.EMERALD, 4));
         shopItems_Melee.put(Utils.enchantTool(Material.STICK, Enchantment.KNOCKBACK, 2), new ItemStack(Material.GOLD_INGOT, 10));
 
-        shopItems_Armor.put(Utils.unbreakable(Material.CHAINMAIL_LEGGINGS), new ItemStack(Material.IRON_INGOT, 20));
         shopItems_Armor.put(Utils.unbreakable(Material.CHAINMAIL_BOOTS), new ItemStack(Material.IRON_INGOT, 20));
-        shopItems_Armor.put(Utils.unbreakable(Material.IRON_LEGGINGS), new ItemStack(Material.GOLD_INGOT, 6));
         shopItems_Armor.put(Utils.unbreakable(Material.IRON_BOOTS), new ItemStack(Material.GOLD_INGOT, 6));
-        shopItems_Armor.put(Utils.unbreakable(Material.DIAMOND_LEGGINGS), new ItemStack(Material.EMERALD, 3));
         shopItems_Armor.put(Utils.unbreakable(Material.DIAMOND_BOOTS), new ItemStack(Material.EMERALD, 3));
 
         shopItems_Tools.put(Utils.enchantTool(Material.WOOD_PICKAXE), new ItemStack(Material.IRON_INGOT, 10));

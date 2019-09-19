@@ -122,7 +122,6 @@ public class ItemShop implements InventoryHolder, Listener {
         ItemMeta meta = item.getItemMeta();
         String name = Utils.getFriendlyName(cost);
         ChatColor color = null;
-        Log.debug(name);
         if (name.equalsIgnoreCase("Iron ingot")) color = ChatColor.WHITE;
         if (name.equalsIgnoreCase("Gold ingot")) color = ChatColor.GOLD;
         if (name.equalsIgnoreCase("Diamond")) color = ChatColor.AQUA;
@@ -210,7 +209,16 @@ public class ItemShop implements InventoryHolder, Listener {
             return;
         }
         p.getInventory().removeItem(cost);
-        p.getInventory().addItem(item);
+        if (item.getType() == Material.DIAMOND_BOOTS) {
+            e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.DIAMOND_BOOTS));
+            e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.DIAMOND_LEGGINGS));
+        } else if (item.getType() == Material.IRON_BOOTS) {
+            e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.IRON_BOOTS));
+            e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.IRON_LEGGINGS));
+        } else if (item.getType() == Material.CHAINMAIL_BOOTS) {
+            e.getWhoClicked().getInventory().setBoots(Utils.unbreakable(Material.CHAINMAIL_BOOTS));
+            e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.CHAINMAIL_LEGGINGS));
+        } else p.getInventory().addItem(item);
         p.sendMessage(ChatColor.GREEN + "You purchased " + ChatColor.GOLD + Utils.getFriendlyName(item));
     }
 }
