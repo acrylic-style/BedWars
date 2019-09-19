@@ -1,13 +1,18 @@
 package xyz.acrylicstyle.bedwars.upgrades;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class SharpenedSword implements OneTimeUpgrade {
     @Override
@@ -34,7 +39,15 @@ public class SharpenedSword implements OneTimeUpgrade {
         new BukkitRunnable() {
             public void run() {
                 BedWars.team.values(team).foreachKeys((uuid, i) -> {
-                    // Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "Someone has bought a upgrade(and triggered event), " + SharpenedSword.this.getName());
+                    List<ItemStack> items = Arrays.asList(Bukkit.getPlayer(uuid).getInventory().getContents());
+                    items.forEach(item -> {
+                        if (item.isSimilar(new ItemStack(Material.IRON_SWORD))
+                                || item.isSimilar(new ItemStack(Material.GOLD_SWORD))
+                                || item.isSimilar(new ItemStack(Material.WOOD_SWORD))
+                                || item.isSimilar(new ItemStack(Material.DIAMOND_SWORD))
+                                || item.isSimilar(new ItemStack(Material.STONE_SWORD))) items.add(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1));
+                    });
+                    Bukkit.getPlayer(uuid).getInventory().setContents(items.toArray(new ItemStack[0]));
                 });
             }
         }.runTaskTimer(Utils.getInstance(), 0, 40);

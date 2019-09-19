@@ -213,11 +213,9 @@ public final class Utils {
      * Grants unbreakable tag and add specified enchant to the specified material and return ItemStack.
      */
     static ItemStack enchantTool(Material material, Collection<Enchantment, Integer> enchantments) {
-        ItemStack item = new ItemStack(material);
+        ItemStack item = unbreakable(material);
         ItemMeta meta = item.getItemMeta();
         enchantments.forEach((enchant, level) -> meta.addEnchant(enchant, level, true));
-        meta.spigot().setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
         return item;
     }

@@ -118,9 +118,14 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         p.getInventory().removeItem(cost);
         Team team = BedWars.team.get(p.getUniqueId());
         upgrades.get(clickedItem.getType()).run(team);
-        if (upgrades.get(clickedItem.getType()) instanceof OneTimeUpgrade) unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
-        if (upgrades.get(clickedItem.getType()) instanceof TieredUpgrade) if (((TieredUpgrade) upgrades.get(clickedItem.getType())).getTier() == ((TieredUpgrade)upgrades.get(clickedItem.getType())).maxTier()) unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
-        clickedItem = setLore(upgrades.get(clickedItem.getType()));
+        if (upgrades.get(clickedItem.getType()) instanceof OneTimeUpgrade) {
+            unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
+            clickedItem = new ItemStack(Material.AIR);
+        }
+        if (upgrades.get(clickedItem.getType()) instanceof TieredUpgrade) if (((TieredUpgrade) upgrades.get(clickedItem.getType())).getTier() == ((TieredUpgrade)upgrades.get(clickedItem.getType())).maxTier()) {
+            unlockedUpgrades.add(upgrades.get(clickedItem.getType()));
+            clickedItem = new ItemStack(Material.AIR);
+        }
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(clickedItem.getType()).getName());
     }
 
