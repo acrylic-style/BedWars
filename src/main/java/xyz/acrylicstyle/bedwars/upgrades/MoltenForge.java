@@ -1,6 +1,5 @@
 package xyz.acrylicstyle.bedwars.upgrades;
 
-import jdk.internal.loader.Resource;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
