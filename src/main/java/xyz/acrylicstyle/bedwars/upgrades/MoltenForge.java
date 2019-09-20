@@ -13,7 +13,7 @@ public class MoltenForge implements TieredUpgrade<Team> {
     private static Collection<Team, Integer> divider = new Collection<>();
 
     public static Integer getDivider(Team team) {
-        return divider.get(team);
+        return divider.getOrDefault(team, 0);
     }
 
     @Override
