@@ -10,7 +10,7 @@ maximumPlayers: # <optional> specify maximum players for join server. [Default: 
 domain: # -1 score at the scoreboard. Shown for all players. [Default: www.acrylicstyle.xyz]
 ```
 
-maps/<map>.yml
+maps/\<map\>.yml
 ```yaml
 world: # <required> world name [Default: none]
 name: # <optional but strongly recommended> The name of this map. [Default: ???]
