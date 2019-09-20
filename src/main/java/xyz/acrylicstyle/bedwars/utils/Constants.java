@@ -88,6 +88,8 @@ public final class Constants {
         shopItems_Utility.put(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.GOLD_INGOT, 4));
         shopItems_Utility.put(new ItemStack(Material.MILK_BUCKET), new ItemStack(Material.GOLD_INGOT, 6));
         shopItems_Utility.put(new ItemStack(Material.COOKED_BEEF), new ItemStack(Material.IRON_INGOT, 1));
+        shopItems_Utility.put(new ItemStack(Material.GOLDEN_APPLE), new ItemStack(Material.GOLD_INGOT, 3));
+        shopItems_Utility.put(new ItemStack(Material.FIREBALL), new ItemStack(Material.IRON_INGOT, 40));
 
         shopItems_everything.addAll(shopItems_Blocks);
         shopItems_everything.addAll(shopItems_Melee);
