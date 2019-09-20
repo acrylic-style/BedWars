@@ -1,10 +1,7 @@
 package xyz.acrylicstyle.bedwars.inventories;
 
 import com.avaje.ebean.validation.NotNull;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
@@ -150,6 +148,7 @@ public class ItemShop implements InventoryHolder, Listener {
         return item;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getClickedInventory() == null) return;
@@ -241,6 +240,10 @@ public class ItemShop implements InventoryHolder, Listener {
             e.getWhoClicked().getInventory().setLeggings(Utils.unbreakable(Material.CHAINMAIL_LEGGINGS));
         } else {
             p.getInventory().removeItem(cost);
+            Team team = BedWars.team.get(p.getUniqueId());
+            String name = team.name().toUpperCase();
+            if (name.equalsIgnoreCase("AQUA")) name = "LIGHT_BLUE";
+            if (item.getType() == Material.WOOL) item.setDurability(DyeColor.valueOf(name).getWoolData());
             p.getInventory().addItem(item);
         }
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
