@@ -41,6 +41,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
+import static xyz.acrylicstyle.bedwars.utils.Utils.teamSize;
 
 public class BedWars extends JavaPlugin implements Listener {
     private boolean enabled = false;
@@ -329,8 +330,10 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onServerListPing(ServerListPingEvent e) {
-        if (GameTask.playedTime > 0 || !enabled) {
+        if (GameTask.playedTime > 0) {
             e.setMaxPlayers(0);
+        } else if (enabled) {
+            e.setMaxPlayers(teamSize*8);
         }
     }
 
