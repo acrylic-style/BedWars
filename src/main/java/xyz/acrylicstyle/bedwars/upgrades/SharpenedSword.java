@@ -52,6 +52,6 @@ public class SharpenedSword implements OneTimeUpgrade {
     }
 
     private void func(Integer slot, ItemStack item) {
-        Bukkit.getPlayer(uuid).getInventory().setItem(slot, Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1));
+        if (!item.getItemMeta().hasEnchant(Enchantment.DAMAGE_ALL)) Bukkit.getPlayer(uuid).getInventory().setItem(slot, Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1));
     }
 }
