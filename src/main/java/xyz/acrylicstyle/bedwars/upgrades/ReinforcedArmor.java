@@ -15,7 +15,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ReinforcedArmor implements TieredUpgrade<Team> {
-    private Collection<Team, Integer> tier = new Collection<>();
+    private static Collection<Team, Integer> tier = new Collection<>();
+
+    public static int getTierStatic(Team team) {
+        return tier.get(team);
+    }
 
     @Override
     public void upgrade(Team team) {

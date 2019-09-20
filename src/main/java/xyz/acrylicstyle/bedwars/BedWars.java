@@ -224,21 +224,22 @@ public class BedWars extends JavaPlugin implements Listener {
                             ItemStack boots;
                             ItemStack leggings;
                             PlayerArmor armor = Constants.wearingArmor.getOrDefault(player.getUniqueId(), PlayerArmor.LEATHER);
+                            int tier = ReinforcedArmor.getTierStatic(team.get(e.getPlayer().getUniqueId()));
                             if (armor == PlayerArmor.LEATHER) {
-                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
-                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
+                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, tier);
                             } else if (armor == PlayerArmor.CHAIN) {
-                                boots = Utils.enchantTool(Material.CHAINMAIL_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
-                                leggings = Utils.enchantTool(Material.CHAINMAIL_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
+                                boots = Utils.enchantTool(Material.CHAINMAIL_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                leggings = Utils.enchantTool(Material.CHAINMAIL_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
                             } else if (armor == PlayerArmor.IRON) {
-                                boots = Utils.enchantTool(Material.IRON_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
-                                leggings = Utils.enchantTool(Material.IRON_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
+                                boots = Utils.enchantTool(Material.IRON_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                leggings = Utils.enchantTool(Material.IRON_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
                             } else if (armor == PlayerArmor.DIAMOND) {
-                                boots = Utils.enchantTool(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
-                                leggings = Utils.enchantTool(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
+                                boots = Utils.enchantTool(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                leggings = Utils.enchantTool(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
                             } else { // impossible
-                                boots = Utils.enchantTool(Material.LEATHER_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
-                                leggings = Utils.enchantTool(Material.LEATHER_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, ReinforcedArmor.tier);
+                                boots = Utils.enchantTool(Material.LEATHER_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                leggings = Utils.enchantTool(Material.LEATHER_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
                             }
                             player.getInventory().setBoots(boots);
                             player.getInventory().setLeggings(leggings);
