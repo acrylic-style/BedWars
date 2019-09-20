@@ -176,14 +176,16 @@ public class BedWars extends JavaPlugin implements Listener {
         Material type = e.getItem().getItemStack().getType();
         ItemStack item = e.getItem().getItemStack();
         ItemMeta meta = item.getItemMeta();
-        meta.spigot().setUnbreakable(false);
-        meta.removeItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        item.setItemMeta(meta);
-        e.getItem().setItemStack(item);
-        if (type == Material.GOLD_INGOT || type == Material.IRON_INGOT || type == Material.BRICK) {
+        if ((type == Material.GOLD_INGOT || type == Material.IRON_INGOT || type == Material.BRICK) && meta.spigot().isUnbreakable()) {
+            meta.spigot().setUnbreakable(false);
+            meta.removeItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+            e.getItem().setItemStack(item);
             Team team = BedWars.team.get(e.getPlayer().getUniqueId());
             Location resourceSpawn = Utils.getConfigUtils().getGeneratorLocation(team.name());
             BedWars.team.values(team).removeReturnCollection(e.getPlayer().getUniqueId()).forEach((uuid, team1) -> {
+                Log.debug("Distance: " + Bukkit.getPlayer(uuid).getLocation().distance(resourceSpawn));
+                Log.debug("Distance squared: " + Bukkit.getPlayer(uuid).getLocation().distanceSquared(resourceSpawn));
                 if (Bukkit.getPlayer(uuid).getLocation().distanceSquared(resourceSpawn) <= 4) {
                     Bukkit.getPlayer(uuid).getInventory().addItem(new ItemStack(type));
                 }
