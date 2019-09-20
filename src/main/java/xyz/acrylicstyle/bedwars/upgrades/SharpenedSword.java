@@ -11,10 +11,11 @@ import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.UUID;
 
 public class SharpenedSword implements OneTimeUpgrade {
+    private UUID uuid = null;
+
     @Override
     public String getName() {
         return "Sharpened Sword";
@@ -39,16 +40,18 @@ public class SharpenedSword implements OneTimeUpgrade {
         new BukkitRunnable() {
             public void run() {
                 BedWars.team.values(team).foreachKeys((uuid, i) -> {
-                    Bukkit.getPlayer(uuid).getInventory().forEach(item -> {
-                        if (item != null)
-                            if (item.getType() == Material.IRON_SWORD
-                                || item.getType() == Material.GOLD_SWORD
-                                || item.getType() == Material.WOOD_SWORD
-                                || item.getType() == Material.DIAMOND_SWORD
-                                || item.getType() == Material.STONE_SWORD) item = Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1);
-                    });
+                    SharpenedSword.this.uuid = uuid;
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.WOOD_SWORD).forEach(SharpenedSword.this::func);
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.STONE_SWORD).forEach(SharpenedSword.this::func);
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.IRON_SWORD).forEach(SharpenedSword.this::func);
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.GOLD_SWORD).forEach(SharpenedSword.this::func);
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.DIAMOND_SWORD).forEach(SharpenedSword.this::func);
                 });
             }
         }.runTaskTimer(Utils.getInstance(), 0, 40);
+    }
+
+    private void func(Integer slot, ItemStack item) {
+        Bukkit.getPlayer(uuid).getInventory().setItem(slot, Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1));
     }
 }
