@@ -13,7 +13,7 @@ import xyz.acrylicstyle.bedwars.utils.Utils;
 
 import java.util.UUID;
 
-public class SharpenedSword implements OneTimeUpgrade {
+public class SharpenedSword implements OneTimeUpgrade<Team> {
     private UUID uuid = null;
 
     @Override
@@ -30,7 +30,7 @@ public class SharpenedSword implements OneTimeUpgrade {
     public ItemStack getItem() {
         ItemStack item = new ItemStack(Material.IRON_SWORD);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GREEN + "Sharpened Sword");
+        meta.setDisplayName(ChatColor.GREEN + getName());
         item.setItemMeta(meta);
         return item;
     }

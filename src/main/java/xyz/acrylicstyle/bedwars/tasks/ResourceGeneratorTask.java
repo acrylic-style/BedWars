@@ -10,7 +10,7 @@ import xyz.acrylicstyle.bedwars.utils.Utils;
 import java.util.Arrays;
 
 public class ResourceGeneratorTask extends BukkitRunnable {
-    private Generator generator;
+    public Generator generator;
 
     ResourceGeneratorTask(Generator generator) {
         this.generator = generator;

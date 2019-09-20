@@ -4,11 +4,19 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import xyz.acrylicstyle.bedwars.upgrades.MoltenForge;
 import xyz.acrylicstyle.bedwars.utils.Generator;
 import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
+import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
 public class GoldGenerator implements Generator {
+    private Team team;
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     @Override
     public GeneratorPlaces getGeneratorPlace() {
         return GeneratorPlaces.TEAM_BASE;
@@ -26,6 +34,6 @@ public class GoldGenerator implements Generator {
 
     @Override
     public double getGenerateTime() {
-        return 3.5/(Utils.teamSize/4F);
+        return (3.5/(Utils.teamSize/4F)) / MoltenForge.getDivider(team);
     }
 }

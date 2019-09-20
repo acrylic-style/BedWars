@@ -27,8 +27,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TeamUpgrades implements InventoryHolder, Listener {
-    private Collection<Material, Upgrade> upgrades = new Collection<>();
-    private List<Upgrade> unlockedUpgrades = new ArrayList<>();
+    private Collection<Material, Upgrade<Team>> upgrades = new Collection<>();
+    private List<Upgrade<Team>> unlockedUpgrades = new ArrayList<>();
     private final Collection<Team, Inventory> inventories = new Collection<>();
     private final Collection<Integer, ItemStack> noLoreItems = new Collection<>();
     private Team team = null;
@@ -52,9 +52,9 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         return inv;
     }
 
-    private ItemStack setLore(Upgrade upgrade, int slot) {
-        if (upgrade instanceof TieredUpgrade) return setLore((TieredUpgrade) upgrade, slot);
-        else if (upgrade instanceof OneTimeUpgrade) return setLore((OneTimeUpgrade) upgrade, slot);
+    private ItemStack setLore(Upgrade<Team> upgrade, int slot, Team team) {
+        if (upgrade instanceof TieredUpgrade) return setLore((TieredUpgrade<Team>) upgrade, slot, team);
+        else if (upgrade instanceof OneTimeUpgrade) return setLore((OneTimeUpgrade<Team>) upgrade, slot);
         else return null;
     }
 
@@ -70,17 +70,17 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         return item;
     }
 
-    private ItemStack setLore(TieredUpgrade upgrade, int slot) {
+    private ItemStack setLore(TieredUpgrade<Team> upgrade, int slot, Team team) {
         ItemStack item = upgrade.getItem();
         noLoreItems.put(slot, item.clone());
         item = item.clone();
-        ItemStack cost = upgrade.getCost(upgrade.getTier()+1);
+        ItemStack cost = upgrade.getCost(upgrade.getTier(team)+1);
         ItemMeta meta = item.getItemMeta();
         final String[] a;
         if (cost == null) {
             a = new String[]{ChatColor.GREEN + "UNLOCKED"};
         } else {
-            a = new String[]{ChatColor.YELLOW + "Tier " + (upgrade.getTier() + 1) + " Cost: " + ChatColor.AQUA + cost.getAmount() + " " + Utils.getFriendlyName(cost)};
+            a = new String[]{ChatColor.YELLOW + "Tier " + (upgrade.getTier(team) + 1) + " Cost: " + ChatColor.AQUA + cost.getAmount() + " " + Utils.getFriendlyName(cost)};
         }
         meta.setLore(Arrays.asList(a));
         item.setItemMeta(meta);
@@ -90,7 +90,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
     private void initializeItems() {
         Constants.upgrades.foreach((upgrade, i) -> {
             upgrades.add(upgrade.getItem().getType(), upgrade);
-            inventories.foreach((inv,i2) -> inv.setItem(i, setLore(upgrade, i)));
+            inventories.forEach((team, inv) -> inv.setItem(i, setLore(upgrade, i, team)));
         });
     }
 
@@ -108,7 +108,8 @@ public class TeamUpgrades implements InventoryHolder, Listener {
             return;
         }
         ItemStack item = noLoreItems.get(e.getSlot());
-        ItemStack cost = getCost(upgrades.get(item.getType()));
+        Team team = BedWars.team.get(p.getUniqueId());
+        ItemStack cost = getCost(upgrades.get(item.getType()), team);
         if (cost == null) {
             p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
             p.sendMessage(ChatColor.RED + "This upgrade is already unlocked!");
@@ -120,12 +121,11 @@ public class TeamUpgrades implements InventoryHolder, Listener {
             return;
         }
         p.getInventory().removeItem(cost);
-        Team team = BedWars.team.get(p.getUniqueId());
         if (upgrades.get(item.getType()) instanceof OneTimeUpgrade) {
             upgrades.get(item.getType()).run(team);
             unlockedUpgrades.add(upgrades.get(item.getType()));
-        } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) if (((TieredUpgrade) upgrades.get(item.getType())).getTier() == ((TieredUpgrade)upgrades.get(item.getType())).maxTier()) {
-            ((TieredUpgrade) upgrades.get(item.getType())).upgrade();
+        } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) if (((TieredUpgrade<Team>) upgrades.get(item.getType())).getTier(team) == ((TieredUpgrade)upgrades.get(item.getType())).maxTier()) {
+            ((TieredUpgrade<Team>) upgrades.get(item.getType())).upgrade(team);
             upgrades.get(item.getType()).run(team);
             unlockedUpgrades.add(upgrades.get(item.getType()));
         }
@@ -134,9 +134,9 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         initializeItems(); // re-add lore for items
     }
 
-    private ItemStack getCost(Upgrade upgrade) {
+    private ItemStack getCost(Upgrade<Team> upgrade, Team team) {
         if (upgrade instanceof OneTimeUpgrade) return ((OneTimeUpgrade)upgrade).getCost();
-        if (upgrade instanceof TieredUpgrade) return ((TieredUpgrade)upgrade).getCost(((TieredUpgrade)upgrade).getTier()+1);
+        if (upgrade instanceof TieredUpgrade) return ((TieredUpgrade<Team>)upgrade).getCost(((TieredUpgrade<Team>)upgrade).getTier(team)+1);
         return null;
     }
 }

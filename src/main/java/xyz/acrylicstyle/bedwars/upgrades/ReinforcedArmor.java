@@ -7,22 +7,24 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.acrylicstyle.bedwars.BedWars;
+import xyz.acrylicstyle.bedwars.utils.Collection;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class ReinforcedArmor implements TieredUpgrade {
-    public static int tier = 0;
+public class ReinforcedArmor implements TieredUpgrade<Team> {
+    private Collection<Team, Integer> tier = new Collection<>();
 
-    public void upgrade() {
-        ReinforcedArmor.tier++;
+    @Override
+    public void upgrade(Team team) {
+        tier.put(team, tier.get(team)+1);
     }
 
     @Override
-    public int getTier() {
-        return ReinforcedArmor.tier;
+    public int getTier(Team team) {
+        return tier.get(team);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class ReinforcedArmor implements TieredUpgrade {
                             || item.getType() == Material.CHAINMAIL_LEGGINGS
                             || item.getType() == Material.CHAINMAIL_BOOTS
                             || item.getType() == Material.DIAMOND_LEGGINGS
-                            || item.getType() == Material.DIAMOND_BOOTS) Bukkit.getPlayer(uuid).getInventory().setItem(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.PROTECTION_FALL, getTier()));
+                            || item.getType() == Material.DIAMOND_BOOTS) Bukkit.getPlayer(uuid).getInventory().setItem(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.PROTECTION_FALL, getTier(team)));
             });
         }));
     }
