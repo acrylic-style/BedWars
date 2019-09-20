@@ -6,6 +6,15 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class CollectionList<V> extends ArrayList<V> {
+    public CollectionList() {
+        super();
+    }
+
+    public CollectionList(ArrayList<? extends V> list) {
+        super();
+        this.addAll(list);
+    }
+
     @SuppressWarnings("unchecked")
     public V first() {
         return (V) this.toArray()[0];

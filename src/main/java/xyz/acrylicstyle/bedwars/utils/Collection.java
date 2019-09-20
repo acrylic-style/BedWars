@@ -7,6 +7,15 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class Collection<K, V> extends HashMap<K, V> {
+    public Collection() {
+        super();
+    }
+
+    public Collection(HashMap<? extends K, ? extends V> map) {
+        super();
+        this.addAll(map);
+    }
+
     public V first() {
         return this.valuesArray()[0];
     }

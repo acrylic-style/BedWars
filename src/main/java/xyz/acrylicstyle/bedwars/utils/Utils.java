@@ -86,7 +86,7 @@ public final class Utils {
         BedWars.world.setPVP(true);
         BedWars.world.setMonsterSpawnLimit(0);
         BedWars.world.setGameRuleValue("doMobSpawning", "false");
-        BedWars.world.setGameRuleValue("keepInventory", Boolean.toString(Constants.keepInventory));
+        BedWars.world.setGameRuleValue("keepInventory", "true"); // for delete all items when death
         BedWars.world.setGameRuleValue("mobGriefing", "true");
         BedWars.world.setFullTime(6000);
         BedWars.manager = Bukkit.getScoreboardManager();

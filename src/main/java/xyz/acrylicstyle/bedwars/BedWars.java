@@ -5,6 +5,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -205,7 +206,10 @@ public class BedWars extends JavaPlugin implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
-        Utils.run(a -> e.getPlayer().setGameMode(GameMode.SPECTATOR));
+        Utils.run(a -> {
+            e.getPlayer().setGameMode(GameMode.SPECTATOR);
+            e.getPlayer().getInventory().clear();
+        });
         if (aliveTeam.contains(team.get(e.getPlayer().getUniqueId()))) {
             AtomicInteger integer = new AtomicInteger(5);
             new BukkitRunnable() {
@@ -327,6 +331,18 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onServerListPing(ServerListPingEvent e) {
         if (GameTask.playedTime > 0 || !enabled) {
             e.setMaxPlayers(0);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (e.getItem().getType() == Material.FIREBALL) {
+                e.getPlayer().getInventory().remove(Material.FIREBALL);
+                e.setCancelled(true);
+                Fireball fireball = e.getPlayer().launchProjectile(Fireball.class);
+                fireball.setVelocity(fireball.getVelocity().multiply(2));
+            }
         }
     }
 }
