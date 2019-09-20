@@ -117,7 +117,7 @@ public class BedWars extends JavaPlugin implements Listener {
         playerPlacedBlocks.add(e.getBlockPlaced().getLocation());
         if (e.getBlockPlaced().getType() == Material.TNT) {
             e.getBlockPlaced().setType(Material.AIR);
-            TNTPrimed tnt = e.getBlockPlaced().getWorld().spawn(e.getBlockPlaced().getLocation().subtract(-0.5, 0, -0.5), TNTPrimed.class);
+            TNTPrimed tnt = e.getBlockPlaced().getWorld().spawn(e.getBlockPlaced().getLocation().add(0.5, 0, 0.5), TNTPrimed.class);
             tnt.setFuseTicks(80);
         }
     }
@@ -182,11 +182,11 @@ public class BedWars extends JavaPlugin implements Listener {
             item.setItemMeta(meta);
             e.getItem().setItemStack(item);
             Team team = BedWars.team.get(e.getPlayer().getUniqueId());
-            Location resourceSpawn = Utils.getConfigUtils().getGeneratorLocation(team.name());
+            Location resourceSpawn = Utils.getConfigUtils().getGeneratorLocation(team.name().toLowerCase());
             BedWars.team.values(team).removeReturnCollection(e.getPlayer().getUniqueId()).forEach((uuid, team1) -> {
                 Log.debug("Distance: " + Bukkit.getPlayer(uuid).getLocation().distance(resourceSpawn));
                 Log.debug("Distance squared: " + Bukkit.getPlayer(uuid).getLocation().distanceSquared(resourceSpawn));
-                if (Bukkit.getPlayer(uuid).getLocation().distanceSquared(resourceSpawn) <= 4) {
+                if (Bukkit.getPlayer(uuid).getLocation().distance(resourceSpawn) <= 4) {
                     Bukkit.getPlayer(uuid).getInventory().addItem(new ItemStack(type));
                 }
             });
