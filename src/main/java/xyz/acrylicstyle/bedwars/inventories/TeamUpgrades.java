@@ -90,7 +90,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
     private void initializeItems() {
         Constants.upgrades.foreach((upgrade, i) -> {
             upgrades.add(upgrade.getItem().getType(), upgrade);
-            inventories.forEach((team, inv) -> inv.setItem(i, setLore(upgrade, i, team)));
+            Arrays.asList(Team.values()).forEach(team -> inventories.get(team).setItem(i, setLore(upgrade, i, team)));
         });
     }
 

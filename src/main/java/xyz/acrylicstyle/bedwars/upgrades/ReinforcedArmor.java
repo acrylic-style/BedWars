@@ -28,7 +28,8 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
 
     @Override
     public int getTier(Team team) {
-        return tier.get(team);
+        if (team == null) throw new NullPointerException("team is null - please nerf.");
+        return tier.getOrDefault(team, 0);
     }
 
     @Override
