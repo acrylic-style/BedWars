@@ -2,9 +2,7 @@ package xyz.acrylicstyle.bedwars;
 
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -115,6 +113,11 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         playerPlacedBlocks.add(e.getBlockPlaced().getLocation());
+        if (e.getBlockPlaced().getType() == Material.TNT) {
+            e.getBlockPlaced().setType(Material.AIR);
+            TNTPrimed tnt = e.getBlockPlaced().getWorld().spawn(e.getBlockPlaced().getLocation(), TNTPrimed.class);
+            tnt.setFuseTicks(80);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -154,7 +157,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onBlockExplode(BlockExplodeEvent e) {
         e.setCancelled(true);
         e.blockList().forEach(block -> {
-            if (block.getType() != Material.GLASS && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
     }
 
@@ -162,7 +165,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onEntityExplode(EntityExplodeEvent e) {
         e.setCancelled(true);
         e.blockList().forEach(block -> {
-            if (block.getType() != Material.GLASS && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
     }
 
