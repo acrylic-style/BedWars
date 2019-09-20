@@ -341,6 +341,7 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (e.getItem() == null) return;
             if (e.getItem().getType() == Material.FIREBALL) {
                 e.getPlayer().getInventory().removeItem(new ItemStack(Material.FIREBALL, 1));
                 e.setCancelled(true);
