@@ -117,7 +117,7 @@ public class BedWars extends JavaPlugin implements Listener {
         playerPlacedBlocks.add(e.getBlockPlaced().getLocation());
         if (e.getBlockPlaced().getType() == Material.TNT) {
             e.getBlockPlaced().setType(Material.AIR);
-            TNTPrimed tnt = e.getBlockPlaced().getWorld().spawn(e.getBlockPlaced().getLocation().subtract(0.5, 0, 0.5), TNTPrimed.class);
+            TNTPrimed tnt = e.getBlockPlaced().getWorld().spawn(e.getBlockPlaced().getLocation().subtract(-0.5, 0, -0.5), TNTPrimed.class);
             tnt.setFuseTicks(80);
         }
     }
