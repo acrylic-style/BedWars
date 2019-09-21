@@ -36,6 +36,10 @@ public class Collection<K, V> extends HashMap<K, V> {
         return (V[]) this.values().toArray();
     }
 
+    public CollectionList<V> valuesList() {
+        return new CollectionList<>(this.values());
+    }
+
     /**
      * @param action it passes value, index.
      */

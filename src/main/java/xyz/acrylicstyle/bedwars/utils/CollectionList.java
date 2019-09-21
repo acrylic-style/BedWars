@@ -1,7 +1,11 @@
 package xyz.acrylicstyle.bedwars.utils;
 
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -11,6 +15,21 @@ public class CollectionList<V> extends ArrayList<V> {
     }
 
     public CollectionList(ArrayList<? extends V> list) {
+        super();
+        this.addAll(list);
+    }
+
+    public CollectionList(java.util.Collection<? extends V> list) {
+        super();
+        this.addAll(list);
+    }
+
+    public CollectionList(CollectionList<? extends V> list) {
+        super();
+        this.addAll(list);
+    }
+
+    public CollectionList(Set<? extends V> list) {
         super();
         this.addAll(list);
     }
@@ -45,6 +64,15 @@ public class CollectionList<V> extends ArrayList<V> {
         super.addAll(list);
     }
 
+    public CollectionList<V> addAll(CollectionList<V> list) {
+        list.forEach(this::add);
+        return this;
+    }
+
+    public CollectionList<V> putAll(CollectionList<V> list) {
+        return this.addAll(list);
+    }
+
     /**
      * Filters values. If returned true, that value will be kept. Returns new Collection of filtered values.
      * @param filter filter function.
@@ -66,5 +94,13 @@ public class CollectionList<V> extends ArrayList<V> {
     public CollectionList<V> removeReturnCollection(V v) {
         this.remove(v);
         return this;
+    }
+
+    public static <T> CollectionList<T> fromValues(HashMap<?, ? extends T> map) {
+        return new CollectionList<>(map.values());
+    }
+
+    public static <T> CollectionList<T> fromKeys(HashMap<? extends T, ?> map) {
+        return new CollectionList<>(map.keySet());
     }
 }

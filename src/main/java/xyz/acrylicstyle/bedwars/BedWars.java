@@ -204,11 +204,38 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onPlayerDeath(PlayerDeathEvent e) {
         Team victimTeam = team.get(e.getEntity().getUniqueId());
         Player killer = e.getEntity().getKiller();
+        e.setKeepInventory(true);
         if (killer == null) {
             e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " died.");
         } else {
+            if (killer.getUniqueId().equals(e.getEntity().getUniqueId())) {
+                e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " took their own life.");
+                Utils.run(l -> e.getEntity().spigot().respawn());
+                return;
+            }
             Team killerTeam = team.get(killer.getUniqueId());
             e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + ".");
+            CollectionList<ItemStack> diamonds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.DIAMOND));
+            CollectionList<ItemStack> emeralds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.EMERALD));
+            CollectionList<ItemStack> golds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.GOLD_INGOT));
+            CollectionList<ItemStack> irons = CollectionList.fromValues(e.getEntity().getInventory().all(Material.IRON_INGOT));
+            e.getEntity().getInventory().clear();
+            if (diamonds.size() >= 1) {
+                killer.sendMessage(ChatColor.AQUA + "+" + diamonds.size() + " Diamond");
+                killer.getInventory().addItem(new ItemStack(Material.DIAMOND, diamonds.size()));
+            }
+            if (emeralds.size() >= 1) {
+                killer.sendMessage(ChatColor.GREEN + "+" + emeralds.size() + " Emerald");
+                killer.getInventory().addItem(new ItemStack(Material.EMERALD, emeralds.size()));
+            }
+            if (golds.size() >= 1) {
+                killer.sendMessage(ChatColor.GOLD + "+" + golds.size() + " Gold");
+                killer.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, golds.size()));
+            }
+            if (irons.size() >= 1) {
+                killer.sendMessage(ChatColor.WHITE + "+" + irons.size() + " Iron");
+                killer.getInventory().addItem(new ItemStack(Material.IRON_INGOT, irons.size()));
+            }
         }
         Utils.run(l -> e.getEntity().spigot().respawn());
     }
