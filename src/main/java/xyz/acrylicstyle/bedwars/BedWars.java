@@ -83,6 +83,8 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+        String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
+        e.setJoinMessage(ChatColor.GRAY + name + ChatColor.GREEN + " has joined! " + ChatColor.YELLOW + "(" + Bukkit.getOnlinePlayers().size() + "/" + (teamSize*8) + ")");
         status.put(e.getPlayer().getUniqueId(), PlayerStatus.BEFORE_GAME);
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setMaxHealth(20);
@@ -104,7 +106,7 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent e) {
         if (Bukkit.getOnlinePlayers().size() >= Utils.maximumPlayers) {
-            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Current game is full. Please try again later!");
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Sorry! Current game is full, Please try again later!");
             return;
         }
         if (GameTask.playedTime > 0) {
