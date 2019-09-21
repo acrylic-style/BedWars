@@ -354,6 +354,7 @@ public class BedWars extends JavaPlugin implements Listener {
                 e.setCancelled(true);
                 Fireball fireball = e.getPlayer().launchProjectile(Fireball.class);
                 fireball.setVelocity(fireball.getVelocity().multiply(8));
+                fireball.setYield(6);
             }
         }
     }
