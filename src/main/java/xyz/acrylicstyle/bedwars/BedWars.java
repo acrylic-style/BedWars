@@ -190,6 +190,11 @@ public class BedWars extends JavaPlugin implements Listener {
                     Bukkit.getPlayer(uuid).getInventory().addItem(new ItemStack(type));
                 }
             });
+        } else if ((type == Material.DIAMOND || type == Material.EMERALD) && meta.spigot().isUnbreakable()) {
+            meta.spigot().setUnbreakable(false);
+            meta.removeItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+            e.getItem().setItemStack(item);
         }
     }
 
