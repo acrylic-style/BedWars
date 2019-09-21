@@ -18,7 +18,7 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
     private static Collection<Team, Integer> tier = new Collection<>();
 
     public static int getTierStatic(Team team) {
-        return tier.get(team);
+        return tier.getOrDefault(team, 0);
     }
 
     @Override
