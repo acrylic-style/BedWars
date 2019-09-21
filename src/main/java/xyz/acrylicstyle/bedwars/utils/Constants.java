@@ -3,6 +3,8 @@ package xyz.acrylicstyle.bedwars.utils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import util.Collection;
+import util.CollectionList;
 import xyz.acrylicstyle.bedwars.gameevents.*;
 import xyz.acrylicstyle.bedwars.generators.DiamondGenerator;
 import xyz.acrylicstyle.bedwars.generators.EmeraldGenerator;

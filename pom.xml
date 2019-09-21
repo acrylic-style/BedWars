@@ -38,9 +38,9 @@
     </build>
     <repositories>
         <repository>
-            <id>rht0910-central</id>
-            <name>Acrylic Style's Repository</name>
-            <url>http://ci.acrylicstyle.xyz/job/TomeitoLib/ws/</url>
+            <id>acrylicstyle-repo</id>
+            <name>Acrylic Style's Repository2</name>
+            <url>https://repo.acrylicstyle.xyz/</url>
         </repository>
         <repository>
             <id>spigot-repo</id>
@@ -98,6 +98,11 @@
             <artifactId>bukkit</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>xyz.acrylicstyle</groupId>
+            <artifactId>Util</artifactId>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
 </project>

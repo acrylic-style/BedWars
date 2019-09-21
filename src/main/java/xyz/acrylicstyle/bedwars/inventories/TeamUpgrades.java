@@ -13,11 +13,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import util.Collection;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.upgrades.OneTimeUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.TieredUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
-import xyz.acrylicstyle.bedwars.utils.Collection;
 import xyz.acrylicstyle.bedwars.utils.Constants;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
@@ -131,6 +131,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         }
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(item.getType()).getName());
+        //Constants.upgrades
         initializeItems(); // re-add lore for items
     }
 

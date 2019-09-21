@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import util.Collection;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
@@ -190,7 +191,7 @@ public class ItemShop implements InventoryHolder, Listener {
             p.updateInventory();
         }
         if (clickedItem == null || clickedItem.getType() == Material.AIR || e.getSlot() <= 17) return;
-        ItemStack item = noLoreItems.get(inventories.values(e.getClickedInventory()).keysCollection().first()).get(e.getSlot()).clone(); // clone for avoid bug
+        ItemStack item = noLoreItems.get(inventories.values(e.getClickedInventory()).keysList().first()).get(e.getSlot()).clone(); // clone for avoid bug
         ItemStack cost = Constants.shopItems_everything.get(item);
         if (cost == null) {
             p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 0.5F);

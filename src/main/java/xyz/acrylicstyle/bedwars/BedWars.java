@@ -26,6 +26,8 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import util.Collection;
+import util.CollectionList;
 import xyz.acrylicstyle.bedwars.inventories.ItemShop;
 import xyz.acrylicstyle.bedwars.inventories.TeamUpgrades;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;

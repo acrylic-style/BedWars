@@ -6,8 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import util.Collection;
 import xyz.acrylicstyle.bedwars.BedWars;
-import xyz.acrylicstyle.bedwars.utils.Collection;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
