@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import util.Collection;
-import util.CollectionList;
+import util.CollectionInstanceSet;
 import xyz.acrylicstyle.bedwars.gameevents.*;
 import xyz.acrylicstyle.bedwars.generators.DiamondGenerator;
 import xyz.acrylicstyle.bedwars.generators.EmeraldGenerator;
@@ -16,14 +16,12 @@ import xyz.acrylicstyle.bedwars.upgrades.ReinforcedArmor;
 import xyz.acrylicstyle.bedwars.upgrades.SharpenedSword;
 import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public final class Constants {
-    public static final List<Generator> generators = new ArrayList<>();
-    public static final List<GameEvent> events = new ArrayList<>();
-    public static final CollectionList<Upgrade<Team>> upgrades = new CollectionList<>();
+    public static final CollectionInstanceSet<Generator> generators = new CollectionInstanceSet<>();
+    public static final CollectionInstanceSet<GameEvent> events = new CollectionInstanceSet<>();
+    public static final CollectionInstanceSet<Upgrade<Team>> upgrades = new CollectionInstanceSet<>();
     public static final Collection<ItemStack, ItemStack> shopItems_everything = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Blocks = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Melee = new Collection<>();

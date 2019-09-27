@@ -28,6 +28,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import util.Collection;
 import util.CollectionList;
+import util.CollectionSync;
 import xyz.acrylicstyle.bedwars.inventories.ItemShop;
 import xyz.acrylicstyle.bedwars.inventories.TeamUpgrades;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
@@ -54,7 +55,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public static World world = null;
     public static ScoreboardManager manager = null;
     public static Collection<UUID, Scoreboard> scoreboards = new Collection<>();
-    public static Collection<UUID, PlayerStatus> status = new Collection<>();
+    public static CollectionSync<UUID, PlayerStatus> status = new CollectionSync<>();
     public static Collection<UUID, Team> team = new Collection<>();
     public static Set<Team> aliveTeam = new HashSet<>();
     public static boolean startedLobbyTask = false;
