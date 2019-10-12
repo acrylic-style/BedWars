@@ -129,9 +129,20 @@ public class BedWars extends JavaPlugin implements Listener {
         if (!playerPlacedBlocks.contains(e.getBlock().getLocation()) && e.getBlock().getType() != Material.BED_BLOCK) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
+            return;
         }
         if (e.getBlock().getType() == Material.BED_BLOCK) {
             Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
+            if (!aliveTeam.contains(team)) {
+                e.getBlock().breakNaturally();
+                Utils.run(a -> {
+                    java.util.Collection<Item> items = e.getBlock().getWorld().getEntitiesByClass(Item.class);
+                    items.forEach(item -> {
+                        if (item.getItemStack().getType() == Material.BED) item.remove();
+                    });
+                });
+                return;
+            }
             Team theirTeam = BedWars.team.get(e.getPlayer().getUniqueId());
             if (team == theirTeam) {
                 e.setCancelled(true);
