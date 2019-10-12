@@ -408,5 +408,10 @@ public class BedWars extends JavaPlugin implements Listener {
                 fireball.setFireTicks(32767);
             }
         }
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (e.getClickedBlock().getType() == Material.BED_BLOCK
+            || e.getClickedBlock().getType() == Material.BED
+            || e.getClickedBlock().getType() == Material.WORKBENCH) e.setCancelled(true);
+        }
     }
 }

@@ -59,6 +59,7 @@ public final class Constants {
         shopItems_Blocks.put(new ItemStack(Material.WOOD, 16), new ItemStack(Material.GOLD_INGOT, 4));
         shopItems_Blocks.put(new ItemStack(Material.GLASS, 4), new ItemStack(Material.IRON_INGOT, 12));
         shopItems_Blocks.put(new ItemStack(Material.ENDER_STONE, 16), new ItemStack(Material.IRON_INGOT, 24));
+        shopItems_Blocks.put(new ItemStack(Material.OBSIDIAN, 4), new ItemStack(Material.EMERALD, 4));
 
         shopItems_Melee.put(Utils.unbreakable(Material.STONE_SWORD), new ItemStack(Material.IRON_INGOT, 10));
         shopItems_Melee.put(Utils.unbreakable(Material.IRON_SWORD), new ItemStack(Material.GOLD_INGOT, 7));
