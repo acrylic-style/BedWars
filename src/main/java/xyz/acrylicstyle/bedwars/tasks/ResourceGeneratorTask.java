@@ -7,8 +7,6 @@ import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
-import java.util.Arrays;
-
 public class ResourceGeneratorTask extends BukkitRunnable {
     public Generator generator;
     private Team team;

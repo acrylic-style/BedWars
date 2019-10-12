@@ -1,6 +1,7 @@
 package xyz.acrylicstyle.bedwars.tasks;
 
 import org.bukkit.scheduler.BukkitRunnable;
+import util.Collection;
 import xyz.acrylicstyle.bedwars.generators.GoldGenerator;
 import xyz.acrylicstyle.bedwars.generators.IronGenerator;
 import xyz.acrylicstyle.bedwars.utils.*;

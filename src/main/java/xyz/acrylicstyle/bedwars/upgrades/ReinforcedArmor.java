@@ -6,8 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import util.Collection;
 import xyz.acrylicstyle.bedwars.BedWars;
-import xyz.acrylicstyle.bedwars.utils.Collection;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
@@ -18,7 +18,7 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
     private static Collection<Team, Integer> tier = new Collection<>();
 
     public static int getTierStatic(Team team) {
-        return tier.get(team);
+        return tier.getOrDefault(team, 0);
     }
 
     @Override

@@ -2,7 +2,7 @@ package xyz.acrylicstyle.bedwars.tasks;
 
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
-import xyz.acrylicstyle.bedwars.utils.CollectionList;
+import util.CollectionList;
 import xyz.acrylicstyle.bedwars.utils.Constants;
 import xyz.acrylicstyle.bedwars.utils.GameEvent;
 import xyz.acrylicstyle.bedwars.utils.Utils;

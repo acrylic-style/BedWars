@@ -26,6 +26,9 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import util.Collection;
+import util.CollectionList;
+import util.CollectionSync;
 import xyz.acrylicstyle.bedwars.inventories.ItemShop;
 import xyz.acrylicstyle.bedwars.inventories.TeamUpgrades;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
@@ -52,7 +55,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public static World world = null;
     public static ScoreboardManager manager = null;
     public static Collection<UUID, Scoreboard> scoreboards = new Collection<>();
-    public static Collection<UUID, PlayerStatus> status = new Collection<>();
+    public static CollectionSync<UUID, PlayerStatus> status = new CollectionSync<>();
     public static Collection<UUID, Team> team = new Collection<>();
     public static Set<Team> aliveTeam = new HashSet<>();
     public static boolean startedLobbyTask = false;
@@ -83,6 +86,8 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+        String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
+        e.setJoinMessage(ChatColor.GRAY + name + ChatColor.GREEN + " has joined! " + ChatColor.YELLOW + "(" + Bukkit.getOnlinePlayers().size() + "/" + (teamSize*8) + ")");
         status.put(e.getPlayer().getUniqueId(), PlayerStatus.BEFORE_GAME);
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setMaxHealth(20);
@@ -104,7 +109,7 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent e) {
         if (Bukkit.getOnlinePlayers().size() >= Utils.maximumPlayers) {
-            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Current game is full. Please try again later!");
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Sorry! Current game is full, Please try again later!");
             return;
         }
         if (GameTask.playedTime > 0) {
@@ -201,6 +206,11 @@ public class BedWars extends JavaPlugin implements Listener {
                     Bukkit.getPlayer(uuid).getInventory().addItem(new ItemStack(type));
                 }
             });
+        } else if ((type == Material.DIAMOND || type == Material.EMERALD) && meta.spigot().isUnbreakable()) {
+            meta.spigot().setUnbreakable(false);
+            meta.removeItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+            e.getItem().setItemStack(item);
         }
     }
 
@@ -208,11 +218,38 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onPlayerDeath(PlayerDeathEvent e) {
         Team victimTeam = team.get(e.getEntity().getUniqueId());
         Player killer = e.getEntity().getKiller();
+        e.setKeepInventory(true);
         if (killer == null) {
             e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " died.");
         } else {
+            if (killer.getUniqueId().equals(e.getEntity().getUniqueId())) {
+                e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " took their own life.");
+                Utils.run(l -> e.getEntity().spigot().respawn());
+                return;
+            }
             Team killerTeam = team.get(killer.getUniqueId());
             e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + ".");
+            CollectionList<ItemStack> diamonds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.DIAMOND));
+            CollectionList<ItemStack> emeralds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.EMERALD));
+            CollectionList<ItemStack> golds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.GOLD_INGOT));
+            CollectionList<ItemStack> irons = CollectionList.fromValues(e.getEntity().getInventory().all(Material.IRON_INGOT));
+            e.getEntity().getInventory().clear();
+            if (diamonds.size() >= 1) {
+                killer.sendMessage(ChatColor.AQUA + "+" + diamonds.size() + " Diamond");
+                killer.getInventory().addItem(new ItemStack(Material.DIAMOND, diamonds.size()));
+            }
+            if (emeralds.size() >= 1) {
+                killer.sendMessage(ChatColor.GREEN + "+" + emeralds.size() + " Emerald");
+                killer.getInventory().addItem(new ItemStack(Material.EMERALD, emeralds.size()));
+            }
+            if (golds.size() >= 1) {
+                killer.sendMessage(ChatColor.GOLD + "+" + golds.size() + " Gold");
+                killer.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, golds.size()));
+            }
+            if (irons.size() >= 1) {
+                killer.sendMessage(ChatColor.WHITE + "+" + irons.size() + " Iron");
+                killer.getInventory().addItem(new ItemStack(Material.IRON_INGOT, irons.size()));
+            }
         }
         Utils.run(l -> e.getEntity().spigot().respawn());
     }
@@ -360,6 +397,8 @@ public class BedWars extends JavaPlugin implements Listener {
                 e.setCancelled(true);
                 Fireball fireball = e.getPlayer().launchProjectile(Fireball.class);
                 fireball.setVelocity(fireball.getVelocity().multiply(8));
+                fireball.setYield(1);
+                fireball.setFireTicks(32767);
             }
         }
     }

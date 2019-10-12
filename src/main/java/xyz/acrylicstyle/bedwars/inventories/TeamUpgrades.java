@@ -13,22 +13,21 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import util.Collection;
+import util.CollectionList;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.upgrades.OneTimeUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.TieredUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
-import xyz.acrylicstyle.bedwars.utils.Collection;
 import xyz.acrylicstyle.bedwars.utils.Constants;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class TeamUpgrades implements InventoryHolder, Listener {
     private Collection<Material, Upgrade<Team>> upgrades = new Collection<>();
-    private List<Upgrade<Team>> unlockedUpgrades = new ArrayList<>();
+    private CollectionList<Upgrade<Team>> unlockedUpgrades = new CollectionList<>();
     private final Collection<Team, Inventory> inventories = new Collection<>();
     private final Collection<Integer, ItemStack> noLoreItems = new Collection<>();
     private Team team = null;
@@ -46,7 +45,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
     @NotNull
     @Override
     public Inventory getInventory() {
-        if (this.team == null) throw new NullPointerException("getInventory must be called after prepare(Team).");
+        if (this.team == null) throw new NullPointerException("getInventory must be called after TeamUpgrades#prepare.");
         Inventory inv = inventories.get(this.team);
         this.team = null;
         return inv;
@@ -125,12 +124,12 @@ public class TeamUpgrades implements InventoryHolder, Listener {
             upgrades.get(item.getType()).run(team);
             unlockedUpgrades.add(upgrades.get(item.getType()));
         } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) if (((TieredUpgrade<Team>) upgrades.get(item.getType())).getTier(team) == ((TieredUpgrade)upgrades.get(item.getType())).maxTier()) {
-            ((TieredUpgrade<Team>) upgrades.get(item.getType())).upgrade(team);
-            upgrades.get(item.getType()).run(team);
+            ((TieredUpgrade<Team>) upgrades.get(item.getType())).upgradeAndRun(team);
             unlockedUpgrades.add(upgrades.get(item.getType()));
         }
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(item.getType()).getName());
+        //Constants.upgrades
         initializeItems(); // re-add lore for items
     }
 
