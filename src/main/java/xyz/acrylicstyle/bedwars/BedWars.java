@@ -16,6 +16,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.ItemFlag;
@@ -283,25 +284,25 @@ public class BedWars extends JavaPlugin implements Listener {
                             PlayerArmor armor = Constants.wearingArmor.getOrDefault(player.getUniqueId(), PlayerArmor.LEATHER);
                             int tier = ReinforcedArmor.getTierStatic(team.get(e.getPlayer().getUniqueId()));
                             if (armor == PlayerArmor.LEATHER) {
-                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, tier);
-                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                boots = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_BOOTS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
+                                leggings = Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_LEGGINGS, BedWars.team.get(player.getUniqueId())), Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
                             } else if (armor == PlayerArmor.CHAIN) {
-                                boots = Utils.enchantTool(Material.CHAINMAIL_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
-                                leggings = Utils.enchantTool(Material.CHAINMAIL_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                boots = Utils.enchantTool(Material.CHAINMAIL_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
+                                leggings = Utils.enchantTool(Material.CHAINMAIL_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
                             } else if (armor == PlayerArmor.IRON) {
-                                boots = Utils.enchantTool(Material.IRON_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
-                                leggings = Utils.enchantTool(Material.IRON_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                boots = Utils.enchantTool(Material.IRON_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
+                                leggings = Utils.enchantTool(Material.IRON_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
                             } else if (armor == PlayerArmor.DIAMOND) {
-                                boots = Utils.enchantTool(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
-                                leggings = Utils.enchantTool(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                boots = Utils.enchantTool(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
+                                leggings = Utils.enchantTool(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
                             } else { // impossible
-                                boots = Utils.enchantTool(Material.LEATHER_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
-                                leggings = Utils.enchantTool(Material.LEATHER_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier);
+                                boots = Utils.enchantTool(Material.LEATHER_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
+                                leggings = Utils.enchantTool(Material.LEATHER_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, tier == 0 ? null : tier);
                             }
                             player.getInventory().setBoots(boots);
                             player.getInventory().setLeggings(leggings);
                             player.getInventory().setChestplate(Utils.getColoredLeatherArmor(Material.LEATHER_CHESTPLATE, BedWars.team.get(player.getUniqueId())));
-                            player.getInventory().setHelmet(Utils.getColoredLeatherArmor(Material.LEATHER_HELMET, BedWars.team.get(player.getUniqueId())));
+                            player.getInventory().setHelmet(Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_HELMET, BedWars.team.get(player.getUniqueId())), Enchantment.WATER_WORKER, 1));
                             player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
                         }
                         this.cancel();
@@ -413,5 +414,20 @@ public class BedWars extends JavaPlugin implements Listener {
             || e.getClickedBlock().getType() == Material.BED
             || e.getClickedBlock().getType() == Material.WORKBENCH) e.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent e) {
+        Team team = BedWars.team.get(e.getPlayer().getUniqueId());
+        String teamName = team != null ? team.color + team.name() + ChatColor.GRAY : ChatColor.GRAY + "[SPECTATOR] " ;
+        e.setFormat(teamName + e.getPlayer().getDisplayName());
+        if (team == null) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPrepareItemCraft(PrepareItemCraftEvent e) {
+        e.getInventory().setResult(new ItemStack(Material.AIR));
     }
 }
