@@ -34,6 +34,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import util.Collection;
 import util.CollectionList;
 import util.CollectionSync;
+import util.CollectionStrictSync;
 import xyz.acrylicstyle.bedwars.commands.*;
 import xyz.acrylicstyle.bedwars.inventories.*;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
@@ -60,6 +61,8 @@ public class BedWars extends JavaPlugin implements Listener {
     public static Collection<UUID, Scoreboard> scoreboards = new Collection<>();
     public static CollectionSync<UUID, PlayerStatus> status = new CollectionSync<>();
     public static Collection<UUID, Team> team = new Collection<>();
+    public static CollectionStrictSync<UUID, Integer> kills = new CollectionStrictSync<>();
+    public static CollectionStrictSync<UUID, Integer> finalKills = new CollectionStrictSync<>();
     public static Set<Team> aliveTeam = new HashSet<>();
     public static boolean startedLobbyTask = false;
     private static Set<Location> playerPlacedBlocks = new HashSet<>();
@@ -237,6 +240,8 @@ public class BedWars extends JavaPlugin implements Listener {
                 Utils.run(l -> e.getEntity().spigot().respawn());
                 return;
             }
+            if (finalKillMessage.length() <= 0) kills.add(killer.getUniqueId(), kills.getOrDefault(killer.getUniqueId(), 0)+1);
+            if (finalKillMessage.length() >= 1) finalKills.add(killer.getUniqueId(), kills.getOrDefault(killer.getUniqueId(), 0)+1);
             Team killerTeam = team.get(killer.getUniqueId());
             e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
             CollectionList<ItemStack> diamonds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.DIAMOND));

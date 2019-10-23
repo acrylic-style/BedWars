@@ -21,6 +21,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import util.Collection;
+import util.CollectionList;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
@@ -356,19 +357,40 @@ public final class Utils {
 
     @SuppressWarnings("deprecation")
     public static void endGame() {
+        StringBuilder players = new StringBuilder();
         BedWars.aliveTeam.forEach(team -> {
             BedWars.team.filter(t -> t.equals(team)).foreachKeys((uuid, index) -> {
+                if (players.length() >= 1) players.append(ChatColor.GRAY + ", ");
                 Player player = Bukkit.getPlayer(uuid);
                 player.sendTitle("" + ChatColor.GOLD + ChatColor.BOLD + "VICTORY!", "");
+                players.append(ChatColor.GRAY + player.getDisplayName());
             });
         });
+        Team team = new CollectionList<>(BedWars.aliveTeam).first();
+        Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "------------------------------------------------------------");
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(Utils.textAtCenter(ChatColor.WHITE + "Bedwars", 60));
+        Bukkit.broadcastMessage("");
+        if (team != null) Bukkit.broadcastMessage(Utils.textAtCenter(team.color + Utils.capitalize(team.name()) + ChatColor.GRAY + " - " + players.toString(), 60));
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "------------------------------------------------------------");
         new BukkitRunnable() {
             public void run() {
-                Bukkit.getOnlinePlayers().forEach(player -> {
-                    player.kickPlayer("");
-                });
+                Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(""));
                 Bukkit.shutdown();
             }
-        }.runTaskLater(Utils.getInstance(), 10*20);
+        }.runTaskLater(Utils.getInstance(), 15*20);
+    }
+
+    public static String repeatString(String s, int count) { // if you're at java 11, this method is useless.
+        StringBuilder s1 = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            s1.append(s);
+        }
+        return s1.toString();
+    }
+
+    public static String textAtCenter(String text, int length) {
+        return repeatString(" ", (int) ((length-text.length())/2L)) + text; // if java 11, we could use String#repeat(count).
     }
 }
