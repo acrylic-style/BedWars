@@ -7,6 +7,9 @@ import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Represents a class that generates resource and drop it to the world.
  */
@@ -25,7 +28,13 @@ public class ResourceGeneratorTask extends BukkitRunnable {
     @Override
     public void run() {
         if (this.generator.getGeneratorPlace() == GeneratorPlaces.TEAM_BASE) {
-            this.runTaskLater(Utils.getInstance(), (long) (generator.getGenerateTime() * 20));
+            Timer timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                public void run() {
+                    ResourceGeneratorTask.this.run();
+                }
+            };
+            timer.schedule(timerTask, (long) (generator.getGenerateTime()*1000));
             Location location = Utils.getConfigUtils().getGeneratorLocation(team.name().toLowerCase());
             location.getWorld().dropItem(location, this.generator.getResource());
         } else if (this.generator.getGeneratorPlace() == GeneratorPlaces.SEMI_MIDDLE) {
