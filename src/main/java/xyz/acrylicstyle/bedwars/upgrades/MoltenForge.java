@@ -4,17 +4,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import util.Collection;
 import util.CollectionStrictSync;
-import xyz.acrylicstyle.bedwars.generators.GoldGenerator;
-import xyz.acrylicstyle.bedwars.generators.IronGenerator;
-import xyz.acrylicstyle.bedwars.tasks.ResourceGeneratorTask;
-import xyz.acrylicstyle.bedwars.utils.*;
+import xyz.acrylicstyle.bedwars.utils.Team;
 
 public class MoltenForge implements TieredUpgrade<Team> {
     private static CollectionStrictSync<Team, Integer> divider = new CollectionStrictSync<>();
 
-    public static Integer getDivider(Team team) { return divider.getOrDefault(team, 1); }
+    public static Integer getDivider(Team team) { return divider.getOrDefault(team, 5); }
 
     @SuppressWarnings("unused") // v  just for debug  v
     public static CollectionStrictSync<Team, Integer> getDivider() { return divider; }
