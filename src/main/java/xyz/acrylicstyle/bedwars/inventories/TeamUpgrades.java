@@ -124,8 +124,9 @@ public class TeamUpgrades implements InventoryHolder, Listener {
             upgrades.get(item.getType()).run(team);
             unlockedUpgrades.add(upgrades.get(item.getType()));
         } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) {
-            ((TieredUpgrade<Team>) upgrades.get(item.getType())).upgradeAndRun(team);
-            if (((TieredUpgrade<Team>) upgrades.get(item.getType())).getTier(team) == ((TieredUpgrade)upgrades.get(item.getType())).maxTier()) {
+            TieredUpgrade<Team> upgrade = (TieredUpgrade<Team>) upgrades.get(item.getType());
+            upgrade.upgradeAndRun(team);
+            if (upgrade.getTier(team) >= upgrade.maxTier()) {
                 unlockedUpgrades.add(upgrades.get(item.getType()));
             }
         }

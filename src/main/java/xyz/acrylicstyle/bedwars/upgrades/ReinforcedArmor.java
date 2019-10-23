@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import util.CollectionStrictSync;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Team;
@@ -17,9 +18,7 @@ import java.util.List;
 public class ReinforcedArmor implements TieredUpgrade<Team> {
     private static CollectionStrictSync<Team, Integer> tier = new CollectionStrictSync<>();
 
-    public static int getTierStatic(Team team) {
-        return tier.getOrDefault(team, 0);
-    }
+    public static int getTierStatic(Team team) { return tier.getOrDefault(team, 0); }
 
     @Override
     public void upgrade(Team team) {
@@ -33,9 +32,7 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
     }
 
     @Override
-    public int maxTier() {
-        return 4;
-    }
+    public int maxTier() { return 4; }
 
     @Override
     public ItemStack getCost(int tier) {
@@ -54,9 +51,7 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
     }
 
     @Override
-    public String getName() {
-        return "Reinforced Armor";
-    }
+    public String getName() { return "Reinforced Armor"; }
 
     @Override
     public ItemStack getItem() {
@@ -69,19 +64,13 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
 
     @Override
     public void run(Team team) {
-        BedWars.team.values(team).foreachKeys(((uuid, i) -> {
-            List<ItemStack> items = Arrays.asList(Bukkit.getPlayer(uuid).getInventory().getContents());
-            items.forEach(item -> {
-                if (item != null)
-                    if (item.getType() == Material.IRON_LEGGINGS
-                            || item.getType() == Material.IRON_BOOTS
-                            || item.getType() == Material.LEATHER_BOOTS
-                            || item.getType() == Material.LEATHER_LEGGINGS
-                            || item.getType() == Material.CHAINMAIL_LEGGINGS
-                            || item.getType() == Material.CHAINMAIL_BOOTS
-                            || item.getType() == Material.DIAMOND_LEGGINGS
-                            || item.getType() == Material.DIAMOND_BOOTS) Bukkit.getPlayer(uuid).getInventory().setItem(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.PROTECTION_FALL, getTier(team)));
-            });
-        }));
+        new BukkitRunnable() {
+            public void run() {
+                BedWars.team.values(team).foreachKeys(((uuid, i) -> {
+                    List<ItemStack> items = Arrays.asList(Bukkit.getPlayer(uuid).getInventory().getArmorContents());
+                    items.forEach(item -> Bukkit.getPlayer(uuid).getInventory().setItem(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.PROTECTION_FALL, getTier(team))));
+                }));
+            }
+        }.runTaskTimer(Utils.getInstance(), 0, 40);
     }
 }

@@ -1,9 +1,12 @@
 package xyz.acrylicstyle.bedwars.tasks;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import util.CollectionList;
+import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.generators.DiamondGenerator;
 import xyz.acrylicstyle.bedwars.generators.EmeraldGenerator;
 import xyz.acrylicstyle.bedwars.utils.Constants;
@@ -34,6 +37,7 @@ public class EventTask extends BukkitRunnable {
             eseconds = EmeraldGenerator.time;
         }
         Utils.setScoreReplace(nextEvent.getName() + " in " + ChatColor.GREEN + Utils.secondsToTime(nextEvent.getTime()-GameTask.playedTime), 10);
+        for (Player player : Bukkit.getOnlinePlayers()) player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
         Utils.getConfigUtils().getSemiMiddleGenerators().forEach(location -> {
             Hologram hologram = Utils.getHologram(location.toString());
             hologram.removeLine(2);

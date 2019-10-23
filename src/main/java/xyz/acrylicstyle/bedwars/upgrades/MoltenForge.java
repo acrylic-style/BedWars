@@ -5,32 +5,28 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import util.Collection;
+import util.CollectionStrictSync;
 import xyz.acrylicstyle.bedwars.generators.GoldGenerator;
 import xyz.acrylicstyle.bedwars.generators.IronGenerator;
 import xyz.acrylicstyle.bedwars.tasks.ResourceGeneratorTask;
 import xyz.acrylicstyle.bedwars.utils.*;
 
 public class MoltenForge implements TieredUpgrade<Team> {
-    private static Collection<Team, Integer> divider = new Collection<>();
+    private static CollectionStrictSync<Team, Integer> divider = new CollectionStrictSync<>();
 
-    public static Integer getDivider(Team team) {
-        return divider.getOrDefault(team, 1);
-    }
+    public static Integer getDivider(Team team) { return divider.getOrDefault(team, 1); }
 
-    @Override
-    public void upgrade(Team team) {
-        divider.put(team, getTier(team)+1);
-    }
+    @SuppressWarnings("unused")
+    public static CollectionStrictSync<Team, Integer> getDivider() { return divider; }
 
     @Override
-    public int getTier(Team team) {
-        return divider.getOrDefault(team, 0);
-    }
+    public void upgrade(Team team) { divider.put(team, getTier(team)+1); }
 
     @Override
-    public int maxTier() {
-        return 4;
-    }
+    public int getTier(Team team) { return divider.getOrDefault(team, 0); }
+
+    @Override
+    public int maxTier() { return 4; }
 
     @Override
     public ItemStack getCost(int tier) {
@@ -49,9 +45,7 @@ public class MoltenForge implements TieredUpgrade<Team> {
     }
 
     @Override
-    public String getName() {
-        return "Molten Forge";
-    }
+    public String getName() { return "Molten Forge"; }
 
     @Override
     public ItemStack getItem() {

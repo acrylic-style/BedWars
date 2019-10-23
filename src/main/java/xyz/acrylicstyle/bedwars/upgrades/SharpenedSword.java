@@ -17,14 +17,10 @@ public class SharpenedSword implements OneTimeUpgrade<Team> {
     private UUID uuid = null;
 
     @Override
-    public String getName() {
-        return "Sharpened Sword";
-    }
+    public String getName() { return "Sharpened Sword"; }
 
     @Override
-    public ItemStack getCost() {
-        return new ItemStack(Material.DIAMOND, 8);
-    }
+    public ItemStack getCost() { return new ItemStack(Material.DIAMOND, 8); }
 
     @Override
     public ItemStack getItem() {
