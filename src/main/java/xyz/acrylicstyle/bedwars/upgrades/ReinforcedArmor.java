@@ -68,7 +68,7 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
             public void run() {
                 BedWars.team.values(team).foreachKeys(((uuid, i) -> {
                     List<ItemStack> items = Arrays.asList(Bukkit.getPlayer(uuid).getInventory().getArmorContents());
-                    items.forEach(item -> Bukkit.getPlayer(uuid).getInventory().setItem(items.indexOf(item), Utils.enchantTool(item.getType(), Enchantment.PROTECTION_FALL, getTier(team))));
+                    items.forEach(item -> item.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, getTier(team)));
                 }));
             }
         }.runTaskTimer(Utils.getInstance(), 0, 40);
