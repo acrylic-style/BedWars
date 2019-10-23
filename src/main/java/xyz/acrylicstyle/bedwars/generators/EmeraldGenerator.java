@@ -33,4 +33,11 @@ public class EmeraldGenerator implements Generator {
     public static void setTime(int time) {
         EmeraldGenerator.time = time;
     }
+
+    @Override
+    public EmeraldGenerator clone() {
+        EmeraldGenerator generator = new EmeraldGenerator();
+        generator.setTime(EmeraldGenerator.time);
+        return generator;
+    }
 }

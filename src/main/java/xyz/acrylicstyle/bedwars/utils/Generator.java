@@ -6,4 +6,5 @@ public interface Generator {
     GeneratorPlaces getGeneratorPlace();
     ItemStack getResource();
     double getGenerateTime();
+    Generator clone();
 }

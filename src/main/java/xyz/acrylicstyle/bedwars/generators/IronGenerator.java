@@ -38,4 +38,11 @@ public class IronGenerator implements Generator {
         Log.debug("Attempting to get time as team: " + team.name() + ", divider: " + MoltenForge.getDivider(team));
         return (1/(Utils.teamSize/4F)) / MoltenForge.getDivider(team);
     }
+
+    @Override
+    public IronGenerator clone() {
+        IronGenerator generator = new IronGenerator();
+        generator.setTeam(this.team);
+        return generator;
+    }
 }
