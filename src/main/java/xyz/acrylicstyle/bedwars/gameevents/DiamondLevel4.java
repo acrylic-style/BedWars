@@ -13,6 +13,7 @@ public class DiamondLevel4 implements GameEvent {
         Bukkit.broadcastMessage(ChatColor.AQUA + "Diamond Generators " + ChatColor.YELLOW + " have been upgraded to Tier " + ChatColor.RED + "IV");
         Utils.getConfigUtils().getSemiMiddleGenerators().forEach(location -> {
             Hologram hologram = Utils.getHologram(location.toString());
+            hologram.removeLine(0);
             hologram.insertTextLine(0, ChatColor.YELLOW + "Tier " + ChatColor.RED + "IV");
         });
     }

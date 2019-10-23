@@ -36,10 +36,12 @@ public class EventTask extends BukkitRunnable {
         Utils.setScoreReplace(nextEvent.getName() + " in " + ChatColor.GREEN + Utils.secondsToTime(nextEvent.getTime()-GameTask.playedTime), 10);
         Utils.getConfigUtils().getSemiMiddleGenerators().forEach(location -> {
             Hologram hologram = Utils.getHologram(location.toString());
+            hologram.removeLine(2);
             hologram.insertTextLine(2, ChatColor.YELLOW + "Spawns in " + ChatColor.RED + dseconds + ChatColor.YELLOW + " seconds");
         });
         Utils.getConfigUtils().getMiddleGenerators().forEach(location -> {
             Hologram hologram = Utils.getHologram(location.toString());
+            hologram.removeLine(2);
             hologram.insertTextLine(2, ChatColor.YELLOW + "Spawns in " + ChatColor.RED + eseconds + ChatColor.YELLOW + " seconds");
         });
         dseconds--;

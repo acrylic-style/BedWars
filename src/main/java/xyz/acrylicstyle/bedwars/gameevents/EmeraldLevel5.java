@@ -13,6 +13,7 @@ public class EmeraldLevel5 implements GameEvent {
         Bukkit.broadcastMessage(ChatColor.GREEN + "Emerald Generators " + ChatColor.YELLOW + " have been upgraded to Tier " + ChatColor.RED + "V");
         Utils.getConfigUtils().getMiddleGenerators().forEach(location -> {
             Hologram hologram = Utils.getHologram(location.toString());
+            hologram.removeLine(0);
             hologram.insertTextLine(0, ChatColor.YELLOW + "Tier " + ChatColor.RED + "V");
         });
     }
