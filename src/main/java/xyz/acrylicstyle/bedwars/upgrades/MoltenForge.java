@@ -16,7 +16,7 @@ public class MoltenForge implements TieredUpgrade<Team> {
 
     public static Integer getDivider(Team team) { return divider.getOrDefault(team, 1); }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") // v  just for debug  v
     public static CollectionStrictSync<Team, Integer> getDivider() { return divider; }
 
     @Override
