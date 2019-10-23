@@ -24,6 +24,7 @@ import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -294,12 +295,17 @@ public final class Utils {
         return item;
     }
 
-    public static ItemStack getPotionItemStack(PotionType type, int amplifier, int duration, String displayName) {
-        Potion potion = new Potion(type, amplifier, false);
-        ItemStack itemstack = potion.toItemStack(1);;
+    public static ItemStack getPotionItemStack(PotionType type, int level, int duration, String displayName) {
+        Potion potion = new Potion(type, 1, false, true);
+        try {
+            Field field = potion.getClass().getField("level");
+            field.setAccessible(true);
+            field.setInt(potion, level);
+        } catch (NoSuchFieldException | IllegalAccessException ignored) {} // impossible
+        ItemStack itemstack = potion.toItemStack(1);
         PotionMeta meta = (PotionMeta) itemstack.getItemMeta();
         meta.setDisplayName(displayName);
-        meta.addCustomEffect(new PotionEffect(type.getEffectType(), duration, amplifier), true);
+        meta.addCustomEffect(new PotionEffect(type.getEffectType(), duration, level), true);
         itemstack.setItemMeta(meta);
         return itemstack;
     }
