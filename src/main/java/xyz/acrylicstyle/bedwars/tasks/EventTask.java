@@ -25,11 +25,11 @@ public class EventTask extends BukkitRunnable {
             events.remove(nextEvent);
             nextEvent = events.first();
         }
-        if (DiamondGenerator.time != lastdseconds) {
+        if (DiamondGenerator.time != lastdseconds || dseconds <= 0) {
             lastdseconds = DiamondGenerator.time;
             dseconds = DiamondGenerator.time;
         }
-        if (EmeraldGenerator.time != lasteseconds) {
+        if (EmeraldGenerator.time != lasteseconds || eseconds <= 0) {
             lasteseconds = EmeraldGenerator.time;
             eseconds = EmeraldGenerator.time;
         }
