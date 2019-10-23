@@ -228,16 +228,16 @@ public class BedWars extends JavaPlugin implements Listener {
         Team victimTeam = team.get(e.getEntity().getUniqueId());
         Player killer = e.getEntity().getKiller();
         e.setKeepInventory(true);
+        final String finalKillMessage = aliveTeam.contains(victimTeam) ? "" : "" + ChatColor.AQUA + ChatColor.BOLD + " FINAL KILL!";
         if (killer == null) {
-            e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " died.");
+            e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " died." + finalKillMessage);
         } else {
             if (killer.getUniqueId().equals(e.getEntity().getUniqueId())) {
-                e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " took their own life.");
+                e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " took their own life." + finalKillMessage);
                 Utils.run(l -> e.getEntity().spigot().respawn());
                 return;
             }
             Team killerTeam = team.get(killer.getUniqueId());
-            final String finalKillMessage = aliveTeam.contains(victimTeam) ? "" : "" + ChatColor.AQUA + ChatColor.BOLD + " FINAL KILL!";
             e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
             CollectionList<ItemStack> diamonds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.DIAMOND));
             CollectionList<ItemStack> emeralds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.EMERALD));

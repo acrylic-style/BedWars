@@ -12,8 +12,8 @@ public class MoltenForge implements TieredUpgrade<Team> {
     private static CollectionStrictSync<Team, Integer> divider = new CollectionStrictSync<>();
 
     public static int getDivider(Team team) {
-        Validate.isTrue(team != null);
-        return divider.getOrDefault(team, 5);
+        Validate.notNull(team, "Team cannot be null");
+        return divider.getOrDefault(team, 1);
     }
 
     @Override
