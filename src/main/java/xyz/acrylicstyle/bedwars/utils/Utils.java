@@ -36,6 +36,7 @@ public final class Utils {
     private static GameTask _gameTask = null;
     private static LobbyTask _lobbyTask = null;
     private static ConfigUtils configUtils = null;
+    private static Collection<String, Hologram> holograms = new Collection<>();
 
     public static int maximumPlayers = 16;
     public static int minimumPlayers = 4;
@@ -297,8 +298,44 @@ public final class Utils {
         return item;
     }
 
+    /**
+     * Create hologram but won't add to the list.
+     * @param location Hologram location
+     * @return new hologram object
+     */
     public static Hologram createHologram(Location location) {
         return HologramsAPI.createHologram(Utils.getInstance(), location);
+    }
+
+    /**
+     * Create hologram and add to the list.
+     * @param id ID that you want to create
+     * @param location Hologram location
+     * @return New hologram object
+     */
+    public static Hologram addHologram(String id, Location location) {
+        Hologram hologram = Utils.createHologram(location);
+        holograms.add(id, hologram);
+        return hologram;
+    }
+
+    /**
+     * Gets hologram by id.
+     * @param id Hologram name specified by #addHologram
+     * @return Hologram but null if not found
+     */
+    public static Hologram getHologram(String id) {
+        return holograms.get(id);
+    }
+
+    /**
+     * Gets hologram by id but if not found, it'll create one with new key.
+     * @param id Hologram name specified by #addHologram
+     * @param location Default location value.
+     * @return Hologram, but new hologram if not found
+     */
+    public static Hologram getHologram(String id, Location location) {
+        return holograms.getOrDefault(id, addHologram(id, location));
     }
 
     public static ItemStack getPotionItemStack(PotionType type, int level, int duration, String displayName) {

@@ -1,11 +1,13 @@
 package xyz.acrylicstyle.bedwars.tasks;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Objective;
 import xyz.acrylicstyle.bedwars.BedWars;
@@ -103,6 +105,20 @@ public class LobbyTask extends BukkitRunnable {
             if (BedWars.team.values(Team.BLACK).size() > 0) BedWars.aliveTeam.add(Team.BLACK);
             if (BedWars.team.values(Team.PINK).size() > 0) BedWars.aliveTeam.add(Team.PINK);
             if (BedWars.team.values(Team.AQUA).size() > 0) BedWars.aliveTeam.add(Team.AQUA);
+            Utils.getConfigUtils().getSemiMiddleGenerators().forEach(location -> {
+                Hologram hologram = Utils.addHologram(location.toString(), location.clone().add(0, 7, 0));
+                hologram.appendTextLine(ChatColor.YELLOW + "Tier " + ChatColor.RED + "I");
+                hologram.appendTextLine("" + ChatColor.AQUA + ChatColor.BOLD + "Diamond");
+                hologram.appendTextLine(ChatColor.YELLOW + "Spawns in " + ChatColor.RED + "0" + ChatColor.YELLOW + " seconds");
+                hologram.appendItemLine(new ItemStack(Material.DIAMOND_BLOCK));
+            });
+            Utils.getConfigUtils().getMiddleGenerators().forEach(location -> {
+                Hologram hologram = Utils.addHologram(location.toString(), location.clone().add(0, 7, 0));
+                hologram.appendTextLine(ChatColor.YELLOW + "Tier " + ChatColor.RED + "I");
+                hologram.appendTextLine("" + ChatColor.GREEN + ChatColor.BOLD + "Emerald");
+                hologram.appendTextLine(ChatColor.YELLOW + "Spawns in " + ChatColor.RED + "0" + ChatColor.YELLOW + " seconds");
+                hologram.appendItemLine(new ItemStack(Material.EMERALD_BLOCK));
+            });
             GameTask gameTask = new GameTask();
             gameTask.runTaskTimer(Utils.getInstance(), 0, 20);
             Utils.setGameTask(gameTask);

@@ -7,6 +7,9 @@ import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
+/**
+ * Represents a class that generates resource and drop it to the world.
+ */
 public class ResourceGeneratorTask extends BukkitRunnable {
     public Generator generator;
     private Team team;
