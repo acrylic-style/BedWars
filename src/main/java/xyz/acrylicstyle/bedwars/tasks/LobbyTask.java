@@ -106,14 +106,14 @@ public class LobbyTask extends BukkitRunnable {
             if (BedWars.team.values(Team.PINK).size() > 0) BedWars.aliveTeam.add(Team.PINK);
             if (BedWars.team.values(Team.AQUA).size() > 0) BedWars.aliveTeam.add(Team.AQUA);
             Utils.getConfigUtils().getSemiMiddleGenerators().forEach(location -> {
-                Hologram hologram = Utils.addHologram(location.toString(), location.clone().add(0, 7, 0));
+                Hologram hologram = Utils.addHologram(location.toString(), location);
                 hologram.appendTextLine(ChatColor.YELLOW + "Tier " + ChatColor.RED + "I");
                 hologram.appendTextLine("" + ChatColor.AQUA + ChatColor.BOLD + "Diamond");
                 hologram.appendTextLine(ChatColor.YELLOW + "Spawns in " + ChatColor.RED + "0" + ChatColor.YELLOW + " seconds");
                 hologram.appendItemLine(new ItemStack(Material.DIAMOND_BLOCK));
             });
             Utils.getConfigUtils().getMiddleGenerators().forEach(location -> {
-                Hologram hologram = Utils.addHologram(location.toString(), location.clone().add(0, 7, 0));
+                Hologram hologram = Utils.addHologram(location.toString(), location);
                 hologram.appendTextLine(ChatColor.YELLOW + "Tier " + ChatColor.RED + "I");
                 hologram.appendTextLine("" + ChatColor.GREEN + ChatColor.BOLD + "Emerald");
                 hologram.appendTextLine(ChatColor.YELLOW + "Spawns in " + ChatColor.RED + "0" + ChatColor.YELLOW + " seconds");
