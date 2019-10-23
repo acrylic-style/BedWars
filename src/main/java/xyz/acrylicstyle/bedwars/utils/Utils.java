@@ -44,7 +44,7 @@ public final class Utils {
     public static int teamSize = 2; // doubles
 
     private final static char heavy_X = '\u2718';
-    private final static char heavy_check = '\u2714';
+    private final static char check = '\u2713';
 
     public static BedWars getInstance() {
         return BedWars.getPlugin(BedWars.class);
@@ -186,7 +186,7 @@ public final class Utils {
         String you = ChatColor.GRAY + " YOU";
         boolean inTeam = BedWars.team.get(uuid) == team;
         if (BedWars.aliveTeam.contains(team)) {
-            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.heavy_check + (inTeam ? you : ""), score, objective, uuid);
+            Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.check + (inTeam ? you : ""), score, objective, uuid);
         } else {
             int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid2 -> BedWars.status.get(uuid2) == PlayerStatus.ALIVE).size();
             if (players <= 0) {
@@ -203,7 +203,7 @@ public final class Utils {
     }
 
     public static String capitalize(String s) {
-        return s.substring(0, 1).toUpperCase() + s.substring(1);
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
     public static String getFriendlyName(ItemStack itemStack) {

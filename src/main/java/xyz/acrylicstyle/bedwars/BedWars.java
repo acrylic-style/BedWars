@@ -92,7 +92,7 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
-        e.setJoinMessage(ChatColor.GRAY + name + ChatColor.GREEN + " has joined! " + ChatColor.YELLOW + "(" + Bukkit.getOnlinePlayers().size() + "/" + (teamSize*8) + ")");
+        e.setJoinMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has joined (" + ChatColor.AQUA + Bukkit.getOnlinePlayers().size() + ChatColor.YELLOW + "/" + ChatColor.AQUA + (teamSize*8) + ChatColor.YELLOW + ")!");
         status.put(e.getPlayer().getUniqueId(), PlayerStatus.BEFORE_GAME);
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setMaxHealth(20);
