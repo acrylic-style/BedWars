@@ -73,24 +73,34 @@ public class LobbyTask extends BukkitRunnable {
             Utils.setScoreReplace("Starting in " + ChatColor.GREEN + Utils.secondsToTime(countdown), 1, objective, uuid);
             Utils.setScoreReplace("", 0, objective, uuid);
             player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
-            if (countdown == 10) {
+            if (countdown == 20) {
+                player.sendTitle(ChatColor.YELLOW + "20", "");
+                player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
+                player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 20 + ChatColor.YELLOW + " seconds!");
+            } else if (countdown == 10) {
                 player.sendTitle(ChatColor.YELLOW + "10", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
+                player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 10 + ChatColor.YELLOW + " seconds!");
             } else if (countdown == 5) {
                 player.sendTitle(ChatColor.YELLOW + "5", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
+                player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 5 + ChatColor.YELLOW + " seconds!");
             } else if (countdown == 4) {
                 player.sendTitle(ChatColor.YELLOW + "4", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
+                player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 4 + ChatColor.YELLOW + " seconds!");
             } else if (countdown == 3) {
                 player.sendTitle(ChatColor.RED + "3", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
+                player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 3 + ChatColor.YELLOW + " seconds!");
             } else if (countdown == 2) {
                 player.sendTitle(ChatColor.RED + "2", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
+                player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 2 + ChatColor.YELLOW + " seconds!");
             } else if (countdown == 1) {
                 player.sendTitle(ChatColor.RED + "1", "");
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
+                player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 1 + ChatColor.YELLOW + " second!");
             } else if (countdown == 0) {
                 player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "Go!", "");
                 player.teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(player.getUniqueId())));
