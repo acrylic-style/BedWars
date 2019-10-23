@@ -421,8 +421,8 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         Team team = BedWars.team.get(e.getPlayer().getUniqueId());
-        String teamName = team != null ? team.color + team.name() + ChatColor.GRAY : ChatColor.GRAY + "[SPECTATOR] " ;
-        if (team != null) e.setFormat(teamName + e.getPlayer().getDisplayName());
+        String teamName = team != null ? team.color + "[" + team.name() + "] " + ChatColor.GRAY : ChatColor.GRAY + "[SPECTATOR] ";
+        if (team != null) e.setFormat(teamName + e.getPlayer().getDisplayName() + ChatColor.WHITE + ": " + ChatColor.GRAY + e.getMessage());
     }
 
     @EventHandler
