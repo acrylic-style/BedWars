@@ -4,6 +4,7 @@ import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -417,7 +418,7 @@ public class BedWars extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         Team team = BedWars.team.get(e.getPlayer().getUniqueId());
         String teamName = team != null ? team.color + team.name() + ChatColor.GRAY : ChatColor.GRAY + "[SPECTATOR] " ;
