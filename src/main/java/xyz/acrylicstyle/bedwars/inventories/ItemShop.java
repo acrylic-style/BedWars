@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionType;
 import util.Collection;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.*;
@@ -23,14 +24,14 @@ public class ItemShop implements InventoryHolder, Listener {
     private final Collection<ShopCategory, Collection<Integer, ItemStack>> noLoreItems = new Collection<>();
 
     public ItemShop() {
-        inventories.add(ShopCategory.QUICK_BUY, Bukkit.createInventory(this, 9*6, "Item Shop"));
-        inventories.add(ShopCategory.BLOCKS, Bukkit.createInventory(this, 9*6, "Item Shop"));
-        inventories.add(ShopCategory.MELEE, Bukkit.createInventory(this, 9*6, "Item Shop"));
-        inventories.add(ShopCategory.ARMOR, Bukkit.createInventory(this, 9*6, "Item Shop"));
-        inventories.add(ShopCategory.TOOLS, Bukkit.createInventory(this, 9*6, "Item Shop"));
-        inventories.add(ShopCategory.RANGED, Bukkit.createInventory(this, 9*6, "Item Shop"));
-        inventories.add(ShopCategory.POTIONS, Bukkit.createInventory(this, 9*6, "Item Shop"));
-        inventories.add(ShopCategory.UTILITY, Bukkit.createInventory(this, 9*6, "Item Shop"));
+        inventories.add(ShopCategory.QUICK_BUY, Bukkit.createInventory(this, 9*6, "Item Shop - Quick Buy"));
+        inventories.add(ShopCategory.BLOCKS, Bukkit.createInventory(this, 9*6, "Item Shop - Blocks"));
+        inventories.add(ShopCategory.MELEE, Bukkit.createInventory(this, 9*6, "Item Shop - Melee"));
+        inventories.add(ShopCategory.ARMOR, Bukkit.createInventory(this, 9*6, "Item Shop - Armor"));
+        inventories.add(ShopCategory.TOOLS, Bukkit.createInventory(this, 9*6, "Item Shop - Tools"));
+        inventories.add(ShopCategory.RANGED, Bukkit.createInventory(this, 9*6, "Item Shop - Ranged"));
+        inventories.add(ShopCategory.POTIONS, Bukkit.createInventory(this, 9*6, "Item Shop - Potions"));
+        inventories.add(ShopCategory.UTILITY, Bukkit.createInventory(this, 9*6, "Item Shop - Utility"));
         initializeItems();
     }
 
@@ -80,10 +81,14 @@ public class ItemShop implements InventoryHolder, Listener {
         quickBuy.setItem(32, setLore(32, Utils.unbreakable(Material.BOW), ShopCategory.QUICK_BUY));
         quickBuy.setItem(41, setLore(41, Utils.enchantTool(Material.BOW, Enchantment.ARROW_DAMAGE, 4), ShopCategory.QUICK_BUY));
         quickBuy.setItem(50, setLore(50, Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 2), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(24, setLore(24, Utils.getPotionItemStack(PotionType.JUMP, 1, 45, ChatColor.AQUA + "Jump Potion II (45 seconds)"), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(33, setLore(33, Utils.getPotionItemStack(PotionType.SPEED, 1, 45, ChatColor.AQUA + "Speed Potion II (45 seconds)"), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(42, setLore(42, Utils.getPotionItemStack(PotionType.INVISIBILITY, 0, 30, ChatColor.AQUA + "Invisibility Potion (30 seconds)"), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(42, setLore(51, Utils.getPotionItemStack(PotionType.REGEN, 1, 10, ChatColor.AQUA + "Regen Potion II (10 seconds)"), ShopCategory.QUICK_BUY));
         quickBuy.setItem(25, setLore(25, new ItemStack(Material.TNT), ShopCategory.QUICK_BUY));
         quickBuy.setItem(34, setLore(34, new ItemStack(Material.WATER_BUCKET), ShopCategory.QUICK_BUY));
         quickBuy.setItem(43, setLore(43, new ItemStack(Material.MILK_BUCKET), ShopCategory.QUICK_BUY));
-        quickBuy.setItem(52, setLore(52, new ItemStack(Material.COOKED_BEEF), ShopCategory.QUICK_BUY));
+        quickBuy.setItem(52, setLore(52, new ItemStack(Material.GOLDEN_APPLE), ShopCategory.QUICK_BUY));
 
         Constants.shopItems_Blocks.foreachKeys((item, index) -> {
             inventories.get(ShopCategory.BLOCKS).setItem(index+18, setLore(index+18, item, ShopCategory.BLOCKS)); // 18 is the offset, because <= 17 is category zone

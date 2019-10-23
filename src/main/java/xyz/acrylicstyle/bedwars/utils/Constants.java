@@ -1,8 +1,10 @@
 package xyz.acrylicstyle.bedwars.utils;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionType;
 import util.Collection;
 import util.CollectionInstanceSet;
 import xyz.acrylicstyle.bedwars.gameevents.*;
@@ -86,12 +88,14 @@ public final class Constants {
         shopItems_Ranged.put(Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 2), new ItemStack(Material.EMERALD, 10));
         shopItems_Ranged.put(Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 10), new ItemStack(Material.EMERALD, 64));
 
-        // shopItems_Potions.put(itemStack, itemStack); // ???
+        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.JUMP, 1, 45, ChatColor.AQUA + "Jump Potion II (45 seconds)"), new ItemStack(Material.EMERALD, 1));
+        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.SPEED, 1, 45, ChatColor.AQUA + "Speed Potion II (45 seconds)"), new ItemStack(Material.EMERALD, 1));
+        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.INVISIBILITY, 0, 30, ChatColor.AQUA + "Invisibility Potion (30 seconds)"), new ItemStack(Material.EMERALD, 3));
+        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.REGEN, 1, 10, ChatColor.AQUA + "Regen Potion II (10 seconds)"), new ItemStack(Material.EMERALD, 3));
 
         shopItems_Utility.put(new ItemStack(Material.TNT), new ItemStack(Material.GOLD_INGOT, 8));
         shopItems_Utility.put(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.GOLD_INGOT, 4));
         shopItems_Utility.put(new ItemStack(Material.MILK_BUCKET), new ItemStack(Material.GOLD_INGOT, 6));
-        shopItems_Utility.put(new ItemStack(Material.COOKED_BEEF), new ItemStack(Material.IRON_INGOT, 1));
         shopItems_Utility.put(new ItemStack(Material.GOLDEN_APPLE), new ItemStack(Material.GOLD_INGOT, 3));
         shopItems_Utility.put(new ItemStack(Material.FIREBALL), new ItemStack(Material.IRON_INGOT, 40));
 

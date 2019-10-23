@@ -9,6 +9,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -288,5 +292,15 @@ public final class Utils {
         meta.setColor(color);
         item.setItemMeta(meta);
         return item;
+    }
+
+    public static ItemStack getPotionItemStack(PotionType type, int amplifier, int duration, String displayName) {
+        Potion potion = new Potion(type, amplifier, false);
+        ItemStack itemstack = potion.toItemStack(1);;
+        PotionMeta meta = (PotionMeta) itemstack.getItemMeta();
+        meta.setDisplayName(displayName);
+        meta.addCustomEffect(new PotionEffect(type.getEffectType(), duration, amplifier), true);
+        itemstack.setItemMeta(meta);
+        return itemstack;
     }
 }
