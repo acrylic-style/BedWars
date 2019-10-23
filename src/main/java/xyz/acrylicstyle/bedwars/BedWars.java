@@ -433,21 +433,25 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onItemConsume(PlayerItemConsumeEvent e) {
-        if (!(e.getItem().getItemMeta() instanceof PotionMeta)) return;
-        ((PotionMeta) e.getItem().getItemMeta()).getCustomEffects().forEach(potionEffect -> {
-            if (potionEffect.getType() == PotionEffectType.INVISIBILITY) {
-                for (Player player : Bukkit.getOnlinePlayers())
-                    player.hidePlayer(e.getPlayer());
-                Timer timer = new Timer();
-                TimerTask timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        for (Player player : Bukkit.getOnlinePlayers())
-                            player.showPlayer(e.getPlayer());
-                    }
-                };
-                timer.schedule(timerTask, potionEffect.getDuration()/20*1000);
-            }
-        });
+        if (e.getItem().getItemMeta() instanceof PotionMeta) {
+            ((PotionMeta) e.getItem().getItemMeta()).getCustomEffects().forEach(potionEffect -> {
+                if (potionEffect.getType() == PotionEffectType.INVISIBILITY) {
+                    for (Player player : Bukkit.getOnlinePlayers())
+                        player.hidePlayer(e.getPlayer());
+                    Timer timer = new Timer();
+                    TimerTask timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            for (Player player : Bukkit.getOnlinePlayers())
+                                player.showPlayer(e.getPlayer());
+                        }
+                    };
+                    timer.schedule(timerTask, potionEffect.getDuration() / 20 * 1000);
+                }
+            });
+        } else if (e.getItem().getType() == Material.MILK_BUCKET) {
+            for (Player player : Bukkit.getOnlinePlayers())
+                player.showPlayer(e.getPlayer());
+        }
     }
 }
