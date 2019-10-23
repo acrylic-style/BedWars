@@ -1,5 +1,6 @@
 package xyz.acrylicstyle.bedwars.tasks;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.acrylicstyle.bedwars.utils.Generator;
@@ -36,7 +37,7 @@ public class ResourceGeneratorTask extends BukkitRunnable {
             };
             timer.schedule(timerTask, (long) (generator.getGenerateTime()*1000));
             Location location = Utils.getConfigUtils().getGeneratorLocation(team.name().toLowerCase());
-            location.getWorld().dropItem(location, this.generator.getResource());
+            Bukkit.getScheduler().runTask(Utils.getInstance(), () -> location.getWorld().dropItem(location, ResourceGeneratorTask.this.generator.getResource()));
         } else if (this.generator.getGeneratorPlace() == GeneratorPlaces.SEMI_MIDDLE) {
             Utils.getConfigUtils().getSemiMiddleGenerators().forEach(location -> location.getWorld().dropItem(location, this.generator.getResource()));
         } else if (this.generator.getGeneratorPlace() == GeneratorPlaces.MIDDLE) {
