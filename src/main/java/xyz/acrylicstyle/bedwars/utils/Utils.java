@@ -241,7 +241,7 @@ public final class Utils {
      */
     public static ItemStack enchantTool(ItemStack item, Enchantment enchant, Integer level) {
         ItemMeta meta = item.getItemMeta();
-        meta.addEnchant(enchant, level, true);
+        if (level != null) meta.addEnchant(enchant, level, true);
         item.setItemMeta(meta);
         return item;
     }
