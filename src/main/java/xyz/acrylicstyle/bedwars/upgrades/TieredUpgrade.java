@@ -9,6 +9,6 @@ public interface TieredUpgrade<T> extends Upgrade<T> {
     default void upgradeAndRun(T t) {
         upgrade(t);
         run(t);
-    };
+    }
     ItemStack getCost(int tier);
 }

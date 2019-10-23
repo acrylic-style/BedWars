@@ -19,7 +19,7 @@ public class MoltenForge implements TieredUpgrade<Team> {
 
     @Override
     public void upgrade(Team team) {
-        divider.put(team, divider.get(team)+1);
+        divider.put(team, getTier(team)+1);
     }
 
     @Override

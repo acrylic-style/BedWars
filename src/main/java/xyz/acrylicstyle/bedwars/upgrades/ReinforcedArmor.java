@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import util.Collection;
+import util.CollectionStrictSync;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ReinforcedArmor implements TieredUpgrade<Team> {
-    private static Collection<Team, Integer> tier = new Collection<>();
+    private static CollectionStrictSync<Team, Integer> tier = new CollectionStrictSync<>();
 
     public static int getTierStatic(Team team) {
         return tier.getOrDefault(team, 0);
@@ -23,7 +23,7 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
 
     @Override
     public void upgrade(Team team) {
-        tier.put(team, tier.get(team)+1);
+        tier.put(team, getTier(team)+1);
     }
 
     @Override
