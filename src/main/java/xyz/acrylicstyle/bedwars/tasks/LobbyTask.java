@@ -16,7 +16,7 @@ import xyz.acrylicstyle.bedwars.utils.*;
 import java.util.UUID;
 
 public class LobbyTask extends BukkitRunnable {
-    private int countdown = 30;
+    private static int countdown = 30;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -130,9 +130,13 @@ public class LobbyTask extends BukkitRunnable {
             ShopNPCTask npcTask = new ShopNPCTask();
             npcTask.runTask(Utils.getInstance());
             this.cancel();
-            this.countdown = 30;
+            countdown = 30;
             return;
         }
         countdown--;
+    }
+
+    public static void setCountdown(int countdown) { // why you don't want to wait?
+        LobbyTask.countdown = countdown;
     }
 }

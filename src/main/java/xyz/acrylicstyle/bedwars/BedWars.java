@@ -34,8 +34,8 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import util.Collection;
 import util.CollectionList;
 import util.CollectionSync;
-import xyz.acrylicstyle.bedwars.inventories.ItemShop;
-import xyz.acrylicstyle.bedwars.inventories.TeamUpgrades;
+import xyz.acrylicstyle.bedwars.commands.*;
+import xyz.acrylicstyle.bedwars.inventories.*;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.bedwars.upgrades.ReinforcedArmor;
@@ -73,6 +73,8 @@ public class BedWars extends JavaPlugin implements Listener {
         teamUpgrades = new TeamUpgrades();
         Bukkit.getPluginManager().registerEvents(itemShop, this);
         Bukkit.getPluginManager().registerEvents(teamUpgrades, this);
+        Bukkit.getPluginCommand("forcestart").setExecutor(new ForceStart());
+        Bukkit.getPluginCommand("forcestop").setExecutor(new EndGame());
         new BukkitRunnable() {
             public void run() {
                 try {
@@ -308,24 +310,26 @@ public class BedWars extends JavaPlugin implements Listener {
                             player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
                         }
                         this.cancel();
-                        return;
+                    } else {
+                        int number = integer.getAndDecrement();
+                        String subtitle = ChatColor.YELLOW + "You will respawn in " + ChatColor.RED + number + ChatColor.YELLOW + " seconds!";
+                        e.getPlayer().sendTitle(ChatColor.RED + "YOU DIED!", subtitle);
+                        e.getPlayer().sendMessage(subtitle);
                     }
-                    int number = integer.getAndDecrement();
-                    String subtitle = ChatColor.YELLOW + "You will respawn in " + ChatColor.RED + number + ChatColor.YELLOW + " seconds!";
-                    e.getPlayer().sendTitle(ChatColor.RED + "YOU DIED!", subtitle);
-                    e.getPlayer().sendMessage(subtitle);
                 }
             }.runTaskTimer(this, 0, 20);
         } else {
             Team team = BedWars.team.remove(e.getPlayer().getUniqueId());
             e.getPlayer().sendTitle(ChatColor.RED + "YOU DIED!", "");
-            e.getPlayer().sendMessage(ChatColor.RED + "You've been eliminated!");
+            e.getPlayer().sendMessage(ChatColor.RED + "You have been eliminated!");
             if (BedWars.team.values(Team.AQUA).size() <= 0) {
                 Bukkit.broadcastMessage("");
                 Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "TEAM ELIMINATED > " + team.color + Utils.capitalize(team.name()) + "Team " + ChatColor.RED + "has been eliminated!");
                 Bukkit.broadcastMessage("");
             }
         }
+        Set<Team> teams = new HashSet<>(team.values());
+        if (teams.size() <= 1) Utils.endGame();
     }
 
     @EventHandler

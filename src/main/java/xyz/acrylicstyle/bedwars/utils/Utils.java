@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -351,5 +352,22 @@ public final class Utils {
         meta.addCustomEffect(new PotionEffect(type.getEffectType(), duration*20, level), true);
         itemstack.setItemMeta(meta);
         return itemstack;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void endGame() {
+        BedWars.aliveTeam.forEach(team -> {
+            BedWars.team.filter(t -> t.equals(team)).foreachKeys((uuid, index) -> {
+                Player player = Bukkit.getPlayer(uuid);
+                player.sendTitle("" + ChatColor.GOLD + ChatColor.BOLD + "VICTORY!", "");
+            });
+        });
+        new BukkitRunnable() {
+            public void run() {
+                Bukkit.getOnlinePlayers().forEach(player -> {
+                    player.kickPlayer("");
+                });
+            }
+        }.runTaskLater(Utils.getInstance(), 10*20);
     }
 }
