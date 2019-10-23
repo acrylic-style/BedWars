@@ -9,7 +9,6 @@ import xyz.acrylicstyle.bedwars.utils.Generator;
 import xyz.acrylicstyle.bedwars.utils.GeneratorPlaces;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Utils;
-import xyz.acrylicstyle.tomeito_core.utils.Log;
 
 public class IronGenerator implements Generator {
     private Team team = null;
@@ -35,7 +34,6 @@ public class IronGenerator implements Generator {
 
     @Override
     public double getGenerateTime() {
-        Log.debug("Attempting to get time as team: " + team.name() + ", divider: " + MoltenForge.getDivider(team));
         return (1/(Utils.teamSize/4F)) / MoltenForge.getDivider(team);
     }
 
