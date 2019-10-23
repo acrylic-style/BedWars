@@ -10,10 +10,8 @@ import xyz.acrylicstyle.bedwars.utils.Team;
 public class MoltenForge implements TieredUpgrade<Team> {
     private static CollectionStrictSync<Team, Integer> divider = new CollectionStrictSync<>();
 
-    public static Integer getDivider(Team team) { return divider.getOrDefault(team, 5); }
+    public static int getDivider(Team team) { return divider.getOrDefault(team, 5); }
 
-    @SuppressWarnings("unused") // v  just for debug  v
-    public static CollectionStrictSync<Team, Integer> getDivider() { return divider; }
 
     @Override
     public void upgrade(Team team) { divider.put(team, getTier(team)+1); }
