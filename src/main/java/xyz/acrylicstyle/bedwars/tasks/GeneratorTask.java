@@ -18,7 +18,7 @@ public class GeneratorTask extends BukkitRunnable {
                     if (generator instanceof GoldGenerator) ((GoldGenerator) generator).setTeam(team);
                     if (generator instanceof IronGenerator) ((IronGenerator) generator).setTeam(team);
                     task.setTeam(team);
-                    task.runTaskTimer(Utils.getInstance(), 0, (long) (generator.getGenerateTime() * 20));
+                    task.runTaskLater(Utils.getInstance(), (long) (generator.getGenerateTime() * 20));
                     if (Constants.resourceGeneratorTask.get(team) == null)
                         Constants.resourceGeneratorTask.put(team, new Collection<>());
                     Collection<Generator, ResourceGeneratorTask> collection = Constants.resourceGeneratorTask.get(team);

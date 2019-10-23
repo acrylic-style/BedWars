@@ -57,13 +57,5 @@ public class MoltenForge implements TieredUpgrade<Team> {
     }
 
     @Override
-    public void run(Team team) {
-        Collection<Generator, ResourceGeneratorTask> tasks = Constants.resourceGeneratorTask.get(team);
-        tasks.forEach(((generator, task) -> {
-            if (generator instanceof IronGenerator || generator instanceof GoldGenerator) {
-                task.cancel();
-                task.runTaskTimer(Utils.getInstance(), 0, (long) (task.generator.getGenerateTime() * 20));
-            }
-        }));
-    }
+    public void run(Team team) {}
 }
