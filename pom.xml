@@ -54,10 +54,10 @@
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
-        <!--repository>
-            <id>dmulloy2-repo</id>
-            <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
-        </repository-->
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -107,6 +107,12 @@
             <groupId>xyz.acrylicstyle</groupId>
             <artifactId>Util</artifactId>
             <version>0.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+            <artifactId>holographicdisplays-api</artifactId>
+            <version>2.4.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

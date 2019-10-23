@@ -123,9 +123,11 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         if (upgrades.get(item.getType()) instanceof OneTimeUpgrade) {
             upgrades.get(item.getType()).run(team);
             unlockedUpgrades.add(upgrades.get(item.getType()));
-        } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) if (((TieredUpgrade<Team>) upgrades.get(item.getType())).getTier(team) == ((TieredUpgrade)upgrades.get(item.getType())).maxTier()) {
+        } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) {
             ((TieredUpgrade<Team>) upgrades.get(item.getType())).upgradeAndRun(team);
-            unlockedUpgrades.add(upgrades.get(item.getType()));
+            if (((TieredUpgrade<Team>) upgrades.get(item.getType())).getTier(team) == ((TieredUpgrade)upgrades.get(item.getType())).maxTier()) {
+                unlockedUpgrades.add(upgrades.get(item.getType()));
+            }
         }
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(item.getType()).getName());

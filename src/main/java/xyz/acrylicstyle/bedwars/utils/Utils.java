@@ -1,5 +1,7 @@
 package xyz.acrylicstyle.bedwars.utils;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -293,6 +295,10 @@ public final class Utils {
         meta.setColor(color);
         item.setItemMeta(meta);
         return item;
+    }
+
+    public static Hologram createHologram(Location location) {
+        return HologramsAPI.createHologram(Utils.getInstance(), location);
     }
 
     public static ItemStack getPotionItemStack(PotionType type, int level, int duration, String displayName) {
