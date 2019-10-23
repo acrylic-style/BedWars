@@ -211,8 +211,6 @@ public class BedWars extends JavaPlugin implements Listener {
             Team team = BedWars.team.get(e.getPlayer().getUniqueId());
             Location resourceSpawn = Utils.getConfigUtils().getGeneratorLocation(team.name().toLowerCase());
             BedWars.team.values(team).removeReturnCollection(e.getPlayer().getUniqueId()).forEach((uuid, team1) -> {
-                Log.debug("Distance: " + Bukkit.getPlayer(uuid).getLocation().distance(resourceSpawn));
-                Log.debug("Distance squared: " + Bukkit.getPlayer(uuid).getLocation().distanceSquared(resourceSpawn));
                 if (Bukkit.getPlayer(uuid).getLocation().distance(resourceSpawn) <= 4) {
                     Bukkit.getPlayer(uuid).getInventory().addItem(new ItemStack(type));
                 }
@@ -324,7 +322,7 @@ public class BedWars extends JavaPlugin implements Listener {
             e.getPlayer().sendMessage(ChatColor.RED + "You have been eliminated!");
             if (BedWars.team.values(Team.AQUA).size() <= 0) {
                 Bukkit.broadcastMessage("");
-                Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "TEAM ELIMINATED > " + team.color + Utils.capitalize(team.name()) + "Team " + ChatColor.RED + "has been eliminated!");
+                Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "TEAM ELIMINATED > " + team.color + Utils.capitalize(team.name()) + " Team " + ChatColor.RED + "has been eliminated!");
                 Bukkit.broadcastMessage("");
             }
         }
