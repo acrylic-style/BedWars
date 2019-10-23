@@ -236,7 +236,8 @@ public class BedWars extends JavaPlugin implements Listener {
                 return;
             }
             Team killerTeam = team.get(killer.getUniqueId());
-            e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + ".");
+            final String finalKillMessage = aliveTeam.contains(victimTeam) ? "" : "" + ChatColor.AQUA + ChatColor.BOLD + " FINAL KILL!";
+            e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
             CollectionList<ItemStack> diamonds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.DIAMOND));
             CollectionList<ItemStack> emeralds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.EMERALD));
             CollectionList<ItemStack> golds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.GOLD_INGOT));
