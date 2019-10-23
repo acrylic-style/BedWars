@@ -12,6 +12,7 @@ public class MoltenForge implements TieredUpgrade<Team> {
 
     public static int getDivider(Team team) { return divider.getOrDefault(team, 5); }
 
+    public static int getDivider() { return divider.getOrDefault(Team.RED, 5); }
 
     @Override
     public void upgrade(Team team) { divider.put(team, getTier(team)+1); }
