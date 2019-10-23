@@ -346,7 +346,7 @@ public class BedWars extends JavaPlugin implements Listener {
         if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
             e.getPlayer().openInventory(itemShop.getInventory());
         } else if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "TEAM UPGRADES")) {
-            Team team = Team.valueOf(e.getRightClicked().getMetadata("team").get(0).asString());
+            Team team = BedWars.team.get(e.getPlayer().getUniqueId());
             e.getPlayer().openInventory(teamUpgrades.prepare(team).getInventory());
         }
     }
@@ -358,7 +358,7 @@ public class BedWars extends JavaPlugin implements Listener {
         if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "ITEM SHOP")) {
             e.getPlayer().openInventory(itemShop.getInventory());
         } else if (e.getRightClicked().getCustomName().equalsIgnoreCase("" + ChatColor.YELLOW + ChatColor.BOLD + "TEAM UPGRADES")) {
-            Team team = Team.valueOf(e.getRightClicked().getMetadata("team").get(0).asString());
+            Team team = BedWars.team.get(e.getPlayer().getUniqueId());
             e.getPlayer().openInventory(teamUpgrades.prepare(team).getInventory());
         }
     }
