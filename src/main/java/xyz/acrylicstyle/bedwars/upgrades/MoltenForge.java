@@ -1,5 +1,6 @@
 package xyz.acrylicstyle.bedwars.upgrades;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -10,9 +11,10 @@ import xyz.acrylicstyle.bedwars.utils.Team;
 public class MoltenForge implements TieredUpgrade<Team> {
     private static CollectionStrictSync<Team, Integer> divider = new CollectionStrictSync<>();
 
-    public static int getDivider(Team team) { return divider.getOrDefault(team, 5); }
-
-    public static int getDivider() { return divider.getOrDefault(null, 5); }
+    public static int getDivider(Team team) {
+        Validate.isTrue(team != null);
+        return divider.getOrDefault(team, 5);
+    }
 
     @Override
     public void upgrade(Team team) { divider.put(team, getTier(team)+1); }
