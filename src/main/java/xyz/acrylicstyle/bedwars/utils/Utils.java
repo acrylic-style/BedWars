@@ -363,23 +363,23 @@ public final class Utils {
                 if (players.length() >= 1) players.append(ChatColor.GRAY + ", ");
                 Player player = Bukkit.getPlayer(uuid);
                 player.sendTitle("" + ChatColor.GOLD + ChatColor.BOLD + "VICTORY!", "");
-                players.append(ChatColor.GRAY + player.getDisplayName());
+                players.append(ChatColor.GRAY + player.getPlayerListName());
             });
         });
         Team team = new CollectionList<>(BedWars.aliveTeam).first();
-        Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "------------------------------------------------------------");
+        Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "----------------------------------------");
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(Utils.textAtCenter(ChatColor.WHITE + "Bedwars", 60));
+        Bukkit.broadcastMessage(Utils.textAtCenter(ChatColor.WHITE + "Bedwars", 40));
         Bukkit.broadcastMessage("");
-        if (team != null) Bukkit.broadcastMessage(Utils.textAtCenter(team.color + Utils.capitalize(team.name()) + ChatColor.GRAY + " - " + players.toString(), 60));
+        if (team != null) Bukkit.broadcastMessage(Utils.textAtCenter(team.color + Utils.capitalize(team.name()) + ChatColor.GRAY + " - " + players.toString(), 40));
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "------------------------------------------------------------");
+        Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "----------------------------------------");
         new BukkitRunnable() {
             public void run() {
                 Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(""));
                 Bukkit.shutdown();
             }
-        }.runTaskLater(Utils.getInstance(), 15*20);
+        }.runTaskLater(Utils.getInstance(), 30*20);
     }
 
     public static String repeatString(String s, int count) { // if you're at java 11, this method is useless.
