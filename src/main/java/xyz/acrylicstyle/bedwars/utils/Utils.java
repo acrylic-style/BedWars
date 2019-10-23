@@ -367,6 +367,7 @@ public final class Utils {
                 Bukkit.getOnlinePlayers().forEach(player -> {
                     player.kickPlayer("");
                 });
+                Bukkit.shutdown();
             }
         }.runTaskLater(Utils.getInstance(), 10*20);
     }
