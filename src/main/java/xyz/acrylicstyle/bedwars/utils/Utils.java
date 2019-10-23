@@ -305,7 +305,7 @@ public final class Utils {
         ItemStack itemstack = potion.toItemStack(1);
         PotionMeta meta = (PotionMeta) itemstack.getItemMeta();
         meta.setDisplayName(displayName);
-        meta.addCustomEffect(new PotionEffect(type.getEffectType(), duration, level), true);
+        meta.addCustomEffect(new PotionEffect(type.getEffectType(), duration*20, level), true);
         itemstack.setItemMeta(meta);
         return itemstack;
     }
