@@ -22,7 +22,9 @@ import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -40,9 +42,7 @@ import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
@@ -429,5 +429,25 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onPrepareItemCraft(PrepareItemCraftEvent e) {
         e.getInventory().setResult(new ItemStack(Material.AIR));
+    }
+
+    @EventHandler
+    public void onItemConsume(PlayerItemConsumeEvent e) {
+        if (!(e.getItem().getItemMeta() instanceof PotionMeta)) return;
+        ((PotionMeta) e.getItem().getItemMeta()).getCustomEffects().forEach(potionEffect -> {
+            if (potionEffect.getType() == PotionEffectType.INVISIBILITY) {
+                for (Player player : Bukkit.getOnlinePlayers())
+                    player.hidePlayer(e.getPlayer());
+                Timer timer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        for (Player player : Bukkit.getOnlinePlayers())
+                            player.showPlayer(e.getPlayer());
+                    }
+                };
+                timer.schedule(timerTask, potionEffect.getDuration()/20*1000);
+            }
+        });
     }
 }

@@ -88,10 +88,10 @@ public final class Constants {
         shopItems_Ranged.put(Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 2), new ItemStack(Material.EMERALD, 10));
         shopItems_Ranged.put(Utils.enchantTool(Material.BOW, Enchantment.ARROW_KNOCKBACK, 10), new ItemStack(Material.EMERALD, 64));
 
-        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.JUMP, 5, 45, ChatColor.AQUA + "Jump Potion V (45 seconds)"), new ItemStack(Material.EMERALD, 1));
-        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.SPEED, 2, 45, ChatColor.AQUA + "Speed Potion II (45 seconds)"), new ItemStack(Material.EMERALD, 1));
-        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.INVISIBILITY, 1, 30, ChatColor.AQUA + "Invisibility Potion (30 seconds)"), new ItemStack(Material.EMERALD, 3));
-        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.REGEN, 2, 10, ChatColor.AQUA + "Regen Potion II (10 seconds)"), new ItemStack(Material.EMERALD, 3));
+        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.JUMP, 4, 45, ChatColor.AQUA + "Jump Potion V (45 seconds)"), new ItemStack(Material.EMERALD, 1));
+        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.SPEED, 1, 45, ChatColor.AQUA + "Speed Potion II (45 seconds)"), new ItemStack(Material.EMERALD, 1));
+        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.INVISIBILITY, 0, 30, ChatColor.AQUA + "Invisibility Potion (30 seconds)"), new ItemStack(Material.EMERALD, 3));
+        shopItems_Potions.put(Utils.getPotionItemStack(PotionType.REGEN, 1, 10, ChatColor.AQUA + "Regen Potion II (10 seconds)"), new ItemStack(Material.EMERALD, 3));
 
         shopItems_Utility.put(new ItemStack(Material.TNT), new ItemStack(Material.GOLD_INGOT, 8));
         shopItems_Utility.put(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.GOLD_INGOT, 4));
