@@ -45,6 +45,7 @@ public final class Utils {
     public static int maximumPlayers = 16;
     public static int minimumPlayers = 4;
     public static int teamSize = 2; // doubles
+    public static boolean ended = false;
 
     private final static char heavy_X = '\u2718';
     private final static char check = '\u2714';
@@ -373,6 +374,7 @@ public final class Utils {
 
     @SuppressWarnings("deprecation")
     public static void endGame() {
+        Utils.ended = true;
         StringBuilder players = new StringBuilder();
         BedWars.aliveTeam.forEach(team -> {
             BedWars.team.filter(t -> t.equals(team)).foreachKeys((uuid, index) -> {
