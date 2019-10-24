@@ -1,10 +1,7 @@
 package xyz.acrylicstyle.bedwars.tasks;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -102,6 +99,7 @@ public class LobbyTask extends BukkitRunnable {
                 player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 1 + ChatColor.YELLOW + " second!");
             } else if (countdown == 0) {
                 player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "Go!", "");
+                player.setGameMode(GameMode.SURVIVAL);
                 player.teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(player.getUniqueId())));
             }
         }
