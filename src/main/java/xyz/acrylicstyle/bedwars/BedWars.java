@@ -78,6 +78,7 @@ public class BedWars extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(teamUpgrades, this);
         Bukkit.getPluginCommand("forcestart").setExecutor(new ForceStart());
         Bukkit.getPluginCommand("forcestop").setExecutor(new EndGame());
+        Bukkit.getPluginCommand("setspawn").setExecutor(new SetSpawn());
         new BukkitRunnable() {
             public void run() {
                 try {
