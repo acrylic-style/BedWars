@@ -378,7 +378,6 @@ public final class Utils {
         Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "----------------------------------------");
         new BukkitRunnable() {
             public void run() {
-                Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(""));
                 Bukkit.shutdown();
             }
         }.runTaskLater(Utils.getInstance(), 30*20);
