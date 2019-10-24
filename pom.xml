@@ -77,8 +77,8 @@
         </dependency>
         <dependency>
             <groupId>xyz.acrylicstyle</groupId>
-            <artifactId>tomeito_core</artifactId>
-            <version>34</version>
+            <artifactId>tomeito_lib</artifactId>
+            <version>0.1.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
