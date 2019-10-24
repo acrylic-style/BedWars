@@ -99,7 +99,7 @@ public class LobbyTask extends BukkitRunnable {
                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 100, 1);
                 player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + 1 + ChatColor.YELLOW + " second!");
             } else if (countdown == 0) {
-                player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "Go!", "");
+                player.sendTitle("", "");
                 player.setGameMode(GameMode.SURVIVAL);
                 player.teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(player.getUniqueId())));
             }
