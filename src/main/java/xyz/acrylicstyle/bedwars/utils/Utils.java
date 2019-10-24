@@ -3,9 +3,11 @@ package xyz.acrylicstyle.bedwars.utils;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -392,5 +394,17 @@ public final class Utils {
 
     public static String textAtCenter(String text, int length) {
         return repeatString(" ", (int) ((length-text.length())/2L)) + text; // if java 11, we could use String#repeat(count).
+    }
+
+    public static void destroyBed(Block block) {
+        if (block.getType() == Material.BED_BLOCK || block.getType() == Material.BED) {
+            block.breakNaturally();
+            Utils.run(a -> {
+                java.util.Collection<Item> items = block.getWorld().getEntitiesByClass(Item.class);
+                items.forEach(item -> {
+                    if (item.getItemStack().getType() == Material.BED) item.remove();
+                });
+            });
+        }
     }
 }

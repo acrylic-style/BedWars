@@ -108,7 +108,9 @@ public class BedWars extends JavaPlugin implements Listener {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(""+ChatColor.YELLOW + ChatColor.BOLD + "BED WARS");
         scoreboards.put(e.getPlayer().getUniqueId(), board);
-        if (startedLobbyTask) return;
+        Location spawnPoint = new Location(world, config.getDouble("spawn.x", 0), config.getDouble("spawn.y", 60), config.getDouble("spawn.z", 0));
+        e.getPlayer().teleport(spawnPoint);
+        if (startedLobbyTask) return; // ---------- event ends here if lobbytask is already started ----------
         LobbyTask lobbyTask = new LobbyTask();
         Utils.setLobbyTask(lobbyTask);
         lobbyTask.runTaskTimer(this, 0, 20);
@@ -147,13 +149,7 @@ public class BedWars extends JavaPlugin implements Listener {
         if (e.getBlock().getType() == Material.BED_BLOCK) {
             Team team = Utils.getConfigUtils().getTeamFromLocation(e.getBlock().getLocation());
             if (!aliveTeam.contains(team)) {
-                e.getBlock().breakNaturally();
-                Utils.run(a -> {
-                    java.util.Collection<Item> items = e.getBlock().getWorld().getEntitiesByClass(Item.class);
-                    items.forEach(item -> {
-                        if (item.getItemStack().getType() == Material.BED) item.remove();
-                    });
-                });
+                Utils.destroyBed(e.getBlock());
                 return;
             }
             Team theirTeam = BedWars.team.get(e.getPlayer().getUniqueId());
@@ -169,13 +165,7 @@ public class BedWars extends JavaPlugin implements Listener {
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "BED DESTRUCTION > " + team.color + Utils.capitalize(team.name()) + " Bed " + ChatColor.GRAY + "was traded with milk by " + theirTeam.color + e.getPlayer().getName() + ChatColor.GRAY + "!");
             Bukkit.broadcastMessage("");
-            e.getBlock().breakNaturally();
-            Utils.run(a -> {
-                java.util.Collection<Item> items = e.getBlock().getWorld().getEntitiesByClass(Item.class);
-                items.forEach(item -> {
-                    if (item.getItemStack().getType() == Material.BED) item.remove();
-                });
-            });
+            Utils.destroyBed(e.getBlock());
         }
     }
 
