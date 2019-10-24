@@ -108,6 +108,12 @@ public class BedWars extends JavaPlugin implements Listener {
         final Objective objective = board.registerNewObjective("scoreboard", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(""+ChatColor.YELLOW + ChatColor.BOLD + "BED WARS");
+        Utils.setScoreReplace("Map: " + ChatColor.GREEN + BedWars.map.getString("name", "???"), 4, objective, e.getPlayer().getUniqueId());
+        Utils.setScoreReplace("Players: " + ChatColor.GREEN + Bukkit.getOnlinePlayers().size() + "/" + (Utils.teamSize*8), 3, objective, e.getPlayer().getUniqueId());
+        Utils.setScoreReplace(" ", 2, objective, e.getPlayer().getUniqueId());
+        Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective, e.getPlayer().getUniqueId());
+        if (Bukkit.getOnlinePlayers().size() < Utils.minimumPlayers) Utils.setScoreReplace(ChatColor.WHITE + "Waiting...", 1, objective, e.getPlayer().getUniqueId());
+        Utils.setScoreReplace("", 0, objective, e.getPlayer().getUniqueId());
         scoreboards.put(e.getPlayer().getUniqueId(), board);
         Location spawnPoint = new Location(world, map.getDouble("spawn.x", 0), map.getDouble("spawn.y", 60), map.getDouble("spawn.z", 0));
         e.getPlayer().teleport(spawnPoint);
