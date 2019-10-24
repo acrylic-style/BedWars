@@ -20,6 +20,7 @@ public class LobbyTask extends BukkitRunnable {
     public void run() {
         if (Bukkit.getOnlinePlayers().size() <= 0) {
             BedWars.startedLobbyTask = false;
+            countdown = 30;
             this.cancel();
             return;
         }
