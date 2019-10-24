@@ -326,7 +326,7 @@ public class BedWars extends JavaPlugin implements Listener {
             }
         }
         Set<Team> teams = new HashSet<>(team.values());
-        if (teams.size() <= 1) Utils.endGame();
+        if (teams.size() <= 1) Utils.run(l -> Utils.endGame());
     }
 
     @EventHandler
