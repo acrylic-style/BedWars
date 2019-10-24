@@ -93,7 +93,7 @@ public class BedWars extends JavaPlugin implements Listener {
         }.runTaskLater(this, 1);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent e) {
         String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
         e.setJoinMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has joined (" + ChatColor.AQUA + Bukkit.getOnlinePlayers().size() + ChatColor.YELLOW + "/" + ChatColor.AQUA + (teamSize*8) + ChatColor.YELLOW + ")!");
@@ -456,5 +456,12 @@ public class BedWars extends JavaPlugin implements Listener {
             for (Player player : Bukkit.getOnlinePlayers())
                 player.showPlayer(e.getPlayer());
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
+        e.setQuitMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has left (" + ChatColor.AQUA + Bukkit.getOnlinePlayers().size() + ChatColor.YELLOW + "/" + ChatColor.AQUA + (teamSize*8) + ChatColor.YELLOW + ")!");
+        Utils.removeScores(e.getPlayer().getUniqueId());
     }
 }

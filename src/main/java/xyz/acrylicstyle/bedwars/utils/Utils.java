@@ -177,6 +177,20 @@ public final class Utils {
         scores.put(uuid, collection);
     }
 
+    public static Collection<UUID, Collection<Integer, String>> getScores() {
+        return scores.clone();
+    }
+
+    public static Collection<UUID, Collection<Integer, String>> setScores(UUID uuid, Collection<Integer, String> collection) {
+        scores.add(uuid, collection);
+        return scores.clone();
+    }
+
+    public static Collection<UUID, Collection<Integer, String>> removeScores(UUID uuid) {
+        scores.remove(uuid);
+        return scores.clone();
+    }
+
     /**
      * @param name A name to register / remove score.
      * @param score Score for set score. null to remove the score.
