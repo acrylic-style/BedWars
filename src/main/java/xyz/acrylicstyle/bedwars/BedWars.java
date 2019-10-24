@@ -109,7 +109,7 @@ public class BedWars extends JavaPlugin implements Listener {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(""+ChatColor.YELLOW + ChatColor.BOLD + "BED WARS");
         scoreboards.put(e.getPlayer().getUniqueId(), board);
-        Location spawnPoint = new Location(world, config.getDouble("spawn.x", 0), config.getDouble("spawn.y", 60), config.getDouble("spawn.z", 0));
+        Location spawnPoint = new Location(world, map.getDouble("spawn.x", 0), map.getDouble("spawn.y", 60), map.getDouble("spawn.z", 0));
         e.getPlayer().teleport(spawnPoint);
         if (startedLobbyTask) return; // ---------- event ends here if lobbytask is already started ----------
         LobbyTask lobbyTask = new LobbyTask();

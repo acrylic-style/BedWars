@@ -17,10 +17,10 @@ public class SetSpawn implements CommandExecutor {
         }
         Player player = (Player) sender;
         Location location = player.getLocation();
-        BedWars.config.set("world", location.getWorld().getName());
-        BedWars.config.set("spawn.x", location.getX());
-        BedWars.config.set("spawn.y", location.getY());
-        BedWars.config.set("spawn.z", location.getZ());
+        BedWars.map.set("world", location.getWorld().getName());
+        BedWars.map.set("spawn.x", location.getX());
+        BedWars.map.set("spawn.y", location.getY());
+        BedWars.map.set("spawn.z", location.getZ());
         sender.sendMessage(ChatColor.GREEN + "Spawn point has been set to:");
         sender.sendMessage(ChatColor.YELLOW + "World: " + ChatColor.RED + location.getWorld().getName());
         sender.sendMessage(ChatColor.YELLOW + "X pos: " + ChatColor.RED + location.getX());
