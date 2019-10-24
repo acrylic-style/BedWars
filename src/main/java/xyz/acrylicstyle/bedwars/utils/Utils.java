@@ -47,7 +47,7 @@ public final class Utils {
     public static int teamSize = 2; // doubles
 
     private final static char heavy_X = '\u2718';
-    private final static char check = '\u2713';
+    private final static char check = '\u2714';
 
     public static BedWars getInstance() {
         return BedWars.getPlugin(BedWars.class);

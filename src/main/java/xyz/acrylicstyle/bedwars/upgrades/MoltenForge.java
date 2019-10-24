@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import util.CollectionStrictSync;
+import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.Team;
 
 public class MoltenForge implements TieredUpgrade<Team> {
@@ -13,7 +14,7 @@ public class MoltenForge implements TieredUpgrade<Team> {
 
     public static int getDivider(Team team) {
         Validate.notNull(team, "Team cannot be null");
-        return divider.getOrDefault(team, 1);
+        return divider.getOrDefault(team, 1) + BedWars.map.getInt("divider", 0);
     }
 
     @Override
