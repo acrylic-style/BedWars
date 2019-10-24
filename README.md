@@ -1,5 +1,10 @@
 # BedWars
 
+## Required plugins
+
+- [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays) (2.4.0)
+- [TomeitoLib](https://ci.acrylicstyle.xyz/job/TomeitoLib/) (v0.1.1, Build #35)
+
 ## Config Tree
 
 config.yml
@@ -13,7 +18,8 @@ domain: # -1 score at the scoreboard. Shown for all players. [Default: www.acryl
 maps/\<map\>.yml
 ```yaml
 world: # <required> world name [Default: none]
-name: # <optional but strongly recommended> The name of this map. [Default: ???]
+name: # <optional but strongly recommended> The name of this map. [Default: "???"]
+divider: 0 # never set this to -1
 teamSize: # <optional> size of a team [Default: 2]
 teams:
   red:
@@ -53,3 +59,13 @@ beds:
     "X pos,Y pos,Z pos2": RED # 2nd part of bed
     ...: BLUE
 ```
+
+## Features
+
+- [x] Item Shop
+- [x] Resource Generator(Iron, Gold)
+- [x] Diamond Generator
+- [x] Emerald Generator
+- [x] Team Upgrades
+- [x] (Almost) Configurable
+- [x] Generators Hologram
