@@ -412,7 +412,7 @@ public class BedWars extends JavaPlugin implements Listener {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getClickedBlock().getType() == Material.BED_BLOCK
             || e.getClickedBlock().getType() == Material.BED
-            || e.getClickedBlock().getType() == Material.WORKBENCH) e.setCancelled(true);
+            || e.getClickedBlock().getType() == Material.WORKBENCH) if (!e.getPlayer().isSneaking()) e.setCancelled(true);
         }
     }
 
