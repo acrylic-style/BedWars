@@ -2,8 +2,9 @@
 
 ## Required plugins
 
+- [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) (4.4.0)
 - [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays) (2.4.0)
-- [TomeitoLib](https://ci.acrylicstyle.xyz/job/TomeitoLib/) (v0.1.1, Build #35)
+- [TomeitoLib](https://ci.acrylicstyle.xyz/job/TomeitoLib/) (0.1.1, Build #35)
 
 ## Config Tree
 
