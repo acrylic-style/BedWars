@@ -268,7 +268,7 @@ public final class Utils {
     private static ItemStack getItemStack(Material material, Enchantment enchant, Integer level, boolean ignoreLevelRestriction) {
         ItemStack item = unbreakable(material);
         ItemMeta meta = item.getItemMeta();
-        meta.addEnchant(enchant, level, ignoreLevelRestriction);
+        if (level != null && enchant != null) meta.addEnchant(enchant, level, ignoreLevelRestriction);
         item.setItemMeta(meta);
         return item;
     }
