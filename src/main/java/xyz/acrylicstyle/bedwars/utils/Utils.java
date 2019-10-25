@@ -384,12 +384,38 @@ public final class Utils {
                 players.append(ChatColor.GRAY + player.getPlayerListName());
             });
         });
-        Team team = new CollectionList<>(BedWars.aliveTeam).first();
+        CollectionList<Team> teams = BedWars.team.valuesList();
+        CollectionList<Team> teams2 = teams.clone();
+        teams2.removeAll(teams2);
+        teams.forEach(t -> {
+            if (!teams2.contains(t)) teams2.add(t);
+        });
+        if (teams2.size() <= 0) {
+            Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "----------------------------------------");
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(Utils.textAtCenter(ChatColor.BOLD + "Bedwars", 40));
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(Utils.textAtCenter(ChatColor.GRAY + "Nobody won at this game!", 40));
+            Bukkit.broadcastMessage("");
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.sendMessage(Utils.textAtCenter(ChatColor.YELLOW + "Your kills: " + ChatColor.RED + BedWars.kills.getOrDefault(player.getUniqueId(), 0), 40));
+                player.sendMessage(Utils.textAtCenter(ChatColor.YELLOW + "Your final kills: " + ChatColor.RED + BedWars.finalKills.getOrDefault(player.getUniqueId(), 0), 40));
+            }
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "----------------------------------------");
+            new BukkitRunnable() {
+                public void run() {
+                    Bukkit.shutdown();
+                }
+            }.runTaskLater(Utils.getInstance(), 30*20);
+            return;
+        }
+        Team team = teams2.first();
         Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "----------------------------------------");
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(Utils.textAtCenter(ChatColor.BOLD + "Bedwars", 40));
         Bukkit.broadcastMessage("");
-        if (team != null) Bukkit.broadcastMessage(Utils.textAtCenter(team.color + Utils.capitalize(team.name()) + ChatColor.GRAY + " - " + players.toString(), 40));
+        Bukkit.broadcastMessage(Utils.textAtCenter(team.color + Utils.capitalize(team.name()) + ChatColor.GRAY + " - " + players.toString(), 40));
         Bukkit.broadcastMessage("");
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(Utils.textAtCenter(ChatColor.YELLOW + "Your kills: " + ChatColor.RED + BedWars.kills.getOrDefault(player.getUniqueId(), 0), 40));
