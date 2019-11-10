@@ -27,6 +27,7 @@ public class LobbyTask extends BukkitRunnable {
         BedWars.startedLobbyTask = true;
         if (countdown == 0) {
             Bukkit.getOnlinePlayers().forEach(player -> {
+                player.getInventory().removeItem(Utils.getModifierItem());
                 BedWars.status.put(player.getUniqueId(), PlayerStatus.ALIVE);
                 if (BedWars.team.values(Team.RED).size() < Utils.teamSize) {
                     BedWars.team.add(player.getUniqueId(), Team.RED);

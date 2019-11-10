@@ -38,7 +38,7 @@ public class GameModifiersGroup implements InventoryHolder, Listener {
 
     private void initializeItems() {
         AtomicInteger index = new AtomicInteger();
-        Constants.modifiers.filter(m -> m.groupOf() != null && m.groupOf().equals(modifier)).forEach(modifier -> {
+        Constants.modifiers.filter(m -> m.groupOf() != null && m.groupOf().getClass().isInstance(modifier)).forEach(modifier -> {
             ItemStack item = modifier.getItem();
             ItemMeta meta = item.getItemMeta();
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
@@ -47,6 +47,7 @@ public class GameModifiersGroup implements InventoryHolder, Listener {
             modifier.getDescription().forEach(d -> lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', d)));
             meta.setLore(lore);
             meta.spigot().setUnbreakable(true);
+            if (modifier.defaultStatus()) meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
             item.setItemMeta(meta);
             this.modifiers.add(index.get()*2, modifier);
             this.statuses.add(modifier, modifier.defaultStatus());

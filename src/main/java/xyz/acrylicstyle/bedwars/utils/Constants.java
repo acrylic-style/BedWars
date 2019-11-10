@@ -54,6 +54,9 @@ public final class Constants {
         events.add(new KickAll()); // 61 minutes
 
         modifiers.add(new Crafting());
+        modifiers.add(new RespawnTime());
+        modifiers.add(new RespawnTime1());
+        modifiers.add(new RespawnTime5());
 
         shopItems_Blocks.put(new ItemStack(Material.WOOL, 16), new ItemStack(Material.IRON_INGOT, 4));
         shopItems_Blocks.put(new ItemStack(Material.WOOD, 16), new ItemStack(Material.GOLD_INGOT, 4));
