@@ -14,7 +14,7 @@ import xyz.acrylicstyle.bedwars.utils.Utils;
 import java.util.UUID;
 
 public class SharpenedSword implements OneTimeUpgrade<Team> {
-    private UUID uuid = null;
+    private static UUID uuid = null;
 
     @Override
     public String getName() { return "Sharpened Sword"; }
@@ -31,23 +31,27 @@ public class SharpenedSword implements OneTimeUpgrade<Team> {
         return item;
     }
 
-    @Override
-    public void run(Team team) {
+    public static void runStatic(Team team) {
         new BukkitRunnable() {
             public void run() {
                 BedWars.team.values(team).foreachKeys((uuid, i) -> {
-                    SharpenedSword.this.uuid = uuid;
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.WOOD_SWORD).forEach(SharpenedSword.this::func);
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.STONE_SWORD).forEach(SharpenedSword.this::func);
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.IRON_SWORD).forEach(SharpenedSword.this::func);
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.GOLD_SWORD).forEach(SharpenedSword.this::func);
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.DIAMOND_SWORD).forEach(SharpenedSword.this::func);
+                    SharpenedSword.uuid = uuid;
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.WOOD_SWORD).forEach(SharpenedSword::func);
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.STONE_SWORD).forEach(SharpenedSword::func);
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.IRON_SWORD).forEach(SharpenedSword::func);
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.GOLD_SWORD).forEach(SharpenedSword::func);
+                    Bukkit.getPlayer(uuid).getInventory().all(Material.DIAMOND_SWORD).forEach(SharpenedSword::func);
                 });
             }
         }.runTaskTimer(Utils.getInstance(), 0, 40);
     }
 
-    private void func(Integer slot, ItemStack item) {
+    @Override
+    public void run(Team team) {
+        runStatic(team);
+    }
+
+    private static void func(Integer slot, ItemStack item) {
         if (!item.getItemMeta().hasEnchant(Enchantment.DAMAGE_ALL)) Bukkit.getPlayer(uuid).getInventory().setItem(slot, Utils.enchantTool(item.getType(), Enchantment.DAMAGE_ALL, 1));
     }
 }

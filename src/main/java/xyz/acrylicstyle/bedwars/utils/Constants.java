@@ -63,6 +63,7 @@ public final class Constants {
         modifiers.add(new EventTime2());
         modifiers.add(new EventTime4());
         modifiers.add(new EventTime8());
+        modifiers.add(new MaxTeamUpgrades());
 
         shopItems_Blocks.put(new ItemStack(Material.WOOL, 16), new ItemStack(Material.IRON_INGOT, 4));
         shopItems_Blocks.put(new ItemStack(Material.WOOD, 16), new ItemStack(Material.GOLD_INGOT, 4));

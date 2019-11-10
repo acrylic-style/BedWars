@@ -20,6 +20,10 @@ public class ReinforcedArmor implements TieredUpgrade<Team> {
 
     public static int getTierStatic(Team team) { return tier.getOrDefault(team, 0); }
 
+    public static void setTier(Team team, int tier) {
+        ReinforcedArmor.tier.add(team, tier);
+    }
+
     @Override
     public void upgrade(Team team) {
         tier.put(team, getTier(team)+1);

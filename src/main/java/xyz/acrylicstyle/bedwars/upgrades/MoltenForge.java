@@ -17,6 +17,10 @@ public class MoltenForge implements TieredUpgrade<Team> {
         return divider.getOrDefault(team, 1) + BedWars.map.getInt("divider", 0);
     }
 
+    public static void setTier(Team team, int tier) {
+        divider.put(team, tier);
+    }
+
     @Override
     public void upgrade(Team team) { divider.put(team, getTier(team)+1); }
 
@@ -24,7 +28,7 @@ public class MoltenForge implements TieredUpgrade<Team> {
     public int getTier(Team team) { return divider.getOrDefault(team, 0); }
 
     @Override
-    public int maxTier() { return 4; }
+    public int maxTier() { return 8; }
 
     @Override
     public ItemStack getCost(int tier) {
