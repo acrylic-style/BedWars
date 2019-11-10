@@ -32,7 +32,7 @@ public class MaxTeamUpgrades implements Modifier {
     public void up() {
         for (Team team : Team.values()) {
             ReinforcedArmor.setTier(team, 4);
-            MoltenForge.setTier(team, 8);
+            MoltenForge.setTier(team, 5);
             SharpenedSword.runStatic(team);
         }
         Utils.maxTeamUpgrades = true;
