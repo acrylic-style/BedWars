@@ -164,9 +164,9 @@ public class BedWars extends JavaPlugin implements Listener {
                 traps.remove(0);
                 Utils.traps.add(closestTeam, traps);
                 if (trap.getTrap() == Traps.MINING_FATIGUE) {
-                    e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 0, false));
+                    e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10*20, 0, false));
                 } else if (trap.getTrap() == Traps.BLIND) {
-                    e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 0, false));
+                    e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10*20, 0, false));
                 }
             }
         }
@@ -385,6 +385,7 @@ public class BedWars extends JavaPlugin implements Listener {
                             player.getInventory().setChestplate(Utils.getColoredLeatherArmor(Material.LEATHER_CHESTPLATE, BedWars.team.get(player.getUniqueId())));
                             player.getInventory().setHelmet(Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_HELMET, BedWars.team.get(player.getUniqueId())), Enchantment.WATER_WORKER, 1));
                             player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
+                            if (Utils.teleportMadness) player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16));
                         }
                         this.cancel();
                     } else {

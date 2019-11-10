@@ -54,6 +54,7 @@ public class LobbyTask extends BukkitRunnable {
                 player.getInventory().setHelmet(Utils.enchantTool(Utils.getColoredLeatherArmor(Material.LEATHER_HELMET, BedWars.team.get(player.getUniqueId())),  Enchantment.WATER_WORKER, 1));
                 player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
                 Constants.wearingArmor.add(player.getUniqueId(), PlayerArmor.LEATHER);
+                if (Utils.teleportMadness) player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16));
             });
             if (Utils.respawnTime != 5 || Utils.crafting || !Utils.blockProtection || Utils.eventTime != 1 || Utils.maxTeamUpgrades || Utils.onePunchOneKill || Utils.strength != 0) {
                 Bukkit.broadcastMessage(ChatColor.GREEN + "Game modifiers have been applied to this game!");
@@ -65,6 +66,7 @@ public class LobbyTask extends BukkitRunnable {
                 if (Utils.onePunchOneKill) Bukkit.broadcastMessage(ChatColor.GOLD + " - One Punch, One Kill");
                 if (Utils.strength != 0) Bukkit.broadcastMessage(ChatColor.GOLD + " - Strength: " + ChatColor.YELLOW + Utils.strength);
                 if (Utils.speed != 0) Bukkit.broadcastMessage(ChatColor.GOLD + " - Speed: " + ChatColor.YELLOW + "Speed " + Utils.speed);
+                if (Utils.teleportMadness) Bukkit.broadcastMessage(ChatColor.GOLD + " - Teleport Madness");
             }
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
