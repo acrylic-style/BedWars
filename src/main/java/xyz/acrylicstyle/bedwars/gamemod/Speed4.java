@@ -28,7 +28,7 @@ public class Speed4 implements Modifier {
 
     @Override
     public void up() {
-        Utils.speed = 1;
+        Utils.speed = 4;
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 3, false));
         });
@@ -44,7 +44,7 @@ public class Speed4 implements Modifier {
 
     @Override
     public boolean defaultStatus() {
-        return true;
+        return false;
     }
 
     @Override

@@ -43,7 +43,7 @@ public class Speed0 implements Modifier {
 
     @Override
     public boolean defaultStatus() {
-        return false;
+        return true;
     }
 
     @Override
