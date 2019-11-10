@@ -74,6 +74,10 @@ public class GameModifiers implements InventoryHolder, Listener {
         Modifier modifier = modifiers.get(e.getRawSlot());
         e.getWhoClicked().sendMessage("Slot: " + e.getRawSlot());
         if (modifier == null) return;
+        if (modifier.isGroup()) {
+            e.getWhoClicked().openInventory(groups.get(modifier).getInventory());
+            return;
+        }
         boolean status = statuses.get(modifier);
         if (status) {
             modifier.down();
