@@ -252,7 +252,8 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onBlockExplode(BlockExplodeEvent e) {
         e.setCancelled(true);
         e.blockList().forEach(block -> {
-            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && Utils.blockProtection && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && !Utils.blockProtection) block.breakNaturally();
+            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
     }
 
@@ -260,7 +261,8 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onEntityExplode(EntityExplodeEvent e) {
         e.setCancelled(true);
         e.blockList().forEach(block -> {
-            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && Utils.blockProtection && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && !Utils.blockProtection) block.breakNaturally();
+            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
     }
 
