@@ -65,6 +65,7 @@ public class BedWars extends JavaPlugin implements Listener {
     private static Set<Location> playerPlacedBlocks = new HashSet<>();
     private static ItemShop itemShop = null;
     private static TeamUpgrades teamUpgrades = null;
+    private final int restrictedRange = 10;
 
     @Override
     public void onEnable() {
@@ -139,7 +140,21 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
-        if (e.getBlockPlaced().getLocation().getBlockY() >= 100) {
+        Team closestTeam = Utils.getConfigUtils().getClosestTeam(e.getPlayer().getLocation());
+        Location loc = Utils.getConfigUtils().getTeamSpawnPoint(closestTeam);
+        Location loc2 = e.getBlock().getLocation();
+        double x = loc.getX();
+        double x2 = loc2.getX();
+        double y = loc.getY();
+        double y2 = loc2.getY();
+        double z = loc.getZ();
+        double z2 = loc2.getZ();
+        if (x-x2 >= -restrictedRange && x-x2 <= restrictedRange && y-y2 >= -restrictedRange && y-y2 <= restrictedRange && z-z2 >= -restrictedRange && z-z2 <= restrictedRange) {
+            e.setCancelled(true);
+            e.getPlayer().sendMessage(ChatColor.RED + "You can't place block here!");
+            return;
+        }
+        if (e.getBlockPlaced().getLocation().getBlockY() >= 120) {
             e.getPlayer().sendMessage(ChatColor.RED + "Build height limit reached!");
             e.setBuild(false);
             e.setCancelled(true);
@@ -157,6 +172,20 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+        Team closestTeam = Utils.getConfigUtils().getClosestTeam(e.getPlayer().getLocation());
+        Location loc = Utils.getConfigUtils().getTeamSpawnPoint(closestTeam);
+        Location loc2 = e.getBlock().getLocation();
+        double x = loc.getX();
+        double x2 = loc2.getX();
+        double y = loc.getY();
+        double y2 = loc2.getY();
+        double z = loc.getZ();
+        double z2 = loc2.getZ();
+        if (x-x2 >= -restrictedRange && x-x2 <= restrictedRange && y-y2 >= -restrictedRange && y-y2 <= restrictedRange && z-z2 >= -restrictedRange && z-z2 <= restrictedRange) {
+            e.setCancelled(true);
+            e.getPlayer().sendMessage(ChatColor.RED + "You can't break block here!");
+            return;
+        }
         if (!playerPlacedBlocks.contains(e.getBlock().getLocation()) && e.getBlock().getType() != Material.BED_BLOCK && Utils.blockProtection) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");

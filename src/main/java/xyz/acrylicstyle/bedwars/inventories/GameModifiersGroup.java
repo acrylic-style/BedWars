@@ -83,14 +83,16 @@ public class GameModifiersGroup implements InventoryHolder, Listener {
             ItemStack item = this.items.get(modifier);
             ItemMeta meta = item.getItemMeta();
             meta.removeEnchant(Enchantment.PROTECTION_ENVIRONMENTAL);
-            item.setItemMeta(meta);
+            meta.setDisplayName(meta.getDisplayName().replaceFirst(" " + ChatColor.GREEN + ChatColor.BOLD + "SELECTED", ""));
             e.getWhoClicked().sendMessage("slot: " + modifiers.values(modifier).firstKey());
+            item.setItemMeta(meta);
             inventory.setItem(modifiers.values(modifier).firstKey(), item);
         });
         modifier.up();
         ItemStack item = this.items.get(modifier);
         ItemMeta meta = item.getItemMeta();
         meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.setDisplayName(meta.getDisplayName() + " " + ChatColor.GREEN + ChatColor.BOLD + "SELECTED");
         item.setItemMeta(meta);
         inventory.setItem(e.getRawSlot(), item);
         ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.NOTE_PLING, 100, 2);

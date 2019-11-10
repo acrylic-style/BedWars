@@ -3,6 +3,8 @@ package xyz.acrylicstyle.bedwars.utils;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
+import util.Collection;
+import util.CollectionList;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 
@@ -59,6 +61,34 @@ public class ConfigUtils extends ConfigProvider {
         double y = this.getDouble("teams." + team.name().toLowerCase() + ".spawn.y");
         double z = this.getDouble("teams." + team.name().toLowerCase() + ".spawn.z");
         return new Location(BedWars.world, x, y, z);
+    }
+
+    public Collection<Team, Location> getSpawnPointsAndTeam() {
+        Collection<Team, Location> spawnPoints = new Collection<>();
+        for (Team team : Team.values()) {
+            double x = this.getDouble("teams." + team.name().toLowerCase() + ".spawn.x");
+            double y = this.getDouble("teams." + team.name().toLowerCase() + ".spawn.y");
+            double z = this.getDouble("teams." + team.name().toLowerCase() + ".spawn.z");
+            spawnPoints.add(team, new Location(BedWars.world, x, y, z));
+        }
+        return spawnPoints;
+    }
+
+    public CollectionList<Location> getSpawnPoints() {
+        return getSpawnPointsAndTeam().valuesList();
+    }
+
+    public Team getClosestTeam(Location location) {
+        Location closest = null;
+        for (Location loc : Utils.getConfigUtils().getSpawnPoints()) {
+            if (closest == null) {
+                closest = loc;
+            } else if (loc.distanceSquared(location) < closest.distanceSquared(location)) {
+                closest = loc;
+            }
+        }
+        assert closest != null; // impossible if all configuration is correct
+        return Utils.getConfigUtils().getSpawnPointsAndTeam().values(new Location(BedWars.world, closest.getX(), closest.getY(), closest.getZ())).firstKey();
     }
 
     public Location getItemShopNPCLocation(Team team) {
