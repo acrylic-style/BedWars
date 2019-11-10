@@ -8,15 +8,10 @@ import org.bukkit.potion.PotionType;
 import util.Collection;
 import util.CollectionInstanceSet;
 import xyz.acrylicstyle.bedwars.gameevents.*;
-import xyz.acrylicstyle.bedwars.generators.DiamondGenerator;
-import xyz.acrylicstyle.bedwars.generators.EmeraldGenerator;
-import xyz.acrylicstyle.bedwars.generators.GoldGenerator;
-import xyz.acrylicstyle.bedwars.generators.IronGenerator;
+import xyz.acrylicstyle.bedwars.gamemod.*;
+import xyz.acrylicstyle.bedwars.generators.*;
 import xyz.acrylicstyle.bedwars.tasks.ResourceGeneratorTask;
-import xyz.acrylicstyle.bedwars.upgrades.MoltenForge;
-import xyz.acrylicstyle.bedwars.upgrades.ReinforcedArmor;
-import xyz.acrylicstyle.bedwars.upgrades.SharpenedSword;
-import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
+import xyz.acrylicstyle.bedwars.upgrades.*;
 
 import java.util.UUID;
 
@@ -24,6 +19,7 @@ public final class Constants {
     public static final CollectionInstanceSet<Generator> generators = new CollectionInstanceSet<>();
     public static final CollectionInstanceSet<GameEvent> events = new CollectionInstanceSet<>();
     public static final CollectionInstanceSet<Upgrade<Team>> upgrades = new CollectionInstanceSet<>();
+    public static final CollectionInstanceSet<Modifier> modifiers = new CollectionInstanceSet<>();
     public static final Collection<ItemStack, ItemStack> shopItems_everything = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Blocks = new Collection<>();
     public static final Collection<ItemStack, ItemStack> shopItems_Melee = new Collection<>();
@@ -56,6 +52,8 @@ public final class Constants {
         events.add(new SuddenDeath()); // 55 minutes
         events.add(new GameEnd()); // 60 minutes
         events.add(new KickAll()); // 61 minutes
+
+        modifiers.add(new Crafting());
 
         shopItems_Blocks.put(new ItemStack(Material.WOOL, 16), new ItemStack(Material.IRON_INGOT, 4));
         shopItems_Blocks.put(new ItemStack(Material.WOOD, 16), new ItemStack(Material.GOLD_INGOT, 4));

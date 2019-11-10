@@ -78,6 +78,8 @@ public class BedWars extends JavaPlugin implements Listener {
         Bukkit.getPluginCommand("setspawn").setExecutor(new SetSpawn());
         Bukkit.getPluginCommand("seteventtime").setExecutor(new SetEventTime());
         Bukkit.getPluginCommand("toggleblockprotection").setExecutor(new ToggleBlockProtection());
+        Bukkit.getPluginCommand("setrespawntime").setExecutor(new SetRespawnTime());
+        Bukkit.getPluginCommand("togglecrafting").setExecutor(new ToggleCrafting());
         new BukkitRunnable() {
             public void run() {
                 try {
@@ -116,6 +118,7 @@ public class BedWars extends JavaPlugin implements Listener {
         scoreboards.put(e.getPlayer().getUniqueId(), board);
         Location spawnPoint = new Location(world, map.getDouble("spawn.x", 0), map.getDouble("spawn.y", 60), map.getDouble("spawn.z", 0));
         e.getPlayer().teleport(spawnPoint);
+        if (e.getPlayer().isOp()) e.getPlayer().getInventory().addItem(Utils.getModifierItem());
         if (startedLobbyTask) return; // ---------- event ends here if lobbytask is already started ----------
         LobbyTask lobbyTask = new LobbyTask();
         Utils.setLobbyTask(lobbyTask);
@@ -279,7 +282,7 @@ public class BedWars extends JavaPlugin implements Listener {
             e.getPlayer().getInventory().clear();
         });
         if (aliveTeam.contains(team.get(e.getPlayer().getUniqueId()))) {
-            AtomicInteger integer = new AtomicInteger(5);
+            AtomicInteger integer = new AtomicInteger(Utils.respawnTime);
             new BukkitRunnable() {
                 @SuppressWarnings("deprecation")
                 public void run() {
@@ -395,7 +398,8 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onDropItem(PlayerDropItemEvent event) {
         if (event.getItemDrop().getItemStack().getType() == Material.LEATHER_CHESTPLATE
         || event.getItemDrop().getItemStack().getType() == Material.LEATHER_HELMET
-        || event.getItemDrop().getItemStack().getType() == Material.WOOD_SWORD) event.setCancelled(true);
+        || event.getItemDrop().getItemStack().getType() == Material.WOOD_SWORD
+        || event.getItemDrop().getItemStack().equals(Utils.getModifierItem())) event.setCancelled(true);
     }
 
     @EventHandler
@@ -409,6 +413,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
+        if (e.getItem() == null)
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getItem() == null) return;
             if (e.getItem().getType() == Material.FIREBALL) {
@@ -422,8 +427,8 @@ public class BedWars extends JavaPlugin implements Listener {
         }
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getClickedBlock().getType() == Material.BED_BLOCK
-            || e.getClickedBlock().getType() == Material.BED
-            || e.getClickedBlock().getType() == Material.WORKBENCH) if (!e.getPlayer().isSneaking()) e.setCancelled(true);
+            || e.getClickedBlock().getType() == Material.BED) if (!e.getPlayer().isSneaking()) e.setCancelled(true);
+            if (e.getClickedBlock().getType() == Material.WORKBENCH && !Utils.crafting) e.setCancelled(true);
         }
     }
 
@@ -436,7 +441,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPrepareItemCraft(PrepareItemCraftEvent e) {
-        e.getInventory().setResult(new ItemStack(Material.AIR));
+        if (!Utils.crafting) e.getInventory().setResult(new ItemStack(Material.AIR));
     }
 
     @EventHandler

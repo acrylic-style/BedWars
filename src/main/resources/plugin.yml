@@ -30,3 +30,11 @@ commands:
     usage: /<command>
     description: "Toggles block protection"
     permission: bedwars.toggleblockprotection
+  setrespawntime:
+    usage: /<command>
+    description: "Set respawn time in seconds"
+    permission: bedwars.setrespawntime
+  togglecrafting:
+    usage: /<command>
+    description: "Toggles players can crafting or not"
+    permission: bedwars.togglecrafting

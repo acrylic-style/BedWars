@@ -25,12 +25,15 @@ import org.bukkit.scoreboard.Scoreboard;
 import util.Collection;
 import util.CollectionList;
 import xyz.acrylicstyle.bedwars.BedWars;
+import xyz.acrylicstyle.bedwars.inventories.GameModifiers;
+import xyz.acrylicstyle.bedwars.inventories.GameModifiersGroup;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -48,6 +51,9 @@ public final class Utils {
     public static boolean ended = false;
     public static float eventTime = 1; // 1x faster
     public static boolean blockProtection = true;
+    public static int respawnTime = 5;
+    public static boolean crafting = false;
+    public static GameModifiers gameModifiers = new GameModifiers();
 
     private final static char heavy_X = '\u2718';
     private final static char check = '\u2714';
@@ -111,6 +117,7 @@ public final class Utils {
         Utils.teamSize = BedWars.map.getInt("teamSize", 2);
         Utils.eventTime = BedWars.map.getInt("eventTime", 1);
         Utils.blockProtection = BedWars.map.getBoolean("blockProtection", true);
+        Utils.crafting = BedWars.map.getBoolean("crafting", false);
         GameTask.playedTime = 0;
         Utils.initConfigUtils();
         BedWars.scoreboards = new Collection<>();
@@ -456,5 +463,15 @@ public final class Utils {
                 });
             });
         }
+    }
+
+    public static ItemStack getModifierItem() {
+        ItemStack item = new ItemStack(Material.REDSTONE_BLOCK);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + "Game Modifiers");
+        meta.setLore(Collections.singletonList("Enable all game modifiers and let's cheat!"));
+        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        item.setItemMeta(meta);
+        return item;
     }
 }
