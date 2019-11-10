@@ -315,8 +315,8 @@ public class BedWars extends JavaPlugin implements Listener {
             e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
             int diamonds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.DIAMOND));
             int emeralds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.EMERALD));
-            int irons = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.GOLD_INGOT));
-            int golds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.IRON_INGOT));
+            int irons = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.IRON_INGOT));
+            int golds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.GOLD_INGOT));
             e.getEntity().getInventory().clear();
             if (diamonds >= 1) {
                 killer.sendMessage(ChatColor.AQUA + "+" + diamonds + " Diamond");
