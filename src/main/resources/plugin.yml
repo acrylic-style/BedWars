@@ -22,18 +22,6 @@ commands:
     usage: /<command>
     description: set spawn point of the bedwars.
     permission: bedwars.setspawn
-  seteventtime:
-    usage: /<command>
-    description: "set event time for xx faster"
-    permission: bedwars.seteventtime
-  toggleblockprotection:
-    usage: /<command>
-    description: "Toggles block protection"
-    permission: bedwars.toggleblockprotection
-  setrespawntime:
-    usage: /<command>
-    description: "Set respawn time in seconds"
-    permission: bedwars.setrespawntime
   modifiers:
     usage: /<command>
     description: "Apply modifiers to the game"
