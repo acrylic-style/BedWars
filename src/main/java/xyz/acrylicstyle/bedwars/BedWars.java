@@ -77,6 +77,7 @@ public class BedWars extends JavaPlugin implements Listener {
         Bukkit.getPluginCommand("forcestop").setExecutor(new EndGame());
         Bukkit.getPluginCommand("setspawn").setExecutor(new SetSpawn());
         Bukkit.getPluginCommand("seteventtime").setExecutor(new SetEventTime());
+        Bukkit.getPluginCommand("toggleblockprotection").setExecutor(new ToggleBlockProtection());
         new BukkitRunnable() {
             public void run() {
                 try {
@@ -152,7 +153,7 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
-        if (!playerPlacedBlocks.contains(e.getBlock().getLocation()) && e.getBlock().getType() != Material.BED_BLOCK) {
+        if (!playerPlacedBlocks.contains(e.getBlock().getLocation()) && e.getBlock().getType() != Material.BED_BLOCK && Utils.blockProtection) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatColor.RED + "You can only break a block that placed by player.");
             return;
@@ -184,7 +185,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onBlockExplode(BlockExplodeEvent e) {
         e.setCancelled(true);
         e.blockList().forEach(block -> {
-            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && Utils.blockProtection && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
     }
 
@@ -192,7 +193,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onEntityExplode(EntityExplodeEvent e) {
         e.setCancelled(true);
         e.blockList().forEach(block -> {
-            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && Utils.blockProtection && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
         });
     }
 

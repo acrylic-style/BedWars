@@ -47,6 +47,7 @@ public final class Utils {
     public static int teamSize = 2; // doubles
     public static boolean ended = false;
     public static float eventTime = 1; // 1x faster
+    public static boolean blockProtection = true;
 
     private final static char heavy_X = '\u2718';
     private final static char check = '\u2714';
@@ -109,6 +110,7 @@ public final class Utils {
         Utils.minimumPlayers = BedWars.config.getInt("minimumPlayers", 4);
         Utils.teamSize = BedWars.map.getInt("teamSize", 2);
         Utils.eventTime = BedWars.map.getInt("eventTime", 1);
+        Utils.blockProtection = BedWars.map.getBoolean("blockProtection", true);
         GameTask.playedTime = 0;
         Utils.initConfigUtils();
         BedWars.scoreboards = new Collection<>();
