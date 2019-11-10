@@ -20,7 +20,7 @@ public class LobbyTask extends BukkitRunnable {
     public void run() {
         if (Bukkit.getOnlinePlayers().size() <= 0) {
             BedWars.startedLobbyTask = false;
-            countdown = 30;
+            countdown = 40;
             this.cancel();
             return;
         }
@@ -55,6 +55,14 @@ public class LobbyTask extends BukkitRunnable {
                 player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
                 Constants.wearingArmor.add(player.getUniqueId(), PlayerArmor.LEATHER);
             });
+            if (Utils.respawnTime != 5 || Utils.crafting || !Utils.blockProtection || Utils.eventTime != 1 || Utils.maxTeamUpgrades) {
+                Bukkit.broadcastMessage(ChatColor.YELLOW + "Game modifiers have been applied to this game!");
+                if (Utils.respawnTime != 5) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + "Respawn Time: " + Utils.respawnTime);
+                if (Utils.crafting) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + "Enabled crafting");
+                if (!Utils.blockProtection) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + "Disable Block Protection");
+                if (Utils.eventTime != 1) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + Utils.eventTime + "x Faster Event Time");
+                if (Utils.maxTeamUpgrades) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + "Max Team Upgrades");
+            }
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
             Objective objective = Utils.getObjective(player.getUniqueId());

@@ -26,7 +26,6 @@ import util.Collection;
 import util.CollectionList;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.inventories.GameModifiers;
-import xyz.acrylicstyle.bedwars.inventories.GameModifiersGroup;
 import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.tasks.LobbyTask;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
@@ -53,6 +52,7 @@ public final class Utils {
     public static boolean blockProtection = true;
     public static int respawnTime = 5;
     public static boolean crafting = false;
+    public static boolean maxTeamUpgrades = false;
     public static GameModifiers gameModifiers = new GameModifiers();
 
     private final static char heavy_X = '\u2718';

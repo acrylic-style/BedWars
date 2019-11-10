@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import xyz.acrylicstyle.bedwars.tasks.GameTask;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
 public class Modifiers implements CommandExecutor {
@@ -16,6 +17,10 @@ public class Modifiers implements CommandExecutor {
         }
         if (!sender.isOp()) {
             sender.sendMessage(ChatColor.RED + "You are no longer OP.");
+            return true;
+        }
+        if (GameTask.playedTime > 0) {
+            sender.sendMessage(ChatColor.RED + "Game is already started!");
             return true;
         }
         ((Player) sender).openInventory(Utils.gameModifiers.getInventory());

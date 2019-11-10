@@ -7,6 +7,7 @@ import xyz.acrylicstyle.bedwars.upgrades.MoltenForge;
 import xyz.acrylicstyle.bedwars.upgrades.ReinforcedArmor;
 import xyz.acrylicstyle.bedwars.upgrades.SharpenedSword;
 import xyz.acrylicstyle.bedwars.utils.Team;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,7 @@ public class MaxTeamUpgrades implements Modifier {
             MoltenForge.setTier(team, 8);
             SharpenedSword.runStatic(team);
         }
+        Utils.maxTeamUpgrades = true;
     }
 
     @Override
