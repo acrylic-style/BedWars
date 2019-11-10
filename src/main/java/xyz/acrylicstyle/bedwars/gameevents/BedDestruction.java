@@ -11,7 +11,7 @@ public class BedDestruction implements GameEvent {
     @SuppressWarnings("deprecation")
     public void run() {
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);
+            player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 0.9F);
             player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "BED DESTROYED!", "You will no longer respawn!");
             BedWars.aliveTeam.forEach(team -> BedWars.aliveTeam.remove(team));
         });

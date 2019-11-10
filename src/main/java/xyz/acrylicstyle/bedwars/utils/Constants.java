@@ -64,6 +64,11 @@ public final class Constants {
         modifiers.add(new EventTime4());
         modifiers.add(new EventTime8());
         modifiers.add(new MaxTeamUpgrades());
+        modifiers.add(new OnePunchOneKill());
+        modifiers.add(new Strength());
+        modifiers.add(new Strength0());
+        modifiers.add(new Strength1());
+        modifiers.add(new Strength2());
 
         shopItems_Blocks.put(new ItemStack(Material.WOOL, 16), new ItemStack(Material.IRON_INGOT, 4));
         shopItems_Blocks.put(new ItemStack(Material.WOOD, 16), new ItemStack(Material.GOLD_INGOT, 4));
@@ -118,5 +123,6 @@ public final class Constants {
         upgrades.add(new SharpenedSword());
         upgrades.add(new ReinforcedArmor());
         upgrades.add(new MoltenForge());
+        upgrades.add(new MiningFatigueTrap());
     }
 }

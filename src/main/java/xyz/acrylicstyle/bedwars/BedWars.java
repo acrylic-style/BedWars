@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -136,6 +137,41 @@ public class BedWars extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings("deprecation")
+    public void onPlayerMove(PlayerMoveEvent e) {
+        Team closestTeam = Utils.getConfigUtils().getClosestTeam(e.getPlayer().getLocation());
+        if (closestTeam == BedWars.team.get(e.getPlayer().getUniqueId())) return;
+        Location loc = Utils.getConfigUtils().getTeamSpawnPoint(closestTeam);
+        Location loc2 = e.getPlayer().getLocation();
+        double x = loc.getX();
+        double x2 = loc2.getX();
+        double y = loc.getY();
+        double y2 = loc2.getY();
+        double z = loc.getZ();
+        double z2 = loc2.getZ();
+        if (x-x2 >= -restrictedRange && x-x2 <= restrictedRange && y-y2 >= -restrictedRange && y-y2 <= restrictedRange && z-z2 >= -restrictedRange && z-z2 <= restrictedRange) {
+            if (Utils.traps.get(closestTeam).size() >= 1) {
+                BedWars.team.values(closestTeam).foreachKeys((uuid, index) -> {
+                    Player player = Bukkit.getPlayer(uuid);
+                    if (player != null) {
+                        player.sendTitle("" + ChatColor.RED + ChatColor.BOLD + "TRAP TRIGGERED!", ChatColor.RED + "Trap has been set to off!");
+                        player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Trap has been set to off! " + ChatColor.GRAY + "(Available traps: " + (Utils.traps.get(closestTeam).size()-1) + ")");
+                    }
+                });
+                CollectionList<Trap> traps = Utils.traps.get(closestTeam);
+                Trap trap = traps.first();
+                traps.remove(0);
+                Utils.traps.add(closestTeam, traps);
+                if (trap.getTrap() == Traps.MINING_FATIGUE) {
+                    e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 0, false));
+                } else if (trap.getTrap() == Traps.BLIND) {
+                    e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 0, false));
+                }
+            }
+        }
+    }
+
+    @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         Team closestTeam = Utils.getConfigUtils().getClosestTeam(e.getPlayer().getLocation());
         Location loc = Utils.getConfigUtils().getTeamSpawnPoint(closestTeam);
@@ -202,7 +238,7 @@ public class BedWars extends JavaPlugin implements Listener {
             }
             if (team == null) throw new NullPointerException("Unknown bed location: " + e.getBlock().getLocation().toString());
             BedWars.team.values(team).foreachKeys((uuid, i) -> Bukkit.getPlayer(uuid).sendTitle("" + ChatColor.RED + ChatColor.BOLD + "BED DESTROYED!", "You will no longer respawn!"));
-            world.getPlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1));
+            world.getPlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 0.9F));
             aliveTeam.remove(team);
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("" + ChatColor.WHITE + ChatColor.BOLD + "BED DESTRUCTION > " + team.color + Utils.capitalize(team.name()) + " Bed " + ChatColor.GRAY + "was traded with milk by " + theirTeam.color + e.getPlayer().getName() + ChatColor.GRAY + "!");

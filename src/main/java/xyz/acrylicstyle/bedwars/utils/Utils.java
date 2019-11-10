@@ -43,6 +43,7 @@ public final class Utils {
     private static LobbyTask _lobbyTask = null;
     private static ConfigUtils configUtils = null;
     private static Collection<String, Hologram> holograms = new Collection<>();
+    public static Collection<Team, CollectionList<Trap>> traps = new Collection<>();
 
     public static int maximumPlayers = 16;
     public static int minimumPlayers = 4;
@@ -118,6 +119,9 @@ public final class Utils {
         Utils.eventTime = BedWars.map.getInt("eventTime", 1);
         Utils.blockProtection = BedWars.map.getBoolean("blockProtection", true);
         Utils.crafting = BedWars.map.getBoolean("crafting", false);
+        for (Team team : Team.values()) {
+            traps.add(team, new CollectionList<>());
+        }
         GameTask.playedTime = 0;
         Utils.initConfigUtils();
         BedWars.scoreboards = new Collection<>();
