@@ -141,6 +141,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onPlayerMove(PlayerMoveEvent e) {
         Team closestTeam = Utils.getConfigUtils().getClosestTeam(e.getPlayer().getLocation());
         if (closestTeam == BedWars.team.get(e.getPlayer().getUniqueId())) return;
+        final int restrictedRange2 = restrictedRange+10; // 17 blocks from spawn
         Location loc = Utils.getConfigUtils().getTeamSpawnPoint(closestTeam);
         Location loc2 = e.getPlayer().getLocation();
         double x = loc.getX();
@@ -149,7 +150,7 @@ public class BedWars extends JavaPlugin implements Listener {
         double y2 = loc2.getY();
         double z = loc.getZ();
         double z2 = loc2.getZ();
-        if (x-x2 >= -restrictedRange && x-x2 <= restrictedRange && y-y2 >= -restrictedRange && y-y2 <= restrictedRange && z-z2 >= -restrictedRange && z-z2 <= restrictedRange) {
+        if (x-x2 >= -restrictedRange2 && x-x2 <= restrictedRange2 && y-y2 >= -restrictedRange2 && y-y2 <= restrictedRange2 && z-z2 >= -restrictedRange2 && z-z2 <= restrictedRange2) {
             if (Utils.traps.get(closestTeam).size() >= 1) {
                 BedWars.team.values(closestTeam).foreachKeys((uuid, index) -> {
                     Player player = Bukkit.getPlayer(uuid);
@@ -312,26 +313,26 @@ public class BedWars extends JavaPlugin implements Listener {
             if (finalKillMessage.length() >= 1) finalKills.add(killer.getUniqueId(), kills.getOrDefault(killer.getUniqueId(), 0)+1);
             Team killerTeam = team.get(killer.getUniqueId());
             e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
-            CollectionList<ItemStack> diamonds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.DIAMOND));
-            CollectionList<ItemStack> emeralds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.EMERALD));
-            CollectionList<ItemStack> golds = CollectionList.fromValues(e.getEntity().getInventory().all(Material.GOLD_INGOT));
-            CollectionList<ItemStack> irons = CollectionList.fromValues(e.getEntity().getInventory().all(Material.IRON_INGOT));
+            int diamonds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.DIAMOND));
+            int emeralds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.EMERALD));
+            int irons = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.GOLD_INGOT));
+            int golds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.IRON_INGOT));
             e.getEntity().getInventory().clear();
-            if (diamonds.size() >= 1) {
-                killer.sendMessage(ChatColor.AQUA + "+" + diamonds.size() + " Diamond");
-                killer.getInventory().addItem(new ItemStack(Material.DIAMOND, diamonds.size()));
+            if (diamonds >= 1) {
+                killer.sendMessage(ChatColor.AQUA + "+" + diamonds + " Diamond");
+                killer.getInventory().addItem(new ItemStack(Material.DIAMOND, diamonds));
             }
-            if (emeralds.size() >= 1) {
-                killer.sendMessage(ChatColor.GREEN + "+" + emeralds.size() + " Emerald");
-                killer.getInventory().addItem(new ItemStack(Material.EMERALD, emeralds.size()));
+            if (emeralds >= 1) {
+                killer.sendMessage(ChatColor.GREEN + "+" + emeralds + " Emerald");
+                killer.getInventory().addItem(new ItemStack(Material.EMERALD, emeralds));
             }
-            if (golds.size() >= 1) {
-                killer.sendMessage(ChatColor.GOLD + "+" + golds.size() + " Gold");
-                killer.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, golds.size()));
+            if (golds >= 1) {
+                killer.sendMessage(ChatColor.GOLD + "+" + golds + " Gold");
+                killer.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, golds));
             }
-            if (irons.size() >= 1) {
-                killer.sendMessage(ChatColor.WHITE + "+" + irons.size() + " Iron");
-                killer.getInventory().addItem(new ItemStack(Material.IRON_INGOT, irons.size()));
+            if (irons >= 1) {
+                killer.sendMessage(ChatColor.WHITE + "+" + irons + " Iron");
+                killer.getInventory().addItem(new ItemStack(Material.IRON_INGOT, irons));
             }
         }
         Utils.run(l -> e.getEntity().spigot().respawn());
