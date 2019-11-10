@@ -80,7 +80,7 @@ public class GameModifiersGroup implements InventoryHolder, Listener {
         if (modifier == null) return;
         modifiers.foreach((mod, i) -> {
             mod.down();
-            ItemStack item = this.items.get(modifier);
+            ItemStack item = this.items.get(mod);
             ItemMeta meta = item.getItemMeta();
             meta.removeEnchant(Enchantment.PROTECTION_ENVIRONMENTAL);
             meta.setDisplayName(meta.getDisplayName().replaceFirst(" " + ChatColor.GREEN + ChatColor.BOLD + "SELECTED", ""));
