@@ -25,7 +25,7 @@ public class SuddenDeath implements GameEvent {
     }
 
     public int getTime() {
-        return 60*55; // 55 minutes
+        return (int) (60*55/Utils.eventTime); // 55 minutes
     }
 
     @Override

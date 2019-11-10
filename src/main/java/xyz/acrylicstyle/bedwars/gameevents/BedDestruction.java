@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.utils.GameEvent;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 
 public class BedDestruction implements GameEvent {
     @SuppressWarnings("deprecation")
@@ -18,7 +19,7 @@ public class BedDestruction implements GameEvent {
     }
 
     public int getTime() {
-        return 60*50; // 50 minutes
+        return (int) (60*50/Utils.eventTime); // 50 minutes
     }
 
     @Override

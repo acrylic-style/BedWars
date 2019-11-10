@@ -3,11 +3,12 @@ package xyz.acrylicstyle.bedwars.gameevents;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import xyz.acrylicstyle.bedwars.utils.GameEvent;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 
 public class KickAll implements GameEvent {
     @Override
     public int getTime() {
-        return 60*61; // 61 minutes
+        return (int) (60*61/Utils.eventTime); // 61 minutes
     }
 
     @Override

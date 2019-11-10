@@ -19,7 +19,7 @@ public class EmeraldLevel6 implements GameEvent {
     }
 
     public int getTime() {
-        return 60*48; // 48 minutes
+        return (int) (60*48/Utils.eventTime); // 48 minutes
     }
 
     @Override

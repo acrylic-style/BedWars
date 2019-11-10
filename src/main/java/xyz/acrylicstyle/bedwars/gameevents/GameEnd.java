@@ -1,14 +1,15 @@
 package xyz.acrylicstyle.bedwars.gameevents;
 
 import xyz.acrylicstyle.bedwars.utils.GameEvent;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 
 public class GameEnd implements GameEvent {
     public void run() {
-        // not defined
+        Utils.endGame();
     }
 
     public int getTime() {
-        return 60*60; // 60 minutes
+        return (int) (60*60/ Utils.eventTime); // 60 minutes
     }
 
     @Override

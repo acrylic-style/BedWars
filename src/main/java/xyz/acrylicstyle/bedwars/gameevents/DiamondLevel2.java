@@ -19,7 +19,7 @@ public class DiamondLevel2 implements GameEvent {
     }
 
     public int getTime() {
-        return 60*6; // 6 minutes
+        return (int) (60*6/Utils.eventTime); // 6 minutes
     }
 
     @Override
