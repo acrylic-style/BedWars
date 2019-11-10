@@ -351,6 +351,9 @@ public class BedWars extends JavaPlugin implements Listener {
                 @SuppressWarnings("deprecation")
                 public void run() {
                     if (integer.get() <= 0) {
+                        if (Utils.speed != 0) e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, Utils.speed-1, false));
+                        if (Utils.onePunchOneKill) e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 127, false));
+                        if (Utils.strength != 0) e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, Utils.strength-1, false));
                         e.getPlayer().setGameMode(GameMode.SURVIVAL);
                         e.getPlayer().teleport(Utils.getConfigUtils().getTeamSpawnPoint(BedWars.team.get(e.getPlayer().getUniqueId())));
                         if (!Constants.keepInventory) {
