@@ -8,12 +8,12 @@ import xyz.acrylicstyle.bedwars.utils.Utils;
 public class KickAll implements GameEvent {
     @Override
     public int getTime() {
-        return (int) (60*61/Utils.eventTime); // 61 minutes
+        return (int) (60*600/Utils.eventTime); // 61 minutes
     }
 
     @Override
     public String getName() {
-        return "Kick all players";
+        return "None!";
     }
 
     @Override

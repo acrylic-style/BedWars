@@ -381,7 +381,7 @@ public final class Utils {
         Utils.ended = true;
         StringBuilder players = new StringBuilder();
         BedWars.aliveTeam.forEach(team -> {
-            BedWars.team.filter(t -> t.equals(team)).foreachKeys((uuid, index) -> {
+            BedWars.team.filter(t -> t == team).foreachKeys((uuid, index) -> {
                 if (players.length() >= 1) players.append(ChatColor.GRAY + ", ");
                 Player player = Bukkit.getPlayer(uuid);
                 player.sendTitle("" + ChatColor.GOLD + ChatColor.BOLD + "VICTORY!", "");

@@ -37,7 +37,7 @@ public class EmeraldGenerator implements Generator {
     @Override
     public EmeraldGenerator clone() {
         EmeraldGenerator generator = new EmeraldGenerator();
-        generator.setTime(EmeraldGenerator.time);
+        setTime(EmeraldGenerator.time);
         return generator;
     }
 }

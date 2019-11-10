@@ -27,8 +27,8 @@ public class GeneratorTask extends BukkitRunnable {
                     Constants.resourceGeneratorTask.put(team, collection);
                 });
             } else {
-                ResourceGeneratorTask task = new ResourceGeneratorTask(generator);
-                task.runTaskTimer(Utils.getInstance(), 0, (long) (generator.getGenerateTime() * 20));
+                ResourceGeneratorTask task = new ResourceGeneratorTask(generator.clone());
+                task.runTaskLater(Utils.getInstance(), (long) (generator.getGenerateTime() * 20));
             }
         });
     }

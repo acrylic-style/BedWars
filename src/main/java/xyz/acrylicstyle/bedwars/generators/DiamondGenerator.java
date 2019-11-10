@@ -34,7 +34,7 @@ public class DiamondGenerator implements Generator {
         DiamondGenerator.time = time;
     }
 
-    public void nonStaticSetTime(int time) { DiamondGenerator.time = time; }
+    private void nonStaticSetTime(int time) { DiamondGenerator.time = time; }
 
     @Override
     public DiamondGenerator clone() {

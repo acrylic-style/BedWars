@@ -26,8 +26,8 @@ public class ResourceGeneratorTask extends BukkitRunnable {
     @Override
     @SuppressWarnings("deprecation")
     public void run() {
+        Bukkit.getScheduler().runTaskLater(Utils.getInstance(), ResourceGeneratorTask.this, (long) (ResourceGeneratorTask.this.generator.getGenerateTime()*20));
         if (this.generator.getGeneratorPlace() == GeneratorPlaces.TEAM_BASE) {
-            Bukkit.getScheduler().runTaskLater(Utils.getInstance(), ResourceGeneratorTask.this, (long) (ResourceGeneratorTask.this.generator.getGenerateTime()*20));
             Location location = Utils.getConfigUtils().getGeneratorLocation(team.name().toLowerCase());
             Bukkit.getScheduler().runTask(Utils.getInstance(), () -> location.getWorld().dropItem(location, ResourceGeneratorTask.this.generator.getResource()));
         } else if (this.generator.getGeneratorPlace() == GeneratorPlaces.SEMI_MIDDLE) {
