@@ -10,15 +10,15 @@ import xyz.acrylicstyle.bedwars.utils.Utils;
 import java.util.Collections;
 import java.util.List;
 
-public class Strength1 implements Modifier {
+public class Speed1 implements Modifier {
     @Override
     public String getName() {
-        return "+1 Strength";
+        return "Speed I";
     }
 
     @Override
     public List<String> getDescription() {
-        return Collections.singletonList("Grants +1 strength.");
+        return Collections.singletonList("Applies Speed I.");
     }
 
     @Override
@@ -28,17 +28,17 @@ public class Strength1 implements Modifier {
 
     @Override
     public void up() {
-        Utils.strength = 1;
+        Utils.speed = 1;
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 0, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 0, false));
         });
     }
 
     @Override
     public void down() {
-        Utils.strength = 0;
+        Utils.speed = 0;
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+            player.removePotionEffect(PotionEffectType.SPEED);
         });
     }
 
@@ -48,12 +48,8 @@ public class Strength1 implements Modifier {
     }
 
     @Override
-    public boolean isGroup() {
-        return false;
-    }
+    public boolean isGroup() { return false; }
 
     @Override
-    public Modifier groupOf() {
-        return new Strength();
-    }
+    public Modifier groupOf() { return new Speed(); }
 }

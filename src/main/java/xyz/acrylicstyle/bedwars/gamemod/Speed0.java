@@ -3,22 +3,21 @@ package xyz.acrylicstyle.bedwars.gamemod;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Strength1 implements Modifier {
+public class Speed0 implements Modifier {
     @Override
     public String getName() {
-        return "+1 Strength";
+        return "No Speed";
     }
 
     @Override
     public List<String> getDescription() {
-        return Collections.singletonList("Grants +1 strength.");
+        return Collections.singletonList("Does not apply speed boost.");
     }
 
     @Override
@@ -28,17 +27,17 @@ public class Strength1 implements Modifier {
 
     @Override
     public void up() {
-        Utils.strength = 1;
+        Utils.speed = 0;
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 0, false));
+            player.removePotionEffect(PotionEffectType.SPEED);
         });
     }
 
     @Override
     public void down() {
-        Utils.strength = 0;
+        Utils.speed = 0;
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+            player.removePotionEffect(PotionEffectType.SPEED);
         });
     }
 
@@ -48,12 +47,8 @@ public class Strength1 implements Modifier {
     }
 
     @Override
-    public boolean isGroup() {
-        return false;
-    }
+    public boolean isGroup() { return false; }
 
     @Override
-    public Modifier groupOf() {
-        return new Strength();
-    }
+    public Modifier groupOf() { return new Speed(); }
 }

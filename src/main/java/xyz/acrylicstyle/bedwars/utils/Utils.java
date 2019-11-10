@@ -54,6 +54,9 @@ public final class Utils {
     public static int respawnTime = 5;
     public static boolean crafting = false;
     public static boolean maxTeamUpgrades = false;
+    public static boolean onePunchOneKill = false;
+    public static int strength = 0;
+    public static int speed = 0;
     public static GameModifiers gameModifiers = new GameModifiers();
 
     private final static char heavy_X = '\u2718';

@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +28,7 @@ public class Strength2 implements Modifier {
 
     @Override
     public void up() {
+        Utils.strength = 2;
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 1, false));
         });
@@ -34,6 +36,7 @@ public class Strength2 implements Modifier {
 
     @Override
     public void down() {
+        Utils.strength = 0;
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
         });

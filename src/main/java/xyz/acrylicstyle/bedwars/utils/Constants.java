@@ -69,6 +69,11 @@ public final class Constants {
         modifiers.add(new Strength0());
         modifiers.add(new Strength1());
         modifiers.add(new Strength2());
+        modifiers.add(new Speed());
+        modifiers.add(new Speed0());
+        modifiers.add(new Speed1());
+        modifiers.add(new Speed2());
+        modifiers.add(new Speed4());
 
         shopItems_Blocks.put(new ItemStack(Material.WOOL, 16), new ItemStack(Material.IRON_INGOT, 4));
         shopItems_Blocks.put(new ItemStack(Material.WOOD, 16), new ItemStack(Material.GOLD_INGOT, 4));

@@ -55,13 +55,16 @@ public class LobbyTask extends BukkitRunnable {
                 player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
                 Constants.wearingArmor.add(player.getUniqueId(), PlayerArmor.LEATHER);
             });
-            if (Utils.respawnTime != 5 || Utils.crafting || !Utils.blockProtection || Utils.eventTime != 1 || Utils.maxTeamUpgrades) {
-                Bukkit.broadcastMessage(ChatColor.YELLOW + "Game modifiers have been applied to this game!");
-                if (Utils.respawnTime != 5) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + "Respawn Time: " + Utils.respawnTime);
-                if (Utils.crafting) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + "Enabled crafting");
-                if (!Utils.blockProtection) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + "Disable Block Protection");
-                if (Utils.eventTime != 1) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + Utils.eventTime + "x Faster Event Time");
-                if (Utils.maxTeamUpgrades) Bukkit.broadcastMessage(ChatColor.AQUA + " - " + ChatColor.YELLOW + "Max Team Upgrades");
+            if (Utils.respawnTime != 5 || Utils.crafting || !Utils.blockProtection || Utils.eventTime != 1 || Utils.maxTeamUpgrades || Utils.onePunchOneKill || Utils.strength != 0) {
+                Bukkit.broadcastMessage(ChatColor.GREEN + "Game modifiers have been applied to this game!");
+                if (Utils.respawnTime != 5) Bukkit.broadcastMessage(ChatColor.GOLD + " - Respawn Time: " + ChatColor.YELLOW + Utils.respawnTime);
+                if (Utils.crafting) Bukkit.broadcastMessage(ChatColor.GOLD + " - Enabled crafting");
+                if (!Utils.blockProtection) Bukkit.broadcastMessage(ChatColor.GOLD + " - Disable Block Protection");
+                if (Utils.eventTime != 1) Bukkit.broadcastMessage(ChatColor.GOLD + " - Event Times: " + ChatColor.YELLOW + Utils.eventTime + "x");
+                if (Utils.maxTeamUpgrades) Bukkit.broadcastMessage(ChatColor.GOLD + " - Max Team Upgrades");
+                if (Utils.onePunchOneKill) Bukkit.broadcastMessage(ChatColor.GOLD + " - One Punch, One Kill");
+                if (Utils.strength != 0) Bukkit.broadcastMessage(ChatColor.GOLD + " - Strength: " + ChatColor.YELLOW + Utils.strength);
+                if (Utils.speed != 0) Bukkit.broadcastMessage(ChatColor.GOLD + " - Speed: " + ChatColor.YELLOW + "Speed " + Utils.speed);
             }
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
