@@ -65,7 +65,7 @@ public class BedWars extends JavaPlugin implements Listener {
     private static Set<Location> playerPlacedBlocks = new HashSet<>();
     private static ItemShop itemShop = null;
     private static TeamUpgrades teamUpgrades = null;
-    private final int restrictedRange = 10;
+    private final int restrictedRange = 7;
 
     @Override
     public void onEnable() {
