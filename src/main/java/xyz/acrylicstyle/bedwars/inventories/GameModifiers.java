@@ -46,6 +46,7 @@ public class GameModifiers implements InventoryHolder, Listener {
                 modifier.getDescription().forEach(d -> lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', d)));
                 meta.setLore(lore);
                 meta.spigot().setUnbreakable(true);
+                if (modifier.defaultStatus()) meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
                 item.setItemMeta(meta);
                 statuses.add(modifier, modifier.defaultStatus());
                 items.add(modifier, item);
