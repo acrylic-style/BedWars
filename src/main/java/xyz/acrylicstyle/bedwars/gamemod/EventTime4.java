@@ -32,7 +32,7 @@ public class EventTime4 implements Modifier {
     public void down() {}
 
     @Override
-    public boolean defaultStatus() { return true; }
+    public boolean defaultStatus() { return false; }
 
     @Override
     public boolean isGroup() { return false; }
