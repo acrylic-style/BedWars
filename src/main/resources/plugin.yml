@@ -22,3 +22,7 @@ commands:
     usage: /<command>
     description: set spawn point of the bedwars.
     permission: bedwars.setspawn
+  seteventtime:
+    usage: /<command>
+    description: "set event time for xx faster"
+    permission: bedwars.seteventtime
