@@ -5,6 +5,8 @@ import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Objective;
 import xyz.acrylicstyle.bedwars.BedWars;
@@ -55,6 +57,9 @@ public class LobbyTask extends BukkitRunnable {
                 player.getInventory().addItem(Utils.unbreakable(Material.WOOD_SWORD));
                 Constants.wearingArmor.add(player.getUniqueId(), PlayerArmor.LEATHER);
                 if (Utils.teleportMadness) player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16), new ItemStack(Material.ENDER_PEARL, 16));
+                if (Utils.speed != 0) player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, Utils.speed-1, false));
+                if (Utils.onePunchOneKill) player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 127, false));
+                if (Utils.strength != 0) player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, Utils.strength-1, false));
             });
             if (Utils.respawnTime != 5 || Utils.crafting || !Utils.blockProtection || Utils.eventTime != 1 || Utils.maxTeamUpgrades || Utils.onePunchOneKill || Utils.strength != 0) {
                 Bukkit.broadcastMessage(ChatColor.GREEN + "Game modifiers have been applied to this game!");
@@ -63,8 +68,7 @@ public class LobbyTask extends BukkitRunnable {
                 if (!Utils.blockProtection) Bukkit.broadcastMessage(ChatColor.GOLD + " - Disable Block Protection");
                 if (Utils.eventTime != 1) Bukkit.broadcastMessage(ChatColor.GOLD + " - Event Times: " + ChatColor.YELLOW + Utils.eventTime + "x");
                 if (Utils.maxTeamUpgrades) Bukkit.broadcastMessage(ChatColor.GOLD + " - Max Team Upgrades");
-                if (Utils.onePunchOneKill) Bukkit.broadcastMessage(ChatColor.GOLD + " - One Punch, One Kill");
-                if (Utils.strength != 0) Bukkit.broadcastMessage(ChatColor.GOLD + " - Strength: " + ChatColor.YELLOW + Utils.strength);
+                if (Utils.strength != 0) Bukkit.broadcastMessage(ChatColor.GOLD + " - Strength: " + ChatColor.YELLOW + Utils.strength + (Utils.strength >= 127 ? (ChatColor.GOLD + " (One Punch, One Kill)") : ""));
                 if (Utils.speed != 0) Bukkit.broadcastMessage(ChatColor.GOLD + " - Speed: " + ChatColor.YELLOW + "Speed " + Utils.speed);
                 if (Utils.teleportMadness) Bukkit.broadcastMessage(ChatColor.GOLD + " - Teleport Madness");
             }

@@ -58,6 +58,7 @@ public final class Constants {
         modifiers.add(new RespawnTime());
         modifiers.add(new RespawnTime1());
         modifiers.add(new RespawnTime5());
+        modifiers.add(new RespawnTime10());
         modifiers.add(new EventTime());
         modifiers.add(new EventTime1());
         modifiers.add(new EventTime2());

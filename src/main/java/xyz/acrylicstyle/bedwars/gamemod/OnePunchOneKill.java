@@ -3,8 +3,7 @@ package xyz.acrylicstyle.bedwars.gamemod;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import xyz.acrylicstyle.bedwars.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,17 +26,11 @@ public class OnePunchOneKill implements Modifier {
 
     @Override
     public void up() {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 127, false));
-        });
+        Utils.strength = 127;
     }
 
     @Override
-    public void down() {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-        });
-    }
+    public void down() {}
 
     @Override
     public boolean defaultStatus() {
@@ -51,6 +44,6 @@ public class OnePunchOneKill implements Modifier {
 
     @Override
     public Modifier groupOf() {
-        return null;
+        return new Strength();
     }
 }
