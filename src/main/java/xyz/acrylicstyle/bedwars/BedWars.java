@@ -483,6 +483,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onServerListPing(ServerListPingEvent e) {
+        Log.info("Connection from " + e.getAddress());
         if (GameTask.playedTime > 0) {
             if (players.contains(e.getAddress())) {
                 e.setMaxPlayers(teamSize*8);

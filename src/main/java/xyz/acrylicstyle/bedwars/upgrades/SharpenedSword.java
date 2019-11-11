@@ -35,7 +35,7 @@ public class SharpenedSword implements OneTimeUpgrade<Team> {
         new BukkitRunnable() {
             public void run() {
                 BedWars.team.values(team).foreachKeys((uuid, i) -> {
-                    if (uuid != null) {
+                    if (Bukkit.getPlayer(uuid) != null) {
                         SharpenedSword.uuid = uuid;
                         Bukkit.getPlayer(uuid).getInventory().all(Material.WOOD_SWORD).forEach(SharpenedSword::func);
                         Bukkit.getPlayer(uuid).getInventory().all(Material.STONE_SWORD).forEach(SharpenedSword::func);
