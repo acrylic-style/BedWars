@@ -19,10 +19,10 @@ public class Modifiers implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "You are no longer OP.");
             return true;
         }
-        //if (GameTask.playedTime > 0) {
-        //    sender.sendMessage(ChatColor.RED + "Game is already started!");
-        //    return true;
-        //}
+        if (GameTask.playedTime > 60) {
+            sender.sendMessage(ChatColor.RED + "Game is already started!");
+            return true;
+        }
         ((Player) sender).openInventory(Utils.gameModifiers.getInventory());
         return true;
     }

@@ -1,7 +1,9 @@
 package xyz.acrylicstyle.bedwars.upgrades;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import xyz.acrylicstyle.bedwars.utils.Team;
 import xyz.acrylicstyle.bedwars.utils.Trap;
 import xyz.acrylicstyle.bedwars.utils.Traps;
@@ -20,7 +22,11 @@ public class BlindTrap implements TrapUpgrade, OneTimeUpgrade<Team> {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStack(Material.EYE_OF_ENDER);
+        ItemStack item = new ItemStack(Material.EYE_OF_ENDER);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + getName());
+        item.setItemMeta(meta);
+        return item;
     }
 
     @Override

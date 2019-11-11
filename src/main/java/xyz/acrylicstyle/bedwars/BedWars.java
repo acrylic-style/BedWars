@@ -42,6 +42,7 @@ import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -97,6 +98,11 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent e) {
         String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
+        if (GameTask.playedTime > 0) {
+            e.setJoinMessage(e.getPlayer().getDisplayName() + " reconnected.");
+            e.getPlayer().damage(LocalDateTime.now().getYear()); // let player die and respawn
+            return;
+        }
         e.setJoinMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has joined (" + ChatColor.AQUA + Bukkit.getOnlinePlayers().size() + ChatColor.YELLOW + "/" + ChatColor.AQUA + (teamSize*8) + ChatColor.YELLOW + ")!");
         status.put(e.getPlayer().getUniqueId(), PlayerStatus.BEFORE_GAME);
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
@@ -131,7 +137,7 @@ public class BedWars extends JavaPlugin implements Listener {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Sorry! Current game is full, Please try again later!");
             return;
         }
-        if (GameTask.playedTime > 0) {
+        if (GameTask.playedTime > 0 && !team.containsKey(e.getPlayer().getUniqueId())) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Game is already started. Please try again later!");
         }
     }
@@ -170,6 +176,7 @@ public class BedWars extends JavaPlugin implements Listener {
                 }
             }
         }
+        if (y2 <= 0) e.getPlayer().damage(2019);
     }
 
     @EventHandler
@@ -546,8 +553,12 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent e) {
-        String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
-        e.setQuitMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has left (" + ChatColor.AQUA + (Bukkit.getOnlinePlayers().size()-1) + ChatColor.YELLOW + "/" + ChatColor.AQUA + (teamSize*8) + ChatColor.YELLOW + ")!");
+        if (GameTask.playedTime > 0) {
+            e.setQuitMessage(e.getPlayer().getPlayerListName() + " disconnected");
+        } else {
+            String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
+            e.setQuitMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has left (" + ChatColor.AQUA + (Bukkit.getOnlinePlayers().size() - 1) + ChatColor.YELLOW + "/" + ChatColor.AQUA + (teamSize * 8) + ChatColor.YELLOW + ")!");
+        }
         Utils.removeScores(e.getPlayer().getUniqueId());
     }
 

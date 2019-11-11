@@ -130,5 +130,6 @@ public final class Constants {
         upgrades.add(new ReinforcedArmor());
         upgrades.add(new MoltenForge());
         upgrades.add(new MiningFatigueTrap());
+        upgrades.add(new BlindTrap());
     }
 }
