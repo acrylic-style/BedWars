@@ -75,6 +75,7 @@ public final class Constants {
         modifiers.add(new Speed1());
         modifiers.add(new Speed2());
         modifiers.add(new Speed4());
+        modifiers.add(new Speed8());
         modifiers.add(new TeleportMadness());
 
         shopItems_Blocks.put(new ItemStack(Material.WOOL, 16), new ItemStack(Material.IRON_INGOT, 4));
