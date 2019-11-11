@@ -35,12 +35,14 @@ public class SharpenedSword implements OneTimeUpgrade<Team> {
         new BukkitRunnable() {
             public void run() {
                 BedWars.team.values(team).foreachKeys((uuid, i) -> {
-                    SharpenedSword.uuid = uuid;
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.WOOD_SWORD).forEach(SharpenedSword::func);
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.STONE_SWORD).forEach(SharpenedSword::func);
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.IRON_SWORD).forEach(SharpenedSword::func);
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.GOLD_SWORD).forEach(SharpenedSword::func);
-                    Bukkit.getPlayer(uuid).getInventory().all(Material.DIAMOND_SWORD).forEach(SharpenedSword::func);
+                    if (uuid != null) {
+                        SharpenedSword.uuid = uuid;
+                        Bukkit.getPlayer(uuid).getInventory().all(Material.WOOD_SWORD).forEach(SharpenedSword::func);
+                        Bukkit.getPlayer(uuid).getInventory().all(Material.STONE_SWORD).forEach(SharpenedSword::func);
+                        Bukkit.getPlayer(uuid).getInventory().all(Material.IRON_SWORD).forEach(SharpenedSword::func);
+                        Bukkit.getPlayer(uuid).getInventory().all(Material.GOLD_SWORD).forEach(SharpenedSword::func);
+                        Bukkit.getPlayer(uuid).getInventory().all(Material.DIAMOND_SWORD).forEach(SharpenedSword::func);
+                    }
                 });
             }
         }.runTaskTimer(Utils.getInstance(), 0, 40);

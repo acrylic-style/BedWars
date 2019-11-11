@@ -42,6 +42,7 @@ import xyz.acrylicstyle.bedwars.utils.*;
 import xyz.acrylicstyle.tomeito_core.providers.ConfigProvider;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
+import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -60,6 +61,7 @@ public class BedWars extends JavaPlugin implements Listener {
     public static Collection<UUID, Scoreboard> scoreboards = new Collection<>();
     public static CollectionSync<UUID, PlayerStatus> status = new CollectionSync<>();
     public static Collection<UUID, Team> team = new Collection<>();
+    public static CollectionList<InetAddress> players = new CollectionList<>();
     public static CollectionStrictSync<UUID, Integer> kills = new CollectionStrictSync<>();
     public static CollectionStrictSync<UUID, Integer> finalKills = new CollectionStrictSync<>();
     public static Set<Team> aliveTeam = new HashSet<>();
@@ -482,7 +484,11 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onServerListPing(ServerListPingEvent e) {
         if (GameTask.playedTime > 0) {
-            e.setMaxPlayers(0);
+            if (players.contains(e.getAddress())) {
+                e.setMaxPlayers(teamSize*8);
+            } else {
+                e.setMaxPlayers(0);
+            }
         } else if (enabled) {
             e.setMaxPlayers(teamSize*8);
         }
