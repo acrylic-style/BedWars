@@ -60,7 +60,6 @@ public class LobbyTask extends BukkitRunnable {
                 if (Utils.speed != 0) player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, Utils.speed-1, false));
                 if (Utils.onePunchOneKill) player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 127, false));
                 if (Utils.strength != 0) player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, Utils.strength-1, false));
-                BedWars.players.add(player.getAddress().getAddress());
             });
             if (Utils.respawnTime != 5 || Utils.crafting || !Utils.blockProtection || Utils.eventTime != 1 || Utils.maxTeamUpgrades || Utils.onePunchOneKill || Utils.strength != 0) {
                 Bukkit.broadcastMessage(ChatColor.GREEN + "Game modifiers have been applied to this game!");
