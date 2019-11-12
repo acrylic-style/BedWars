@@ -256,18 +256,40 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockExplode(BlockExplodeEvent e) {
         e.setCancelled(true);
+        Team closestTeam = Utils.getConfigUtils().getClosestTeam(e.getBlock().getLocation());
+        Location loc = Utils.getConfigUtils().getTeamSpawnPoint(closestTeam);
+        double x = loc.getX();
+        double y = loc.getY();
+        double z = loc.getZ();
         e.blockList().forEach(block -> {
-            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && !Utils.blockProtection) block.breakNaturally();
-            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            Location loc2 = block.getLocation();
+            double x2 = loc2.getX();
+            double y2 = loc2.getY();
+            double z2 = loc2.getZ();
+            if (!(x-x2 >= -restrictedRange && x-x2 <= restrictedRange && y-y2 >= -restrictedRange && y-y2 <= restrictedRange && z-z2 >= -restrictedRange && z-z2 <= restrictedRange)) {
+                if (block.getType() != Material.GLASS && block.getType() != Material.TNT && !Utils.blockProtection) block.breakNaturally();
+                if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            }
         });
     }
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent e) {
         e.setCancelled(true);
+        Team closestTeam = Utils.getConfigUtils().getClosestTeam(e.getLocation());
+        Location loc = Utils.getConfigUtils().getTeamSpawnPoint(closestTeam);
+        double x = loc.getX();
+        double y = loc.getY();
+        double z = loc.getZ();
         e.blockList().forEach(block -> {
-            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && !Utils.blockProtection) block.breakNaturally();
-            if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            Location loc2 = block.getLocation();
+            double x2 = loc2.getX();
+            double y2 = loc2.getY();
+            double z2 = loc2.getZ();
+            if (!(x-x2 >= -restrictedRange && x-x2 <= restrictedRange && y-y2 >= -restrictedRange && y-y2 <= restrictedRange && z-z2 >= -restrictedRange && z-z2 <= restrictedRange)) {
+                if (block.getType() != Material.GLASS && block.getType() != Material.TNT && !Utils.blockProtection) block.breakNaturally();
+                if (block.getType() != Material.GLASS && block.getType() != Material.TNT && playerPlacedBlocks.contains(block.getLocation())) block.breakNaturally();
+            }
         });
     }
 

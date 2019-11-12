@@ -228,7 +228,7 @@ public final class Utils {
         if (BedWars.aliveTeam.contains(team)) {
             Utils.setScoreReplace(team + ": " + ChatColor.GREEN + Utils.check + (inTeam ? you : ""), score, objective, uuid);
         } else {
-            int players = BedWars.team.filter(t -> t.equals(team)).filterKeys(uuid2 -> BedWars.status.get(uuid2) == PlayerStatus.ALIVE).size();
+            int players = BedWars.team.values(team).filterKeys(uuid2 -> BedWars.status.get(uuid2) == PlayerStatus.ALIVE).size();
             if (players <= 0) {
                 Utils.setScoreReplace(team + ": " + ChatColor.RED + Utils.heavy_X + (inTeam ? you : ""), score, objective, uuid);
             } else {
@@ -402,8 +402,10 @@ public final class Utils {
             BedWars.team.filter(t -> t == team).foreachKeys((uuid, index) -> {
                 if (players.length() >= 1) players.append(ChatColor.GRAY + ", ");
                 Player player = Bukkit.getPlayer(uuid);
-                player.sendTitle("" + ChatColor.GOLD + ChatColor.BOLD + "VICTORY!", "");
-                players.append(ChatColor.GRAY + player.getPlayerListName());
+                if (player != null) {
+                    player.sendTitle("" + ChatColor.GOLD + ChatColor.BOLD + "VICTORY!", "");
+                    players.append(ChatColor.GRAY).append(player.getPlayerListName());
+                }
             });
         });
         CollectionList<Team> teams = BedWars.team.valuesList();
