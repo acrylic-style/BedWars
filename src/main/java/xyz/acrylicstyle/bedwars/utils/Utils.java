@@ -47,6 +47,7 @@ public final class Utils {
     private static ConfigUtils configUtils = null;
     private static Collection<String, Hologram> holograms = new Collection<>();
     public static Collection<Team, CollectionList<Trap>> traps = new Collection<>();
+    public static int teams = 8;
 
     public static int maximumPlayers = 16;
     public static int minimumPlayers = 4;
@@ -120,8 +121,9 @@ public final class Utils {
         BedWars.world.setGameRuleValue("mobGriefing", "true");
         BedWars.world.setFullTime(6000);
         BedWars.manager = Bukkit.getScoreboardManager();
-        Utils.maximumPlayers = BedWars.config.getInt("maximumPlayers", 16);
-        Utils.minimumPlayers = BedWars.config.getInt("minimumPlayers", 4);
+        Utils.maximumPlayers = BedWars.map.getInt("maximumPlayers", 16);
+        Utils.minimumPlayers = BedWars.map.getInt("minimumPlayers", 4);
+        Utils.teams = BedWars.map.getInt("teamOf", 8);
         Utils.teamSize = BedWars.map.getInt("teamSize", 2);
         Utils.eventTime = BedWars.map.getInt("eventTime", 1);
         Utils.blockProtection = BedWars.map.getBoolean("blockProtection", true);
@@ -409,10 +411,9 @@ public final class Utils {
             });
         });
         CollectionList<Team> teams = BedWars.team.valuesList();
-        CollectionList<Team> teams2 = teams.clone();
-        teams2.removeAll(teams2);
+        CollectionList<Team> teams2 = new CollectionList<>();
         teams.forEach(t -> {
-            if (!teams2.contains(t)) teams2.add(t);
+            if (!teams2.contains(t)) teams2.add(t); // don't use addAll or constructor(list), it just need to remove duplicate entries
         });
         if (teams2.size() <= 0) {
             Bukkit.broadcastMessage("" + ChatColor.GREEN + ChatColor.BOLD + "----------------------------------------");
@@ -431,7 +432,7 @@ public final class Utils {
                 public void run() {
                     Bukkit.shutdown();
                 }
-            }.runTaskLater(Utils.getInstance(), 30*20);
+            }.runTaskLater(Utils.getInstance(), 15*20);
             return;
         }
         Team team = teams2.first();
@@ -451,7 +452,7 @@ public final class Utils {
             public void run() {
                 Bukkit.shutdown();
             }
-        }.runTaskLater(Utils.getInstance(), 30*20);
+        }.runTaskLater(Utils.getInstance(), 15*20);
     }
 
     public static String repeatString(String s, int count) { // if you're at java 11, this method is useless.

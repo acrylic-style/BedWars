@@ -31,21 +31,21 @@ public class LobbyTask extends BukkitRunnable {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.getInventory().removeItem(Utils.getModifierItem());
                 BedWars.status.put(player.getUniqueId(), PlayerStatus.ALIVE);
-                if (BedWars.team.values(Team.RED).size() < Utils.teamSize) {
+                if (BedWars.team.values(Team.RED).size() < Utils.teamSize && Utils.teams >= 1) {
                     BedWars.team.add(player.getUniqueId(), Team.RED);
-                } else if (BedWars.team.values(Team.BLUE).size() < Utils.teamSize) {
+                } else if (BedWars.team.values(Team.BLUE).size() < Utils.teamSize && Utils.teams >= 2) {
                     BedWars.team.add(player.getUniqueId(), Team.BLUE);
-                } else if (BedWars.team.values(Team.YELLOW).size() < Utils.teamSize) {
+                } else if (BedWars.team.values(Team.YELLOW).size() < Utils.teamSize && Utils.teams >= 3) {
                     BedWars.team.add(player.getUniqueId(), Team.YELLOW);
-                } else if (BedWars.team.values(Team.GREEN).size() < Utils.teamSize) {
+                } else if (BedWars.team.values(Team.GREEN).size() < Utils.teamSize && Utils.teams >= 4) {
                     BedWars.team.add(player.getUniqueId(), Team.GREEN);
-                } else if (BedWars.team.values(Team.WHITE).size() < Utils.teamSize) {
+                } else if (BedWars.team.values(Team.WHITE).size() < Utils.teamSize && Utils.teams >= 5) {
                     BedWars.team.add(player.getUniqueId(), Team.WHITE);
-                } else if (BedWars.team.values(Team.BLACK).size() < Utils.teamSize) {
+                } else if (BedWars.team.values(Team.BLACK).size() < Utils.teamSize && Utils.teams >= 6) {
                     BedWars.team.add(player.getUniqueId(), Team.BLACK);
-                } else if (BedWars.team.values(Team.PINK).size() < Utils.teamSize) {
+                } else if (BedWars.team.values(Team.PINK).size() < Utils.teamSize && Utils.teams >= 7) {
                     BedWars.team.add(player.getUniqueId(), Team.PINK);
-                } else if (BedWars.team.values(Team.AQUA).size() < Utils.teamSize) {
+                } else if (BedWars.team.values(Team.AQUA).size() < Utils.teamSize && Utils.teams >= 8) {
                     BedWars.team.add(player.getUniqueId(), Team.AQUA);
                 } else throw new StackOverflowError("Players count has overflowed.");
                 player.setPlayerListName(BedWars.team.get(player.getUniqueId()).color + player.getName());
