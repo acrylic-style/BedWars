@@ -34,7 +34,7 @@ public class GoldGenerator implements Generator {
 
     @Override
     public double getGenerateTime() {
-        return (6/(Utils.teamSize/4F)) / MoltenForge.getDivider(team);
+        return (6/(Utils.teamSize/8F)) / MoltenForge.getDivider(team);
     }
 
     @Override

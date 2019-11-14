@@ -42,7 +42,7 @@ public class MoltenForge implements TieredUpgrade<Team> {
             case 4:
                 return new ItemStack(Material.DIAMOND, 16);
             case 5:
-                return new ItemStack(Material.DIAMOND, 24);
+                return new ItemStack(Material.DIAMOND, 64);
             default:
                 return new ItemStack(Material.DIAMOND, 64*64*64);
         }

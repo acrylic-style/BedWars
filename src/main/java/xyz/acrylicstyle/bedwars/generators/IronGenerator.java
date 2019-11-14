@@ -34,7 +34,7 @@ public class IronGenerator implements Generator {
 
     @Override
     public double getGenerateTime() {
-        return (1/(Utils.teamSize/4F)) / MoltenForge.getDivider(team);
+        return (1/(Utils.teamSize/8F)) / MoltenForge.getDivider(team);
     }
 
     @Override
