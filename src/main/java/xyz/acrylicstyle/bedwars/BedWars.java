@@ -340,8 +340,8 @@ public class BedWars extends JavaPlugin implements Listener {
             }
             if (finalKillMessage.length() <= 0) kills.add(killer.getUniqueId(), kills.getOrDefault(killer.getUniqueId(), 0)+1);
             if (finalKillMessage.length() >= 1) finalKills.add(killer.getUniqueId(), finalKills.getOrDefault(killer.getUniqueId(), 0)+1);
-            if (Utils.teams < 6) Utils.setScoreReplace("Kills: " + kills.get(killer.getUniqueId()), 3, getObjective(killer.getUniqueId()), killer.getUniqueId());
-            if (Utils.teams < 7) Utils.setScoreReplace("Final Kills: " + finalKills.get(killer.getUniqueId()), 2, getObjective(killer.getUniqueId()), killer.getUniqueId());
+            if (Utils.teams < 6) Utils.setScoreReplace(ChatColor.YELLOW + "Kills: " + ChatColor.AQUA + kills.get(killer.getUniqueId()), 3, getObjective(killer.getUniqueId()), killer.getUniqueId());
+            if (Utils.teams < 7) Utils.setScoreReplace(ChatColor.YELLOW + "Final Kills: " + ChatColor.AQUA + finalKills.get(killer.getUniqueId()), 2, getObjective(killer.getUniqueId()), killer.getUniqueId());
             Team killerTeam = team.get(killer.getUniqueId());
             if (voidKill) e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was knocked into the void by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
                 else e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
