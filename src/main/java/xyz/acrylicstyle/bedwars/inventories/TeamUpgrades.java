@@ -119,12 +119,12 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         Player p = (Player) e.getWhoClicked();
         ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
-        if (unlockedUpgrades.contains(upgrades.get(clickedItem.getType()))) {
+        ItemStack item = noLoreItems.get(e.getSlot());
+        if (unlockedUpgrades.contains(upgrades.get(clickedItem.getType())) && !upgrades.get(item.getType()).getClass().isAssignableFrom(TrapUpgrade.class)) {
             p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
             p.sendMessage(ChatColor.RED + "You've already unlocked this upgrade!");
             return;
         }
-        ItemStack item = noLoreItems.get(e.getSlot());
         Team team = BedWars.team.get(p.getUniqueId());
         ItemStack cost = getCost(upgrades.get(item.getType()), team);
         if (cost == null) {
