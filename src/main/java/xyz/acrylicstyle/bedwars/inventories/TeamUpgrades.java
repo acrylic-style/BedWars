@@ -18,12 +18,17 @@ import util.CollectionList;
 import xyz.acrylicstyle.bedwars.BedWars;
 import xyz.acrylicstyle.bedwars.upgrades.OneTimeUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.TieredUpgrade;
+import xyz.acrylicstyle.bedwars.upgrades.TrapUpgrade;
 import xyz.acrylicstyle.bedwars.upgrades.Upgrade;
 import xyz.acrylicstyle.bedwars.utils.Constants;
 import xyz.acrylicstyle.bedwars.utils.Team;
+import xyz.acrylicstyle.bedwars.utils.Traps;
 import xyz.acrylicstyle.bedwars.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class TeamUpgrades implements InventoryHolder, Listener {
     private Collection<Material, Upgrade<Team>> upgrades = new Collection<>();
@@ -53,18 +58,31 @@ public class TeamUpgrades implements InventoryHolder, Listener {
 
     private ItemStack setLore(Upgrade<Team> upgrade, int slot, Team team) {
         if (upgrade instanceof TieredUpgrade) return setLore((TieredUpgrade<Team>) upgrade, slot, team);
-        else if (upgrade instanceof OneTimeUpgrade) return setLore((OneTimeUpgrade<Team>) upgrade, slot);
+        else if (upgrade instanceof OneTimeUpgrade) return setLore((OneTimeUpgrade<Team>) upgrade, slot, team, null);
         else return null;
     }
 
-    private ItemStack setLore(OneTimeUpgrade upgrade, int slot) {
+    @SuppressWarnings("unused")
+    private ItemStack setLore(OneTimeUpgrade upgrade, int slot, Team team, String dummy) {
         ItemStack item = upgrade.getItem();
         noLoreItems.put(slot, item.clone());
         item = item.clone();
         ItemStack cost = upgrade.getCost();
         ItemMeta meta = item.getItemMeta();
-        String[] a = { ChatColor.YELLOW + "Cost: " + ChatColor.AQUA + cost.getAmount() + " " + Utils.getFriendlyName(cost) };
-        meta.setLore(Arrays.asList(a));
+        String a = ChatColor.YELLOW + "Cost: " + ChatColor.AQUA + cost.getAmount() + " " + Utils.getFriendlyName(cost);
+        List<String> traps = new ArrayList<>();
+        Utils.traps.get(team).forEach(trap -> {
+            if (trap.getTrap() == Traps.MINING_FATIGUE) {
+                traps.add(ChatColor.AQUA + " - Mining Fatigue");
+            } else if (trap.getTrap() == Traps.BLIND) {
+                traps.add(ChatColor.AQUA + " - Blind");
+            } else {
+                traps.add(ChatColor.AQUA + " - Unknown Trap");
+            }
+        });
+        List<String> l = Arrays.asList(a, "", ChatColor.YELLOW + "You have following traps:");
+        l.addAll(traps);
+        meta.setLore(upgrade.getClass().isAssignableFrom(TrapUpgrade.class) ? l : Collections.singletonList(a));
         item.setItemMeta(meta);
         return item;
     }
@@ -122,13 +140,11 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         p.getInventory().removeItem(cost);
         if (upgrades.get(item.getType()) instanceof OneTimeUpgrade) {
             upgrades.get(item.getType()).run(team);
-            unlockedUpgrades.add(upgrades.get(item.getType()));
+            if (!upgrades.get(item.getType()).getClass().isAssignableFrom(TrapUpgrade.class)) unlockedUpgrades.add(upgrades.get(item.getType()));
         } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) {
             TieredUpgrade<Team> upgrade = (TieredUpgrade<Team>) upgrades.get(item.getType());
             upgrade.upgradeAndRun(team);
-            if (upgrade.getTier(team) >= upgrade.maxTier()) {
-                unlockedUpgrades.add(upgrades.get(item.getType()));
-            }
+            if (upgrade.getTier(team) >= upgrade.maxTier() && !upgrades.get(item.getType()).getClass().isAssignableFrom(TrapUpgrade.class)) unlockedUpgrades.add(upgrades.get(item.getType()));
         }
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(item.getType()).getName());
