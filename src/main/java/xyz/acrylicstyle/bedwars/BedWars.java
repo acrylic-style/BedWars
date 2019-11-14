@@ -192,7 +192,7 @@ public class BedWars extends JavaPlugin implements Listener {
             e.getPlayer().sendMessage(ChatColor.RED + "You can't place block here!");
             return;
         }
-        if (e.getBlockPlaced().getLocation().getBlockY() >= 120) {
+        if (e.getBlockPlaced().getLocation().getBlockY() >= 150) {
             e.getPlayer().sendMessage(ChatColor.RED + "Build height limit reached!");
             e.setBuild(false);
             e.setCancelled(true);
