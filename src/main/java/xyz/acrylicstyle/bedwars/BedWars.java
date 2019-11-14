@@ -96,11 +96,11 @@ public class BedWars extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
         if (GameTask.playedTime > 0) {
-            e.setJoinMessage(e.getPlayer().getDisplayName() + " reconnected.");
+            e.setJoinMessage(e.getPlayer().getDisplayName() + ChatColor.YELLOW + " reconnected.");
             e.getPlayer().damage(LocalDateTime.now().getYear()); // let player die and respawn
             return;
         }
-        e.setJoinMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has joined (" + ChatColor.AQUA + Bukkit.getOnlinePlayers().size() + ChatColor.YELLOW + "/" + ChatColor.AQUA + (teamSize*8) + ChatColor.YELLOW + ")!");
+        e.setJoinMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has joined (" + ChatColor.AQUA + Bukkit.getOnlinePlayers().size() + ChatColor.YELLOW + "/" + ChatColor.AQUA + maximumPlayers + ChatColor.YELLOW + ")!");
         status.put(e.getPlayer().getUniqueId(), PlayerStatus.BEFORE_GAME);
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setMaxHealth(20);
@@ -113,7 +113,7 @@ public class BedWars extends JavaPlugin implements Listener {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(""+ChatColor.YELLOW + ChatColor.BOLD + "BED WARS");
         Utils.setScoreReplace("Map: " + ChatColor.GREEN + BedWars.map.getString("name", "???"), 4, objective, e.getPlayer().getUniqueId());
-        Utils.setScoreReplace("Players: " + ChatColor.GREEN + Bukkit.getOnlinePlayers().size() + "/" + (Utils.teamSize*8), 3, objective, e.getPlayer().getUniqueId());
+        Utils.setScoreReplace("Players: " + ChatColor.GREEN + Bukkit.getOnlinePlayers().size() + "/" + maximumPlayers, 3, objective, e.getPlayer().getUniqueId());
         Utils.setScoreReplace(" ", 2, objective, e.getPlayer().getUniqueId());
         Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective, e.getPlayer().getUniqueId());
         if (Bukkit.getOnlinePlayers().size() < Utils.minimumPlayers) Utils.setScoreReplace(ChatColor.WHITE + "Waiting...", 1, objective, e.getPlayer().getUniqueId());
@@ -504,7 +504,7 @@ public class BedWars extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onServerListPing(ServerListPingEvent e) {
-        e.setMaxPlayers(teamSize*8);
+        e.setMaxPlayers(maximumPlayers);
     }
 
     @EventHandler
@@ -573,10 +573,10 @@ public class BedWars extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent e) {
         if (GameTask.playedTime > 0) {
-            e.setQuitMessage(e.getPlayer().getPlayerListName() + " disconnected");
+            e.setQuitMessage(e.getPlayer().getPlayerListName() + ChatColor.YELLOW + " disconnected");
         } else {
             String name = e.getPlayer().getDisplayName().equalsIgnoreCase("") ? e.getPlayer().getName() : e.getPlayer().getDisplayName();
-            e.setQuitMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has left (" + ChatColor.AQUA + (Bukkit.getOnlinePlayers().size() - 1) + ChatColor.YELLOW + "/" + ChatColor.AQUA + (teamSize * 8) + ChatColor.YELLOW + ")!");
+            e.setQuitMessage(ChatColor.GRAY + name + ChatColor.YELLOW + " has left!");
         }
         Utils.removeScores(e.getPlayer().getUniqueId());
     }

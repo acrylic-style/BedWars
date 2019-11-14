@@ -77,7 +77,7 @@ public class LobbyTask extends BukkitRunnable {
             Objective objective = Utils.getObjective(player.getUniqueId());
             UUID uuid = player.getUniqueId();
             Utils.setScoreReplace("Map: " + ChatColor.GREEN + BedWars.map.getString("name", "???"), 4, objective, uuid);
-            Utils.setScoreReplace("Players: " + ChatColor.GREEN + Bukkit.getOnlinePlayers().size() + "/" + (Utils.teamSize*8), 3, objective, uuid);
+            Utils.setScoreReplace("Players: " + ChatColor.GREEN + Bukkit.getOnlinePlayers().size() + "/" + Utils.maximumPlayers, 3, objective, uuid);
             Utils.setScoreReplace(" ", 2, objective, uuid);
             Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective, uuid);
             if (Bukkit.getOnlinePlayers().size() < Utils.minimumPlayers) {
