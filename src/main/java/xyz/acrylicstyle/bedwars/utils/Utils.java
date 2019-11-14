@@ -128,9 +128,6 @@ public final class Utils {
         Utils.eventTime = BedWars.map.getInt("eventTime", 1);
         Utils.blockProtection = BedWars.map.getBoolean("blockProtection", true);
         Utils.crafting = BedWars.map.getBoolean("crafting", false);
-        for (Team team : Team.values()) {
-            traps.add(team, new CollectionList<>());
-        }
         GameTask.playedTime = 0;
         Utils.initConfigUtils();
         BedWars.scoreboards = new Collection<>();
