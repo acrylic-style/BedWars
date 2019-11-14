@@ -538,7 +538,7 @@ public class BedWars extends JavaPlugin implements Listener {
         String teamName = team != null ? team.color + "[" + team.name() + "] " + ChatColor.GRAY : ChatColor.GRAY + "[SPECTATOR] ";
         Player player = e.getPlayer();
         player.setPlayerListName(BedWars.team.get(player.getUniqueId()).color + player.getName());
-        if (team != null) e.setFormat(teamName + e.getPlayer().getDisplayName() + ChatColor.WHITE + ": " + ChatColor.GRAY + e.getMessage());
+        if (team != null) e.setMessage(teamName + e.getPlayer().getDisplayName() + ChatColor.WHITE + ": " + ChatColor.GRAY + e.getMessage());
     }
 
     @EventHandler
