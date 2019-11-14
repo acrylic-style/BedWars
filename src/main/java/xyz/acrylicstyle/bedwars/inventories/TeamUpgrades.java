@@ -120,7 +120,7 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         ItemStack item = noLoreItems.get(e.getSlot());
-        if (unlockedUpgrades.contains(upgrades.get(clickedItem.getType())) && !upgrades.get(item.getType()).getClass().isAssignableFrom(TrapUpgrade.class)) {
+        if (unlockedUpgrades.contains(upgrades.get(clickedItem.getType())) && !(upgrades.get(item.getType()) instanceof TrapUpgrade)) {
             p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 100, 1);
             p.sendMessage(ChatColor.RED + "You've already unlocked this upgrade!");
             return;
@@ -140,11 +140,11 @@ public class TeamUpgrades implements InventoryHolder, Listener {
         p.getInventory().removeItem(cost);
         if (upgrades.get(item.getType()) instanceof OneTimeUpgrade) {
             upgrades.get(item.getType()).run(team);
-            if (!upgrades.get(item.getType()).getClass().isAssignableFrom(TrapUpgrade.class)) unlockedUpgrades.add(upgrades.get(item.getType()));
+            if (!(upgrades.get(item.getType()) instanceof TrapUpgrade)) unlockedUpgrades.add(upgrades.get(item.getType()));
         } else if (upgrades.get(item.getType()) instanceof TieredUpgrade) {
             TieredUpgrade<Team> upgrade = (TieredUpgrade<Team>) upgrades.get(item.getType());
             upgrade.upgradeAndRun(team);
-            if (upgrade.getTier(team) >= upgrade.maxTier() && !upgrades.get(item.getType()).getClass().isAssignableFrom(TrapUpgrade.class)) unlockedUpgrades.add(upgrades.get(item.getType()));
+            if (upgrade.getTier(team) >= upgrade.maxTier() && !(upgrades.get(item.getType()) instanceof TrapUpgrade)) unlockedUpgrades.add(upgrades.get(item.getType()));
         }
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 2);
         p.sendMessage(ChatColor.GREEN + p.getName() + " purchased " + ChatColor.GOLD + upgrades.get(item.getType()).getName());
