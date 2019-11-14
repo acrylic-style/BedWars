@@ -24,12 +24,12 @@ public class GameTask extends BukkitRunnable {
             Utils.setScoreReplace("   ", 9, objective, uuid);
             if (Utils.teams >= 1) Utils.teamSB(Team.RED, 8, objective, uuid);
             if (Utils.teams >= 2) Utils.teamSB(Team.BLUE, 7, objective, uuid);
-            if (Utils.teams >= 3) Utils.teamSB(Team.GREEN, 6, objective, uuid);
-            if (Utils.teams >= 4) Utils.teamSB(Team.YELLOW, 5, objective, uuid);
-            if (Utils.teams >= 5) Utils.teamSB(Team.AQUA, 4, objective, uuid);
-            if (Utils.teams >= 6) Utils.teamSB(Team.WHITE, 3, objective, uuid);
-            if (Utils.teams >= 7) Utils.teamSB(Team.PINK, 2, objective, uuid);
-            if (Utils.teams >= 8) Utils.teamSB(Team.BLACK, 1, objective, uuid);
+            if (Utils.teams >= 3) Utils.teamSB(Team.GREEN, 6, objective, uuid); else Utils.setScoreReplace("         ", 6, objective, uuid);
+            if (Utils.teams >= 4) Utils.teamSB(Team.YELLOW, 5, objective, uuid); else Utils.setScoreReplace("        ", 5, objective, uuid);
+            if (Utils.teams >= 5) Utils.teamSB(Team.AQUA, 4, objective, uuid); else Utils.setScoreReplace("      ", 4, objective, uuid);
+            if (Utils.teams >= 6) Utils.teamSB(Team.WHITE, 3, objective, uuid); else Utils.setScoreReplace("Kills: 0", 3, objective, uuid);
+            if (Utils.teams >= 7) Utils.teamSB(Team.PINK, 2, objective, uuid); else Utils.setScoreReplace("Final Kills: 0", 2, objective, uuid);
+            if (Utils.teams >= 8) Utils.teamSB(Team.BLACK, 1, objective, uuid); else Utils.setScoreReplace("       ", 1, objective, uuid);
             Utils.setScoreReplace(ChatColor.YELLOW + BedWars.config.getString("domain", "www.acrylicstyle.xyz"), -1, objective, uuid);
             player.setScoreboard(BedWars.scoreboards.get(player.getUniqueId()));
         }

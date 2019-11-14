@@ -46,8 +46,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static xyz.acrylicstyle.bedwars.utils.Utils.getInstance;
-import static xyz.acrylicstyle.bedwars.utils.Utils.teamSize;
+import static xyz.acrylicstyle.bedwars.utils.Utils.*;
 
 public class BedWars extends JavaPlugin implements Listener {
     public static ConfigProvider config = null;
@@ -330,8 +329,9 @@ public class BedWars extends JavaPlugin implements Listener {
         Player killer = e.getEntity().getKiller();
         e.setKeepInventory(true);
         final String finalKillMessage = aliveTeam.contains(victimTeam) ? "" : "" + ChatColor.AQUA + ChatColor.BOLD + " FINAL KILL!";
+        final boolean voidKill = e.getDeathMessage().contains(" void ");
         if (killer == null) {
-            e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " died." + finalKillMessage);
+            if (voidKill) e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " fell into the void." + finalKillMessage); else e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " died." + finalKillMessage);
         } else {
             if (killer.getUniqueId().equals(e.getEntity().getUniqueId())) {
                 e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " took their own life." + finalKillMessage);
@@ -339,9 +339,12 @@ public class BedWars extends JavaPlugin implements Listener {
                 return;
             }
             if (finalKillMessage.length() <= 0) kills.add(killer.getUniqueId(), kills.getOrDefault(killer.getUniqueId(), 0)+1);
-            if (finalKillMessage.length() >= 1) finalKills.add(killer.getUniqueId(), kills.getOrDefault(killer.getUniqueId(), 0)+1);
+            if (finalKillMessage.length() >= 1) finalKills.add(killer.getUniqueId(), finalKills.getOrDefault(killer.getUniqueId(), 0)+1);
+            if (Utils.teams < 6) Utils.setScoreReplace("Kills: " + kills.get(killer.getUniqueId()), 3, getObjective(killer.getUniqueId()), killer.getUniqueId());
+            if (Utils.teams < 7) Utils.setScoreReplace("Final Kills: " + finalKills.get(killer.getUniqueId()), 2, getObjective(killer.getUniqueId()), killer.getUniqueId());
             Team killerTeam = team.get(killer.getUniqueId());
-            e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
+            if (voidKill) e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was knocked into the void by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
+                else e.setDeathMessage(victimTeam.color + e.getEntity().getName() + ChatColor.GRAY + " was killed by " + (killerTeam == null ? "" : killerTeam.color) + killer.getName() + ChatColor.GRAY + "." + finalKillMessage);
             int diamonds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.DIAMOND));
             int emeralds = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.EMERALD));
             int irons = Utils.countItems(Utils.all(e.getEntity().getInventory().getContents(), Material.IRON_INGOT));

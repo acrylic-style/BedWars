@@ -121,10 +121,10 @@ public final class Utils {
         BedWars.world.setGameRuleValue("mobGriefing", "true");
         BedWars.world.setFullTime(6000);
         BedWars.manager = Bukkit.getScoreboardManager();
-        Utils.maximumPlayers = BedWars.map.getInt("maximumPlayers", 16);
         Utils.minimumPlayers = BedWars.map.getInt("minimumPlayers", 4);
         Utils.teams = BedWars.map.getInt("teamOf", 8);
         Utils.teamSize = BedWars.map.getInt("teamSize", 2);
+        Utils.maximumPlayers = BedWars.map.getInt("maximumPlayers", teamSize*teams);
         Utils.eventTime = BedWars.map.getInt("eventTime", 1);
         Utils.blockProtection = BedWars.map.getBoolean("blockProtection", true);
         Utils.crafting = BedWars.map.getBoolean("crafting", false);
